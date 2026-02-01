@@ -7,11 +7,7 @@ export default function LandingPage() {
     <div className="relative min-h-screen overflow-x-clip flex flex-col mb-0">
       {/* Background Map */}
       <div className="fixed inset-0 -z-10">
-        <img
-          src="/MAP BG.svg"
-          alt=""
-          className="h-full w-full object-cover"
-        />
+        <img src="/MAP BG.svg" alt="" className="h-full w-full object-cover" />
       </div>
 
       {/* Header */}
@@ -157,12 +153,12 @@ export default function LandingPage() {
         <p className="absolute right-[106px] top-[464px] font-alliance text-[128px] leading-[1.2] text-[#1f2b26] text-right tracking-[-5.12px] w-[637px] z-10">
           verdant
         </p>
-        
+
         {/* Number "(1)" - positioned to the left of "verdant" */}
         <p className="absolute left-[713px] top-[509px] font-helvetica text-[24px] text-[#1f2b26] tracking-[-0.96px] w-[32px] z-10">
           (1)
         </p>
-        
+
         {/* Pronunciation - positioned from right edge */}
         <p className="absolute right-[106px] top-[622px] font-alliance text-[36px] leading-[0] text-[#1f2b26] text-right tracking-[-1.44px] w-[611px] z-10">
           <span className="leading-normal">/ˈvərd</span>
@@ -173,7 +169,7 @@ export default function LandingPage() {
           <span className="leading-normal">{` `}</span>
           <span className="leading-normal">adjective</span>
         </p>
-        
+
         {/* Definition text - positioned from right edge, below pronunciation */}
         <div className="absolute right-[105px] top-[759px] flex items-center justify-center w-[608.874px] z-10">
           <div className="rotate-[0.19deg]">

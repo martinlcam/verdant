@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useEffect, useMemo, useState, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   generateHeatZones,
   generateInfrastructurePoints,
@@ -42,7 +42,7 @@ export function HeatMap() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    
+
     // Wait for DOM to be ready
     setIsMounted(true);
   }, []);

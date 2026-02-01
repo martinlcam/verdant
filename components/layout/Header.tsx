@@ -16,12 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import {
   CANADIAN_CITIES,
   generateCityStats,
@@ -184,7 +179,10 @@ export function Header() {
                 <div>
                   <h4 className="font-semibold mb-2 text-gray-50 text-base">Dashboard Overview</h4>
                   <p className="text-xs text-gray-300 leading-relaxed">
-                    Verdant provides data-driven insights into urban heat islands and green infrastructure planning for Canadian cities. Use this dashboard to understand heat patterns, identify vulnerable areas, and explore recommendations for climate resilience.
+                    Verdant provides data-driven insights into urban heat islands and green
+                    infrastructure planning for Canadian cities. Use this dashboard to understand
+                    heat patterns, identify vulnerable areas, and explore recommendations for
+                    climate resilience.
                   </p>
                 </div>
                 <div className="border-t border-gray-700 pt-3">
@@ -201,16 +199,24 @@ export function Header() {
                 <div className="border-t border-gray-700 pt-3">
                   <h4 className="font-semibold mb-1.5 text-gray-50">Interpreting the Data</h4>
                   <p className="text-xs text-gray-300 leading-relaxed">
-                    <strong className="text-gray-200">Temperature Metrics:</strong> Compare urban vs. rural temperatures to understand the heat island effect. Higher differences indicate stronger heat island intensity.
+                    <strong className="text-gray-200">Temperature Metrics:</strong> Compare urban
+                    vs. rural temperatures to understand the heat island effect. Higher differences
+                    indicate stronger heat island intensity.
                   </p>
                   <p className="text-xs text-gray-300 leading-relaxed mt-1.5">
-                    <strong className="text-gray-200">Hotspot Zones:</strong> Areas with elevated temperatures requiring immediate attention. Severity levels help prioritize intervention areas.
+                    <strong className="text-gray-200">Hotspot Zones:</strong> Areas with elevated
+                    temperatures requiring immediate attention. Severity levels help prioritize
+                    intervention areas.
                   </p>
                   <p className="text-xs text-gray-300 leading-relaxed mt-1.5">
-                    <strong className="text-gray-200">Green Coverage:</strong> Percentage of vegetation indicates cooling potential. Lower coverage suggests opportunities for green infrastructure expansion.
+                    <strong className="text-gray-200">Green Coverage:</strong> Percentage of
+                    vegetation indicates cooling potential. Lower coverage suggests opportunities
+                    for green infrastructure expansion.
                   </p>
                   <p className="text-xs text-gray-300 leading-relaxed mt-1.5">
-                    <strong className="text-gray-200">Vulnerable Population:</strong> Residents at higher risk from heat exposure. Use this to target cooling interventions and emergency planning.
+                    <strong className="text-gray-200">Vulnerable Population:</strong> Residents at
+                    higher risk from heat exposure. Use this to target cooling interventions and
+                    emergency planning.
                   </p>
                 </div>
               </div>

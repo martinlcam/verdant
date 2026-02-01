@@ -1,14 +1,9 @@
 'use client';
 
 import { Flame, Leaf, Loader2, ThermometerSun, TrendingUp, Users } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 import { useMemo } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useHeatIslandComparison } from '@/hooks/useClimateData';
 import { generateCityStats, generateRecommendations } from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
@@ -113,7 +108,8 @@ export function StatsCards() {
       isLoading: false,
       tooltip: {
         source: 'Vegetation and park area analysis',
-        calculation: 'Percentage of city area covered by vegetation, parks, and green infrastructure',
+        calculation:
+          'Percentage of city area covered by vegetation, parks, and green infrastructure',
         location: 'City-wide assessment of green spaces and natural areas',
       },
     },
@@ -142,7 +138,9 @@ export function StatsCards() {
             <CardContent className="p-4">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400">{card.title}</p>
+                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                    {card.title}
+                  </p>
                   <p className="mt-1 text-2xl font-bold text-gray-900 dark:text-white">
                     {card.isLoading ? (
                       <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
@@ -150,7 +148,9 @@ export function StatsCards() {
                       card.value
                     )}
                   </p>
-                  <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">{card.description}</p>
+                  <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
+                    {card.description}
+                  </p>
                 </div>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -171,7 +171,8 @@ export function StatsCards() {
                       )}
                       {card.tooltip.location && (
                         <p className="text-xs text-gray-300 leading-relaxed mt-1">
-                          <strong className="text-gray-200">Location:</strong> {card.tooltip.location}
+                          <strong className="text-gray-200">Location:</strong>{' '}
+                          {card.tooltip.location}
                         </p>
                       )}
                       {card.tooltip.calculation && (

@@ -337,8 +337,14 @@ export function generateCityStats(
     avgRuralTemp: Math.round(ruralTemp * 10) / 10,
     heatIslandIntensity: Math.round((baseTemp - ruralTemp) * 10) / 10,
     hotspotCount: Math.max(0, Math.floor(baseHotspotCount - hotspotReduction)),
-    greenCoverage: Math.min(100, Math.round((baseGreenCoverage + additionalGreenCoveragePercent) * 10) / 10),
-    vulnerablePopulation: Math.max(0, Math.round(baseVulnerablePopulation * (1 - vulnerablePopulationReduction))),
+    greenCoverage: Math.min(
+      100,
+      Math.round((baseGreenCoverage + additionalGreenCoveragePercent) * 10) / 10,
+    ),
+    vulnerablePopulation: Math.max(
+      0,
+      Math.round(baseVulnerablePopulation * (1 - vulnerablePopulationReduction)),
+    ),
     projectedTempIncrease: Math.round((1.5 + random() * 2) * 10) / 10,
   };
 }

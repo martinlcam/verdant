@@ -12,12 +12,7 @@ import {
 import { useMemo } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { generateRecommendations } from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
 import { formatArea, formatTemperatureDifference } from '@/lib/utils';
