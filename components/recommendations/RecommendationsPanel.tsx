@@ -88,17 +88,17 @@ export function RecommendationsPanel() {
               <Ruler className="h-3.5 w-3.5" />
               <span className="text-[10px] font-medium">Total Area</span>
             </div>
-            <p className="mt-0.5 text-base font-bold text-emerald-700 dark:text-emerald-300">
+            <p className="mt-0.5 text-sm font-bold text-emerald-700 dark:text-emerald-300">
               {formatArea(totalArea)}
             </p>
           </div>
           <div className="rounded-lg bg-red-50 p-2.5 dark:bg-red-950">
             <div className="flex items-center gap-1.5 text-red-600 dark:text-red-400">
               <TreeDeciduous className="h-3.5 w-3.5" />
-              <span className="text-[10px] font-medium">Priority</span>
+              <span className="text-[10px] font-medium">Urgent Priority</span>
             </div>
-            <p className="mt-0.5 text-base font-bold text-red-700 dark:text-red-300">
-              {criticalCount} urgent
+            <p className="mt-0.5 text-sm font-bold text-red-700 dark:text-red-300">
+              {criticalCount} sites
             </p>
           </div>
         </div>
