@@ -1,5 +1,7 @@
 ## [verdant](https://verdant-delta-ashen.vercel.app/) 
 
+![Heading Slider](./public/svgs/heading slider.jpg)
+
 **Fighting urban heat islands through data-driven green infrastructure planning.**
 
 Urban areas experience higher temperatures overtime creating dangerous conditions for millions of residents. Vulnerable communities suffer the most by facing higher energy costs, increased health risks, and degraded quality of life.
