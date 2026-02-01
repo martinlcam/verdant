@@ -1,20 +1,20 @@
 'use client';
 
+import { TrendingDown } from 'lucide-react';
 import { useMemo } from 'react';
 import {
-  BarChart,
   Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Cell,
 } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TrendingDown } from 'lucide-react';
-import { useDashboardStore } from '@/lib/store';
 import { generateRecommendations } from '@/lib/data';
+import { useDashboardStore } from '@/lib/store';
 
 export function ImpactProjections() {
   const { selectedCity } = useDashboardStore();
@@ -33,7 +33,7 @@ export function ImpactProjections() {
         acc[type].count += 1;
         return acc;
       },
-      {} as Record<string, { cooling: number; count: number }>
+      {} as Record<string, { cooling: number; count: number }>,
     );
 
     return Object.entries(byType)

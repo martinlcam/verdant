@@ -1,9 +1,9 @@
 'use client';
 
+import { useDashboardStore } from '@/lib/store';
+import { cn } from '@/lib/utils';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
-import { cn } from '@/lib/utils';
-import { useDashboardStore } from '@/lib/store';
 
 interface DashboardShellProps {
   children: React.ReactNode;
@@ -20,7 +20,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
         <main
           className={cn(
             'flex-1 overflow-hidden transition-all duration-300',
-            sidebarOpen ? 'lg:ml-0' : ''
+            sidebarOpen ? 'lg:ml-0' : '',
           )}
         >
           {children}

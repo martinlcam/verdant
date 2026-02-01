@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { useDashboardStore } from '@/lib/store';
+import { useEffect, useMemo, useState } from 'react';
 import { generateHeatMapData, generateHeatZones, generateRecommendations } from '@/lib/data';
-import { interpolateColor, getPriorityColor, getInfrastructureIcon } from '@/lib/utils';
+import { useDashboardStore } from '@/lib/store';
+import { getInfrastructureIcon, getPriorityColor, interpolateColor } from '@/lib/utils';
 
 // Dynamic import for Leaflet components (client-side only)
 const MapContainer = dynamic(() => import('react-leaflet').then((mod) => mod.MapContainer), {

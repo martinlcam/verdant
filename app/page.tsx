@@ -1,16 +1,16 @@
 'use client';
 
+import { BarChart3, Map as MapIcon, TreeDeciduous } from 'lucide-react';
 import dynamic from 'next/dynamic';
-import { DashboardShell } from '@/components/layout/DashboardShell';
-import { StatsCards } from '@/components/analytics/StatsCards';
-import { TemperatureChart } from '@/components/analytics/TemperatureChart';
 import { HeatZoneList } from '@/components/analytics/HeatZoneList';
 import { ImpactProjections } from '@/components/analytics/ImpactProjections';
-import { RecommendationsPanel } from '@/components/recommendations/RecommendationsPanel';
+import { StatsCards } from '@/components/analytics/StatsCards';
+import { TemperatureChart } from '@/components/analytics/TemperatureChart';
 import { TimeSlider } from '@/components/controls/TimeSlider';
 import { ExportPanel } from '@/components/export/ExportPanel';
+import { DashboardShell } from '@/components/layout/DashboardShell';
+import { RecommendationsPanel } from '@/components/recommendations/RecommendationsPanel';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Map, BarChart3, TreeDeciduous } from 'lucide-react';
 
 // Dynamic import for HeatMap (uses Leaflet which requires client-side rendering)
 const HeatMap = dynamic(() => import('@/components/map/HeatMap').then((mod) => mod.HeatMap), {
@@ -35,7 +35,7 @@ export default function Dashboard() {
             <div className="border-b border-gray-200 bg-white px-4 py-2 dark:border-gray-800 dark:bg-gray-950">
               <TabsList className="w-full">
                 <TabsTrigger value="map" className="flex-1 gap-2">
-                  <Map className="h-4 w-4" />
+                  <MapIcon className="h-4 w-4" />
                   Map
                 </TabsTrigger>
                 <TabsTrigger value="analytics" className="flex-1 gap-2">

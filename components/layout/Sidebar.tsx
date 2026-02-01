@@ -1,19 +1,19 @@
 'use client';
 
 import {
-  Map,
-  ThermometerSun,
-  Leaf,
   BarChart3,
-  Settings,
   Layers,
-  TreeDeciduous,
+  Leaf,
+  Map,
   Radio,
+  Settings,
+  ThermometerSun,
+  TreeDeciduous,
   X,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import { useDashboardStore } from '@/lib/store';
+import { cn } from '@/lib/utils';
 import type { LayerType } from '@/types';
 
 const layers: { id: LayerType; name: string; icon: React.ReactNode; color: string }[] = [
@@ -51,16 +51,18 @@ export function Sidebar() {
     <>
       {/* Mobile overlay */}
       {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+        <button
+          type="button"
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden cursor-default"
           onClick={() => setSidebarOpen(false)}
+          aria-label="Close sidebar"
         />
       )}
 
       <aside
         className={cn(
           'fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-gray-200 bg-white transition-transform duration-300 dark:border-gray-800 dark:bg-gray-950 lg:static lg:translate-x-0',
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full',
         )}
       >
         <div className="flex h-16 items-center justify-between border-b border-gray-200 px-4 dark:border-gray-800 lg:hidden">
@@ -80,13 +82,14 @@ export function Sidebar() {
             <div className="space-y-2">
               {layers.map((layer) => (
                 <button
+                  type="button"
                   key={layer.id}
                   onClick={() => toggleLayer(layer.id)}
                   className={cn(
                     'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
                     activeLayers.includes(layer.id)
                       ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'
-                      : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800'
+                      : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800',
                   )}
                 >
                   <span className={cn(layer.color)}>{layer.icon}</span>
@@ -96,7 +99,7 @@ export function Sidebar() {
                       'ml-auto h-2 w-2 rounded-full',
                       activeLayers.includes(layer.id)
                         ? 'bg-emerald-500'
-                        : 'bg-gray-300 dark:bg-gray-600'
+                        : 'bg-gray-300 dark:bg-gray-600',
                     )}
                   />
                 </button>

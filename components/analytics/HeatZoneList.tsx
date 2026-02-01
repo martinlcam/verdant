@@ -1,11 +1,11 @@
 'use client';
 
+import { ArrowRight, Flame } from 'lucide-react';
 import { useMemo } from 'react';
-import { Flame, ArrowRight } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { useDashboardStore } from '@/lib/store';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { generateHeatZones } from '@/lib/data';
+import { useDashboardStore } from '@/lib/store';
 import { formatTemperature } from '@/lib/utils';
 
 export function HeatZoneList() {
@@ -27,6 +27,7 @@ export function HeatZoneList() {
         <div className="space-y-3">
           {zones.map((zone, index) => (
             <button
+              type="button"
               key={zone.id}
               onClick={() => setSelectedHeatZone(zone)}
               className="flex w-full items-center gap-3 rounded-lg border border-gray-100 bg-gray-50/50 p-3 text-left transition-colors hover:border-emerald-200 hover:bg-emerald-50/50 dark:border-gray-800 dark:bg-gray-900/50 dark:hover:border-emerald-800 dark:hover:bg-emerald-950/30"

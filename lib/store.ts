@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { City, LayerType, GreenInfrastructureRecommendation, HeatZone } from '@/types';
+import type { City, GreenInfrastructureRecommendation, HeatZone, LayerType } from '@/types';
 import { CANADIAN_CITIES } from './data';
 
 interface DashboardStore {

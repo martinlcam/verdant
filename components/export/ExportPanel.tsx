@@ -1,11 +1,11 @@
 'use client';
 
+import { Check, Download, FileImage, FileSpreadsheet, FileText } from 'lucide-react';
 import { useState } from 'react';
-import { Download, FileImage, FileSpreadsheet, FileText, Check } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useDashboardStore } from '@/lib/store';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { generateCityStats, generateHeatZones, generateRecommendations } from '@/lib/data';
+import { useDashboardStore } from '@/lib/store';
 
 type ExportFormat = 'png' | 'csv' | 'json';
 
@@ -45,7 +45,7 @@ export function ExportPanel() {
             z.maxTemperature.toFixed(1),
             z.area.toFixed(2),
             z.vulnerabilityScore.toFixed(0),
-          ].join(',')
+          ].join(','),
         ),
       ].join('\n');
 
@@ -65,7 +65,7 @@ export function ExportPanel() {
     } else if (format === 'png') {
       // For PNG, we'd capture the map - simplified here
       alert(
-        'Map screenshot feature would capture the current view. This requires additional setup with html2canvas.'
+        'Map screenshot feature would capture the current view. This requires additional setup with html2canvas.',
       );
     }
 

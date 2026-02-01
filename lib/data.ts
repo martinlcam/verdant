@@ -1,10 +1,10 @@
 import type {
   City,
+  CityStats,
+  GreenInfrastructureRecommendation,
+  HeatDataPoint,
   HeatZone,
   TemperatureRecord,
-  GreenInfrastructureRecommendation,
-  CityStats,
-  HeatDataPoint,
 } from '@/types';
 
 // Canadian cities with their coordinates
@@ -149,7 +149,7 @@ function generatePolygon(centerLat: number, centerLng: number, radius: number): 
 }
 
 // Generate temperature history for a city
-export function generateTemperatureHistory(city: City, months: number = 12): TemperatureRecord[] {
+export function generateTemperatureHistory(_city: City, months: number = 12): TemperatureRecord[] {
   const records: TemperatureRecord[] = [];
   const today = new Date();
 
@@ -287,7 +287,7 @@ export function generateHeatMapData(city: City, resolution: number = 20): HeatDa
 
       // Distance from center affects temperature
       const distFromCenter = Math.sqrt(
-        Math.pow((i / resolution - 0.5) * 2, 2) + Math.pow((j / resolution - 0.5) * 2, 2)
+        ((i / resolution - 0.5) * 2) ** 2 + ((j / resolution - 0.5) * 2) ** 2,
       );
 
       // Base temperature with urban heat island effect
@@ -314,7 +314,7 @@ export function generateHeatMapData(city: City, resolution: number = 20): HeatDa
 
 // Time series data for charts
 export function generateDailyTemperatures(
-  days: number = 30
+  days: number = 30,
 ): { date: string; high: number; low: number; avg: number }[] {
   const data = [];
   const today = new Date();

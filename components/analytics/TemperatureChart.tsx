@@ -2,18 +2,18 @@
 
 import { useMemo } from 'react';
 import {
-  AreaChart,
   Area,
+  AreaChart,
+  CartesianGrid,
+  Legend,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
 } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useDashboardStore } from '@/lib/store';
 import { generateTemperatureHistory } from '@/lib/data';
+import { useDashboardStore } from '@/lib/store';
 
 export function TemperatureChart() {
   const { selectedCity, temperatureUnit } = useDashboardStore();
@@ -30,7 +30,7 @@ export function TemperatureChart() {
 
   const formatMonth = (dateStr: string) => {
     const [year, month] = dateStr.split('-');
-    const date = new Date(parseInt(year), parseInt(month) - 1);
+    const date = new Date(parseInt(year, 10), parseInt(month, 10) - 1);
     return date.toLocaleDateString('en-US', { month: 'short' });
   };
 

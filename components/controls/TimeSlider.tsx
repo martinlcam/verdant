@@ -1,11 +1,11 @@
 'use client';
 
+import { addMonths, format, subMonths } from 'date-fns';
+import { Calendar, Play, SkipBack, SkipForward } from 'lucide-react';
 import { useMemo } from 'react';
-import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
-import { Play, SkipBack, SkipForward, Calendar } from 'lucide-react';
+import { Slider } from '@/components/ui/slider';
 import { useDashboardStore } from '@/lib/store';
-import { format, subMonths, addMonths } from 'date-fns';
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 

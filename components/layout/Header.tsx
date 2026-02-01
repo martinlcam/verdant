@@ -1,6 +1,7 @@
 'use client';
 
-import { Sun, Moon, Menu, Download, Info, Thermometer } from 'lucide-react';
+import { Download, Info, Menu, Moon, Sun, Thermometer } from 'lucide-react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -9,9 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useDashboardStore } from '@/lib/store';
 import { CANADIAN_CITIES } from '@/lib/data';
-import { useState } from 'react';
+import { useDashboardStore } from '@/lib/store';
 
 export function Header() {
   const {

@@ -1,11 +1,11 @@
 'use client';
 
+import { Flame, Leaf, ThermometerSun, TrendingUp, Users } from 'lucide-react';
 import { useMemo } from 'react';
-import { ThermometerSun, TrendingUp, Flame, Leaf, Users } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { useDashboardStore } from '@/lib/store';
 import { generateCityStats } from '@/lib/data';
-import { formatTemperature, formatNumber } from '@/lib/utils';
+import { useDashboardStore } from '@/lib/store';
+import { formatNumber, formatTemperature } from '@/lib/utils';
 
 export function StatsCards() {
   const { selectedCity, temperatureUnit } = useDashboardStore();

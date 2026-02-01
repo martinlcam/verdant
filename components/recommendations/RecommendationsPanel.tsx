@@ -1,20 +1,20 @@
 'use client';
 
-import { useMemo } from 'react';
 import {
-  TreeDeciduous,
-  DollarSign,
-  Thermometer,
   Building2,
-  TreePine,
+  DollarSign,
   Droplets,
   Square,
+  Thermometer,
+  TreeDeciduous,
+  TreePine,
 } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useMemo } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { useDashboardStore } from '@/lib/store';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { generateRecommendations } from '@/lib/data';
-import { formatCurrency, formatArea } from '@/lib/utils';
+import { useDashboardStore } from '@/lib/store';
+import { formatArea, formatCurrency } from '@/lib/utils';
 import type { GreenInfrastructureRecommendation } from '@/types';
 
 const typeIcons: Record<string, React.ReactNode> = {
@@ -115,6 +115,7 @@ interface RecommendationCardProps {
 function RecommendationCard({ recommendation, isSelected, onSelect }: RecommendationCardProps) {
   return (
     <button
+      type="button"
       onClick={onSelect}
       className={`w-full rounded-lg border p-3 text-left transition-all ${
         isSelected
