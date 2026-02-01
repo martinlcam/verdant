@@ -15,12 +15,7 @@ import { CANADIAN_CITIES } from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
 
 export function Header() {
-  const {
-    selectedCity,
-    setSelectedCity,
-    sidebarOpen,
-    setSidebarOpen,
-  } = useDashboardStore();
+  const { selectedCity, setSelectedCity, sidebarOpen, setSidebarOpen } = useDashboardStore();
 
   const [isDark, setIsDark] = useState(false);
 

@@ -286,33 +286,36 @@ export function generateHeatMapData(city: City, resolution: number = 20): HeatDa
       // Normalized position (-1 to 1)
       const normalizedI = (i / resolution - 0.5) * 2;
       const normalizedJ = (j / resolution - 0.5) * 2;
-      
+
       // Small jitter to break up perfect grid (much smaller)
       const jitterLat = (Math.random() - 0.5) * (spread / resolution) * 0.3;
       const jitterLng = (Math.random() - 0.5) * (spread / resolution) * 0.3;
-      
+
       const lat = centerLat + normalizedI * spread + jitterLat;
       const lng = centerLng + normalizedJ * spread * 1.2 + jitterLng;
 
       // Distance from center (0 to ~1.4 for corners)
       const distFromCenter = Math.sqrt(normalizedI ** 2 + normalizedJ ** 2);
-      
+
       // Create smooth gradient: hot in center, cooler at edges
       // Use exponential decay for more realistic heat island effect
       const gradientFactor = Math.exp(-distFromCenter * 1.2);
-      
+
       // Base temperature: 35°C in center, ~22°C at edges
       const baseTemp = 22 + gradientFactor * 13;
-      
+
       // Add natural variation (smaller range to maintain gradient)
       const variation = (Math.random() - 0.5) * 3;
       const finalTemp = Math.max(18, Math.min(38, baseTemp + variation));
-      
+
       // Surface temp is typically higher
       const surfaceTemp = finalTemp + 3 + Math.random() * 4;
 
       // Vegetation index inversely related to temperature
-      const ndvi = Math.max(-0.2, Math.min(0.8, 0.5 - (finalTemp - 25) * 0.05 + (Math.random() - 0.5) * 0.2));
+      const ndvi = Math.max(
+        -0.2,
+        Math.min(0.8, 0.5 - (finalTemp - 25) * 0.05 + (Math.random() - 0.5) * 0.2),
+      );
 
       points.push({
         lat,
