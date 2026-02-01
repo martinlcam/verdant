@@ -19,8 +19,6 @@ export function Header() {
     setSelectedCity,
     sidebarOpen,
     setSidebarOpen,
-    temperatureUnit,
-    setTemperatureUnit,
   } = useDashboardStore();
 
   const [isDark, setIsDark] = useState(false);
@@ -73,25 +71,6 @@ export function Header() {
             ))}
           </SelectContent>
         </Select>
-
-        <div className="hidden items-center gap-1 rounded-lg border border-gray-200 p-1 dark:border-gray-700 sm:flex">
-          <Button
-            variant={temperatureUnit === 'C' ? 'default' : 'ghost'}
-            size="sm"
-            onClick={() => setTemperatureUnit('C')}
-            className="h-7 w-8 px-0"
-          >
-            °C
-          </Button>
-          <Button
-            variant={temperatureUnit === 'F' ? 'default' : 'ghost'}
-            size="sm"
-            onClick={() => setTemperatureUnit('F')}
-            className="h-7 w-8 px-0"
-          >
-            °F
-          </Button>
-        </div>
 
         <Button variant="outline" size="icon" className="hidden sm:flex">
           <Download className="h-4 w-4" />

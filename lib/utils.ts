@@ -5,17 +5,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatTemperature(temp: number, unit: 'C' | 'F' = 'C'): string {
-  if (unit === 'F') {
-    return `${((temp * 9) / 5 + 32).toFixed(1)}°F`;
-  }
+export function formatTemperature(temp: number): string {
   return `${temp.toFixed(1)}°C`;
 }
 
-export function formatTemperatureDifference(temp: number, unit: 'C' | 'F' = 'C'): string {
-  if (unit === 'F') {
-    return `${((temp * 9) / 5 + 32).toFixed(1)}°F`;
-  }
+export function formatTemperatureDifference(temp: number): string {
   return `${temp.toFixed(1)}°C`;
 }
 

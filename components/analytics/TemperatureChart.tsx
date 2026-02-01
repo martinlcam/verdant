@@ -16,16 +16,14 @@ import { useHeatIslandComparison } from '@/hooks/useClimateData';
 import { useDashboardStore } from '@/lib/store';
 
 export function TemperatureChart() {
-  const { selectedCity, temperatureUnit } = useDashboardStore();
+  const { selectedCity } = useDashboardStore();
   const { data: heatIslandData, isLoading, error } = useHeatIslandComparison(selectedCity);
 
   const chartData =
     heatIslandData?.comparison.map((record) => ({
       date: record.date,
-      urban:
-        temperatureUnit === 'F' ? (record.urban * 9) / 5 + 32 : Math.round(record.urban * 10) / 10,
-      rural:
-        temperatureUnit === 'F' ? (record.rural * 9) / 5 + 32 : Math.round(record.rural * 10) / 10,
+      urban: Math.round(record.urban * 10) / 10,
+      rural: Math.round(record.rural * 10) / 10,
     })) || [];
 
   const formatDate = (dateStr: string) => {
@@ -114,7 +112,7 @@ export function TemperatureChart() {
                   fontSize: '12px',
                 }}
                 formatter={(value, name) => [
-                  `${Number(value).toFixed(1)}°${temperatureUnit}`,
+                  `${Number(value).toFixed(1)}°C`,
                   name === 'urban' ? 'Urban Center' : 'Rural Reference',
                 ]}
                 labelFormatter={(label) => `Date: ${formatDate(label as string)}`}

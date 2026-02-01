@@ -37,7 +37,7 @@ const priorityColors: Record<string, string> = {
 };
 
 export function RecommendationsPanel() {
-  const { selectedCity, setSelectedRecommendation, selectedRecommendation, temperatureUnit } =
+  const { selectedCity, setSelectedRecommendation, selectedRecommendation } =
     useDashboardStore();
 
   const recommendations = useMemo(() => {
@@ -81,7 +81,7 @@ export function RecommendationsPanel() {
               <span className="text-[10px] font-medium">Avg Cooling</span>
             </div>
             <p className="mt-0.5 text-base font-bold text-blue-700 dark:text-blue-300">
-              {formatTemperatureDifference(-totalCooling, temperatureUnit)}
+              {formatTemperatureDifference(-totalCooling)}
             </p>
           </div>
           <div className="rounded-lg bg-emerald-50 p-2.5 dark:bg-emerald-950">
@@ -127,7 +127,6 @@ interface RecommendationCardProps {
 }
 
 function RecommendationCard({ recommendation, isSelected, onSelect }: RecommendationCardProps) {
-  const { temperatureUnit } = useDashboardStore();
   return (
     <button
       type="button"
@@ -154,7 +153,7 @@ function RecommendationCard({ recommendation, isSelected, onSelect }: Recommenda
           <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
             <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
               <Thermometer className="h-3 w-3" />
-              {formatTemperatureDifference(-recommendation.estimatedCoolingEffect, temperatureUnit)}
+              {formatTemperatureDifference(-recommendation.estimatedCoolingEffect)}
             </span>
             <span className="text-gray-400">•</span>
             <span className="text-gray-600 dark:text-gray-400">

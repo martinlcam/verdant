@@ -9,7 +9,7 @@ import { useDashboardStore } from '@/lib/store';
 import { formatTemperature } from '@/lib/utils';
 
 export function HeatZoneList() {
-  const { selectedCity, temperatureUnit, setSelectedHeatZone } = useDashboardStore();
+  const { selectedCity, setSelectedHeatZone } = useDashboardStore();
 
   const zones = useMemo(() => {
     return generateHeatZones(selectedCity).slice(0, 5);
@@ -43,7 +43,7 @@ export function HeatZoneList() {
               </div>
               <div className="text-right">
                 <p className="font-semibold text-red-600 dark:text-red-400">
-                  {formatTemperature(zone.avgTemperature, temperatureUnit)}
+                  {formatTemperature(zone.avgTemperature)}
                 </p>
                 <Badge
                   variant={zone.severity as 'extreme' | 'high' | 'moderate' | 'low'}

@@ -8,7 +8,7 @@ import { useDashboardStore } from '@/lib/store';
 import { formatNumber, formatTemperature, formatTemperatureDifference } from '@/lib/utils';
 
 export function StatsCards() {
-  const { selectedCity, temperatureUnit } = useDashboardStore();
+  const { selectedCity } = useDashboardStore();
   const { data: heatIslandData, isLoading } = useHeatIslandComparison(selectedCity);
 
   // Use NASA data for temperature stats, fallback to generated data for others
@@ -26,7 +26,7 @@ export function StatsCards() {
   const cards = [
     {
       title: 'Urban Temperature',
-      value: isLoading ? null : formatTemperature(stats.avgUrbanTemp, temperatureUnit),
+      value: isLoading ? null : formatTemperature(stats.avgUrbanTemp),
       icon: <ThermometerSun className="h-5 w-5" />,
       color: 'text-red-500',
       bgColor: 'bg-red-50 dark:bg-red-950',
@@ -35,7 +35,7 @@ export function StatsCards() {
     },
     {
       title: 'Rural Temperature',
-      value: isLoading ? null : formatTemperature(stats.avgRuralTemp, temperatureUnit),
+      value: isLoading ? null : formatTemperature(stats.avgRuralTemp),
       icon: <Leaf className="h-5 w-5" />,
       color: 'text-green-500',
       bgColor: 'bg-green-50 dark:bg-green-950',
@@ -46,7 +46,7 @@ export function StatsCards() {
       title: 'Heat Island Effect',
       value: isLoading
         ? null
-        : `${stats.heatIslandIntensity >= 0 ? '+' : ''}${formatTemperatureDifference(stats.heatIslandIntensity, temperatureUnit)}`,
+        : `${stats.heatIslandIntensity >= 0 ? '+' : ''}${formatTemperatureDifference(stats.heatIslandIntensity)}`,
       icon: <TrendingUp className="h-5 w-5" />,
       color: 'text-orange-500',
       bgColor: 'bg-orange-50 dark:bg-orange-950',
