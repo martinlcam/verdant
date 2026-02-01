@@ -9,11 +9,11 @@ import { useDashboardStore } from '@/lib/store';
 import { formatTemperature } from '@/lib/utils';
 
 export function HeatZoneList() {
-  const { selectedCity, setSelectedHeatZone, setMapView } = useDashboardStore();
+  const { selectedCity, selectedDate, setSelectedHeatZone, setMapView } = useDashboardStore();
 
   const zones = useMemo(() => {
-    return generateHeatZones(selectedCity).slice(0, 5);
-  }, [selectedCity]);
+    return generateHeatZones(selectedCity, selectedDate).slice(0, 5);
+  }, [selectedCity, selectedDate]);
 
   // Calculate the center of a polygon from its coordinates
   const calculatePolygonCenter = (coordinates: [number, number][]): [number, number] => {

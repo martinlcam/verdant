@@ -110,10 +110,14 @@ export const CANADIAN_CITIES: City[] = [
 ];
 
 // Generate mock heat zones for a city
-export function generateHeatZones(city: City): HeatZone[] {
+export function generateHeatZones(city: City, date: Date = new Date()): HeatZone[] {
   const random = seededRandom(city.id);
   const zones: HeatZone[] = [];
-  const baseTemp = 28 + random() * 8;
+  
+  // Vary base temperature based on month (summer months are hotter)
+  const month = date.getMonth(); // 0-11 (Jan-Dec)
+  const seasonalVariation = month >= 5 && month <= 8 ? 5 : month >= 3 && month <= 9 ? 2 : -2; // Summer: +5°C, Spring/Fall: +2°C, Winter: -2°C
+  const baseTemp = 28 + random() * 8 + seasonalVariation;
 
   const zoneNames = [
     'Downtown Core',
@@ -137,6 +141,7 @@ export function generateHeatZones(city: City): HeatZone[] {
     const offset = 0.02 + random() * 0.03;
     const lat = city.coordinates[0] + (random() - 0.5) * offset * 2;
     const lng = city.coordinates[1] + (random() - 0.5) * offset * 2;
+    // Add some variation per zone, but keep seasonal base
     const temp = baseTemp + random() * 10 - 2;
 
     zones.push({
@@ -200,7 +205,7 @@ export function generateTemperatureHistory(_city: City, months: number = 12): Te
 }
 
 // Generate green infrastructure recommendations
-export function generateRecommendations(city: City): GreenInfrastructureRecommendation[] {
+export function generateRecommendations(city: City, date: Date = new Date()): GreenInfrastructureRecommendation[] {
   const random = seededRandom(city.id);
   const types: GreenInfrastructureRecommendation['type'][] = [
     'urban_park',

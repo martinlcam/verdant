@@ -54,12 +54,12 @@ export function HeatMap() {
   }, []);
 
   const heatZones = useMemo(() => {
-    return generateHeatZones(selectedCity);
-  }, [selectedCity]);
+    return generateHeatZones(selectedCity, selectedDate);
+  }, [selectedCity, selectedDate]);
 
   const recommendations = useMemo(() => {
-    return generateRecommendations(selectedCity);
-  }, [selectedCity]);
+    return generateRecommendations(selectedCity, selectedDate);
+  }, [selectedCity, selectedDate]);
 
   const vegetationAreas = useMemo(() => {
     return generateVegetationAreas(selectedCity);

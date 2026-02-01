@@ -40,6 +40,7 @@ const priorityColors: Record<string, string> = {
 export function RecommendationsPanel() {
   const {
     selectedCity,
+    selectedDate,
     setSelectedRecommendation,
     selectedRecommendation,
     implementedRecommendations,
@@ -47,8 +48,8 @@ export function RecommendationsPanel() {
   } = useDashboardStore();
 
   const recommendations = useMemo(() => {
-    return generateRecommendations(selectedCity);
-  }, [selectedCity]);
+    return generateRecommendations(selectedCity, selectedDate);
+  }, [selectedCity, selectedDate]);
 
   const totalCooling = useMemo(() => {
     return (

@@ -26,7 +26,7 @@ import {
 import { useDashboardStore } from '@/lib/store';
 
 export function Header() {
-  const { selectedCity, setSelectedCity, sidebarOpen, setSidebarOpen } = useDashboardStore();
+  const { selectedCity, selectedDate, setSelectedCity, sidebarOpen, setSidebarOpen } = useDashboardStore();
 
   const handleCityChange = (cityId: string) => {
     const city = CANADIAN_CITIES.find((c) => c.id === cityId);
@@ -37,8 +37,8 @@ export function Header() {
 
   const handleExport = async (format: 'csv' | 'json' | 'png') => {
     const stats = generateCityStats(selectedCity);
-    const zones = generateHeatZones(selectedCity);
-    const recommendations = generateRecommendations(selectedCity);
+    const zones = generateHeatZones(selectedCity, selectedDate);
+    const recommendations = generateRecommendations(selectedCity, selectedDate);
 
     if (format === 'csv') {
       // Generate CSV content

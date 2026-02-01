@@ -10,13 +10,13 @@ import { useDashboardStore } from '@/lib/store';
 import { formatNumber, formatTemperature, formatTemperatureDifference } from '@/lib/utils';
 
 export function StatsCards() {
-  const { selectedCity, implementedRecommendations } = useDashboardStore();
+  const { selectedCity, selectedDate, implementedRecommendations } = useDashboardStore();
   const { data: heatIslandData, isLoading } = useHeatIslandComparison(selectedCity);
 
-  // Get stable recommendations (memoized by city)
+  // Get stable recommendations (memoized by city and date)
   const allRecommendations = useMemo(() => {
-    return generateRecommendations(selectedCity);
-  }, [selectedCity]);
+    return generateRecommendations(selectedCity, selectedDate);
+  }, [selectedCity, selectedDate]);
 
   // Get only implemented recommendations
   const implementedRecs = useMemo(() => {

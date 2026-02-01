@@ -10,7 +10,7 @@ import { useDashboardStore } from '@/lib/store';
 type ExportFormat = 'png' | 'csv' | 'json';
 
 export function ExportPanel() {
-  const { selectedCity } = useDashboardStore();
+  const { selectedCity, selectedDate } = useDashboardStore();
   const [exporting, setExporting] = useState<ExportFormat | null>(null);
   const [exported, setExported] = useState<ExportFormat | null>(null);
 
@@ -21,8 +21,8 @@ export function ExportPanel() {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const stats = generateCityStats(selectedCity);
-    const zones = generateHeatZones(selectedCity);
-    const recommendations = generateRecommendations(selectedCity);
+    const zones = generateHeatZones(selectedCity, selectedDate);
+    const recommendations = generateRecommendations(selectedCity, selectedDate);
 
     if (format === 'csv') {
       // Generate CSV content

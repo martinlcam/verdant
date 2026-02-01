@@ -17,10 +17,10 @@ import { generateRecommendations } from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
 
 export function ImpactProjections() {
-  const { selectedCity } = useDashboardStore();
+  const { selectedCity, selectedDate } = useDashboardStore();
 
   const data = useMemo(() => {
-    const recommendations = generateRecommendations(selectedCity);
+    const recommendations = generateRecommendations(selectedCity, selectedDate);
 
     // Aggregate by type
     const byType = recommendations.reduce(
