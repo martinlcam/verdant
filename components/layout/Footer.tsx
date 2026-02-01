@@ -19,9 +19,14 @@ export default function Footer() {
 
         {/* Right Side Content - centered on the right */}
         <div className="absolute right-[15px] top-1/2 -translate-y-1/2 text-center">
-          <p className="font-alliance text-[15px] leading-normal text-[#cfcfcf] mb-2">
+          <a
+            href="https://github.com/martinlcam/verdant"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-alliance text-[15px] leading-normal text-[#cfcfcf] mb-2 hover:text-[#ecefe8] transition-colors inline-block"
+          >
             Github Repository
-          </p>
+          </a>
           <div className="font-alliance text-[15px] leading-normal text-[#545454]">
             <p className="mb-0">Owen Skippen</p>
             <p className="mb-0">Martin Cam</p>
