@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useHeatIslandComparison } from '@/hooks/useClimateData';
 import { generateCityStats } from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
-import { formatNumber, formatTemperature } from '@/lib/utils';
+import { formatNumber, formatTemperature, formatTemperatureDifference } from '@/lib/utils';
 
 export function StatsCards() {
   const { selectedCity, temperatureUnit } = useDashboardStore();
@@ -46,7 +46,7 @@ export function StatsCards() {
       title: 'Heat Island Effect',
       value: isLoading
         ? null
-        : `${stats.heatIslandIntensity >= 0 ? '+' : ''}${formatTemperature(stats.heatIslandIntensity, temperatureUnit)}`,
+        : `${stats.heatIslandIntensity >= 0 ? '+' : ''}${formatTemperatureDifference(stats.heatIslandIntensity, temperatureUnit)}`,
       icon: <TrendingUp className="h-5 w-5" />,
       color: 'text-orange-500',
       bgColor: 'bg-orange-50 dark:bg-orange-950',

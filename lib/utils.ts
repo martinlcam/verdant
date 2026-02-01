@@ -12,6 +12,13 @@ export function formatTemperature(temp: number, unit: 'C' | 'F' = 'C'): string {
   return `${temp.toFixed(1)}°C`;
 }
 
+export function formatTemperatureDifference(temp: number, unit: 'C' | 'F' = 'C'): string {
+  if (unit === 'F') {
+    return `${((temp * 9) / 5 + 32).toFixed(1)}°F`;
+  }
+  return `${temp.toFixed(1)}°C`;
+}
+
 export function formatNumber(num: number): string {
   return new Intl.NumberFormat('en-CA').format(num);
 }
