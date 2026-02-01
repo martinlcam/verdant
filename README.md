@@ -8,9 +8,9 @@ Cities are heating up. Urban areas experience temperatures 5-10°C higher than s
 
 ## Our Mission
 
-We believe every city deserves the tools to build a cooler, greener future. Verdant transforms complex satellite and sensor data into clear recommendations for where to plant trees, build parks, install green roofs, and implement cooling infrastructure.
+We believe every city deserves the tools to build a cooler, greener future. Verdant transforms complex satellite and sensor data into clear recommendations for where to plant trees, build parks, install green roofs, and implement cooling infrastructure. Verdant strives to help communities choose the best areas to build infrastructure to reduce environmental degradation and the effect of climate change.
 
-**The goal is simple: reduce urban temperatures, protect vulnerable populations, and make cities livable for generations to come.**
+**The goal is simple:** reduce urban temperatures, protect vulnerable populations, and make cities livable for generations to come.
 
 ## What Verdant Does
 
@@ -31,4 +31,8 @@ Open [http://localhost:3000](http://localhost:3000)
 ## Tech Stack
 
 Next.js 16 · React 19 · TailwindCSS · Leaflet · Recharts · Zustand
+
+
+
+
 
