@@ -48,8 +48,8 @@ export default function LandingPage() {
               </span>
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
-              Verdant empowers urban planners with real NASA satellite data
-              and AI-powered recommendations to build cooler, greener, more livable cities.
+              Verdant empowers urban planners with real NASA satellite data and AI-powered
+              recommendations to build cooler, greener, more livable cities.
             </p>
             <div className="mt-10 flex items-center justify-center gap-4">
               <Link

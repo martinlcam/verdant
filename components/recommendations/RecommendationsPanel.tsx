@@ -14,7 +14,6 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { generateRecommendations } from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
-import { formatArea, formatTemperature, formatTemperatureDifference } from '@/lib/utils';
 import type { GreenInfrastructureRecommendation } from '@/types';
 
 const typeIcons: Record<string, React.ReactNode> = {
@@ -37,7 +36,8 @@ const priorityColors: Record<string, string> = {
 };
 
 export function RecommendationsPanel() {
-  const { selectedCity, setSelectedRecommendation, selectedRecommendation, temperatureUnit } = useDashboardStore();
+  const { selectedCity, setSelectedRecommendation, selectedRecommendation, temperatureUnit } =
+    useDashboardStore();
 
   const recommendations = useMemo(() => {
     return generateRecommendations(selectedCity);
@@ -152,7 +152,8 @@ function RecommendationCard({ recommendation, isSelected, onSelect }: Recommenda
           </p>
           <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
             <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-              <Thermometer className="h-3 w-3" />{formatTemperatureDifference(-recommendation.estimatedCoolingEffect, temperatureUnit)}
+              <Thermometer className="h-3 w-3" />
+              {formatTemperatureDifference(-recommendation.estimatedCoolingEffect, temperatureUnit)}
             </span>
             <span className="text-gray-400">•</span>
             <span className="text-gray-600 dark:text-gray-400">
