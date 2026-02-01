@@ -53,12 +53,8 @@ export default function LandingPage() {
       {/* Header */}
       <header className="absolute top-0 left-0 right-0 h-[54px] bg-[#1f2b26] z-10">
         <div className="relative h-full flex items-center justify-between px-5">
-          <p className="font-alliance text-[24px] text-[#ecefe8] tracking-[-0.96px]">
-            verdant
-          </p>
-          <p className="font-alliance text-[24px] text-white tracking-[-3.6px]">
-            © 2026
-          </p>
+          <p className="font-alliance text-[24px] text-[#ecefe8] tracking-[-0.96px]">verdant</p>
+          <p className="font-alliance text-[24px] text-white tracking-[-3.6px]">© 2026</p>
         </div>
       </header>
 
