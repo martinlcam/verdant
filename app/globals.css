@@ -54,12 +54,7 @@ footer {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family:
-    var(--font-alliance),
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    sans-serif;
+  font-family: var(--font-alliance);
 }
 
 * {
@@ -198,11 +193,12 @@ body {
     radial-gradient(at 0% 50%, hsla(355, 85%, 63%, 0.05) 0px, transparent 50%);
 }
 
-/* Landing page typography */
+/* Landing page typography - Alliance No 2 */
 .font-alliance {
-  font-family: var(--font-alliance), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Alliance No 2', var(--font-alliance), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-.font-helvetica {
-  font-family: 'Helvetica', 'Arial', sans-serif;
+/* Alliance No 2 font - all text should use this */
+.font-alliance {
+  font-family: var(--font-alliance), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }

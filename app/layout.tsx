@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono, Inter } from 'next/font/google';
+import { Geist, Geist_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import { QueryProvider } from '@/components/providers/QueryProvider';
 import './globals.css';
 import 'leaflet/dist/leaflet.css';
@@ -15,10 +16,17 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-const alliance = Inter({
+// Alliance No 2 font
+const alliance = localFont({
+  src: [
+    {
+      path: '../public/fonts/Alliance No.2 Regular.otf',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
   variable: '--font-alliance',
-  subsets: ['latin'],
-  weight: ['400'],
+  fallback: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
   display: 'swap',
 });
 
