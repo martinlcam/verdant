@@ -1,43 +1,57 @@
 'use client';
 
-import { Flame, Leaf, ThermometerSun, TrendingUp, Users } from 'lucide-react';
-import { useMemo } from 'react';
+import { Flame, Leaf, Loader2, ThermometerSun, TrendingUp, Users } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { useHeatIslandComparison } from '@/hooks/useClimateData';
 import { generateCityStats } from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
 import { formatNumber, formatTemperature } from '@/lib/utils';
 
 export function StatsCards() {
   const { selectedCity, temperatureUnit } = useDashboardStore();
+  const { data: heatIslandData, isLoading } = useHeatIslandComparison(selectedCity);
 
-  const stats = useMemo(() => {
-    return generateCityStats(selectedCity);
-  }, [selectedCity]);
+  // Use NASA data for temperature stats, fallback to generated data for others
+  const mockStats = generateCityStats(selectedCity);
+
+  const stats = {
+    avgUrbanTemp: heatIslandData?.urbanAvg ?? mockStats.avgUrbanTemp,
+    avgRuralTemp: heatIslandData?.ruralAvg ?? mockStats.avgRuralTemp,
+    heatIslandIntensity: heatIslandData?.heatIslandIntensity ?? mockStats.heatIslandIntensity,
+    hotspotCount: mockStats.hotspotCount,
+    greenCoverage: mockStats.greenCoverage,
+    vulnerablePopulation: mockStats.vulnerablePopulation,
+  };
 
   const cards = [
     {
       title: 'Urban Temperature',
-      value: formatTemperature(stats.avgUrbanTemp, temperatureUnit),
+      value: isLoading ? null : formatTemperature(stats.avgUrbanTemp, temperatureUnit),
       icon: <ThermometerSun className="h-5 w-5" />,
       color: 'text-red-500',
       bgColor: 'bg-red-50 dark:bg-red-950',
-      description: 'Average urban area',
+      description: '30-day avg (NASA)',
+      isLoading,
     },
     {
       title: 'Rural Temperature',
-      value: formatTemperature(stats.avgRuralTemp, temperatureUnit),
+      value: isLoading ? null : formatTemperature(stats.avgRuralTemp, temperatureUnit),
       icon: <Leaf className="h-5 w-5" />,
       color: 'text-green-500',
       bgColor: 'bg-green-50 dark:bg-green-950',
-      description: 'Average rural area',
+      description: '30-day avg (NASA)',
+      isLoading,
     },
     {
       title: 'Heat Island Effect',
-      value: `+${formatTemperature(stats.heatIslandIntensity, temperatureUnit)}`,
+      value: isLoading
+        ? null
+        : `${stats.heatIslandIntensity >= 0 ? '+' : ''}${formatTemperature(stats.heatIslandIntensity, temperatureUnit)}`,
       icon: <TrendingUp className="h-5 w-5" />,
       color: 'text-orange-500',
       bgColor: 'bg-orange-50 dark:bg-orange-950',
-      description: 'Urban vs. rural difference',
+      description: 'Urban vs. rural diff',
+      isLoading,
     },
     {
       title: 'Hotspot Zones',
@@ -45,7 +59,8 @@ export function StatsCards() {
       icon: <Flame className="h-5 w-5" />,
       color: 'text-red-600',
       bgColor: 'bg-red-50 dark:bg-red-950',
-      description: 'High-risk areas identified',
+      description: 'High-risk areas',
+      isLoading: false,
     },
     {
       title: 'Green Coverage',
@@ -54,6 +69,7 @@ export function StatsCards() {
       color: 'text-emerald-500',
       bgColor: 'bg-emerald-50 dark:bg-emerald-950',
       description: 'Vegetation & parks',
+      isLoading: false,
     },
     {
       title: 'Vulnerable Population',
@@ -62,6 +78,7 @@ export function StatsCards() {
       color: 'text-purple-500',
       bgColor: 'bg-purple-50 dark:bg-purple-950',
       description: 'At-risk residents',
+      isLoading: false,
     },
   ];
 
@@ -74,7 +91,11 @@ export function StatsCards() {
               <div className="flex-1">
                 <p className="text-xs font-medium text-gray-500 dark:text-gray-400">{card.title}</p>
                 <p className="mt-1 text-2xl font-bold text-gray-900 dark:text-white">
-                  {card.value}
+                  {card.isLoading ? (
+                    <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
+                  ) : (
+                    card.value
+                  )}
                 </p>
                 <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">{card.description}</p>
               </div>

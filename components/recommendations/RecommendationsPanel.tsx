@@ -2,8 +2,8 @@
 
 import {
   Building2,
-  DollarSign,
   Droplets,
+  Ruler,
   Square,
   Thermometer,
   TreeDeciduous,
@@ -14,7 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { generateRecommendations } from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
-import { formatArea, formatCurrency } from '@/lib/utils';
+import { formatArea } from '@/lib/utils';
 import type { GreenInfrastructureRecommendation } from '@/types';
 
 const typeIcons: Record<string, React.ReactNode> = {
@@ -43,15 +43,19 @@ export function RecommendationsPanel() {
     return generateRecommendations(selectedCity);
   }, [selectedCity]);
 
-  const totalCost = useMemo(() => {
-    return recommendations.reduce((sum, rec) => sum + rec.estimatedCost, 0);
-  }, [recommendations]);
-
   const totalCooling = useMemo(() => {
     return (
       recommendations.reduce((sum, rec) => sum + rec.estimatedCoolingEffect, 0) /
       recommendations.length
     );
+  }, [recommendations]);
+
+  const totalArea = useMemo(() => {
+    return recommendations.reduce((sum, rec) => sum + rec.area, 0);
+  }, [recommendations]);
+
+  const criticalCount = useMemo(() => {
+    return recommendations.filter((r) => r.priority === 'critical' || r.priority === 'high').length;
   }, [recommendations]);
 
   return (
@@ -60,32 +64,41 @@ export function RecommendationsPanel() {
         <CardTitle className="flex items-center justify-between text-base font-semibold">
           <span className="flex items-center gap-2">
             <TreeDeciduous className="h-4 w-4 text-emerald-500" />
-            Green Infrastructure Recommendations
+            Green Infrastructure
           </span>
           <Badge variant="default" className="text-xs">
-            {recommendations.length} projects
+            {recommendations.length} sites
           </Badge>
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
         {/* Summary Stats */}
-        <div className="mb-4 grid grid-cols-2 gap-3">
-          <div className="rounded-lg bg-emerald-50 p-3 dark:bg-emerald-950">
-            <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
-              <DollarSign className="h-4 w-4" />
-              <span className="text-xs font-medium">Total Investment</span>
+        <div className="mb-4 grid grid-cols-3 gap-2">
+          <div className="rounded-lg bg-blue-50 p-2.5 dark:bg-blue-950">
+            <div className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400">
+              <Thermometer className="h-3.5 w-3.5" />
+              <span className="text-[10px] font-medium">Avg Cooling</span>
             </div>
-            <p className="mt-1 text-lg font-bold text-emerald-700 dark:text-emerald-300">
-              {formatCurrency(totalCost)}
+            <p className="mt-0.5 text-base font-bold text-blue-700 dark:text-blue-300">
+              -{totalCooling.toFixed(1)}°C
             </p>
           </div>
-          <div className="rounded-lg bg-blue-50 p-3 dark:bg-blue-950">
-            <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
-              <Thermometer className="h-4 w-4" />
-              <span className="text-xs font-medium">Avg. Cooling</span>
+          <div className="rounded-lg bg-emerald-50 p-2.5 dark:bg-emerald-950">
+            <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+              <Ruler className="h-3.5 w-3.5" />
+              <span className="text-[10px] font-medium">Total Area</span>
             </div>
-            <p className="mt-1 text-lg font-bold text-blue-700 dark:text-blue-300">
-              -{totalCooling.toFixed(1)}°C
+            <p className="mt-0.5 text-base font-bold text-emerald-700 dark:text-emerald-300">
+              {formatArea(totalArea)}
+            </p>
+          </div>
+          <div className="rounded-lg bg-red-50 p-2.5 dark:bg-red-950">
+            <div className="flex items-center gap-1.5 text-red-600 dark:text-red-400">
+              <TreeDeciduous className="h-3.5 w-3.5" />
+              <span className="text-[10px] font-medium">Priority</span>
+            </div>
+            <p className="mt-0.5 text-base font-bold text-red-700 dark:text-red-300">
+              {criticalCount} urgent
             </p>
           </div>
         </div>
@@ -143,11 +156,11 @@ function RecommendationCard({ recommendation, isSelected, onSelect }: Recommenda
             </span>
             <span className="text-gray-400">•</span>
             <span className="text-gray-600 dark:text-gray-400">
-              {formatCurrency(recommendation.estimatedCost)}
+              {formatArea(recommendation.area)}
             </span>
             <span className="text-gray-400">•</span>
-            <span className="text-gray-600 dark:text-gray-400">
-              {formatArea(recommendation.area)}
+            <span className="text-gray-600 dark:text-gray-400 capitalize">
+              {recommendation.type.replace('_', ' ')}
             </span>
           </div>
         </div>

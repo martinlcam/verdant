@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { Loader2 } from 'lucide-react';
 import {
   Area,
   AreaChart,
@@ -12,37 +12,77 @@ import {
   YAxis,
 } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { generateTemperatureHistory } from '@/lib/data';
+import { useHeatIslandComparison } from '@/hooks/useClimateData';
 import { useDashboardStore } from '@/lib/store';
 
 export function TemperatureChart() {
   const { selectedCity, temperatureUnit } = useDashboardStore();
+  const { data: heatIslandData, isLoading, error } = useHeatIslandComparison(selectedCity);
 
-  const data = useMemo(() => {
-    const history = generateTemperatureHistory(selectedCity, 12);
-    return history.map((record) => ({
-      ...record,
-      urban: temperatureUnit === 'F' ? (record.urban * 9) / 5 + 32 : record.urban,
-      rural: temperatureUnit === 'F' ? (record.rural * 9) / 5 + 32 : record.rural,
-      differential: temperatureUnit === 'F' ? (record.differential * 9) / 5 : record.differential,
-    }));
-  }, [selectedCity, temperatureUnit]);
+  const chartData =
+    heatIslandData?.comparison.map((record) => ({
+      date: record.date,
+      urban:
+        temperatureUnit === 'F' ? (record.urban * 9) / 5 + 32 : Math.round(record.urban * 10) / 10,
+      rural:
+        temperatureUnit === 'F' ? (record.rural * 9) / 5 + 32 : Math.round(record.rural * 10) / 10,
+    })) || [];
 
-  const formatMonth = (dateStr: string) => {
-    const [year, month] = dateStr.split('-');
-    const date = new Date(parseInt(year, 10), parseInt(month, 10) - 1);
-    return date.toLocaleDateString('en-US', { month: 'short' });
+  const formatDate = (dateStr: string) => {
+    // NASA date format: YYYYMMDD
+    if (dateStr.length === 8) {
+      const month = parseInt(dateStr.slice(4, 6), 10);
+      const day = parseInt(dateStr.slice(6, 8), 10);
+      return `${month}/${day}`;
+    }
+    return dateStr;
   };
+
+  if (isLoading) {
+    return (
+      <Card className="h-full">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base font-semibold">
+            Temperature Trends (NASA POWER Data)
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex h-[240px] items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-emerald-500" />
+            <span className="ml-2 text-sm text-gray-500">Loading NASA data...</span>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (error) {
+    return (
+      <Card className="h-full">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base font-semibold">Temperature Trends</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex h-[240px] items-center justify-center text-sm text-gray-500">
+            Unable to load NASA data. Please try again later.
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className="h-full">
       <CardHeader className="pb-2">
-        <CardTitle className="text-base font-semibold">Temperature Trends (12 Months)</CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-base font-semibold">Temperature Trends (30 Days)</CardTitle>
+          <span className="text-xs text-gray-400">Source: NASA POWER</span>
+        </div>
       </CardHeader>
       <CardContent>
         <div className="h-[240px]">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="urbanGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3} />
@@ -56,9 +96,10 @@ export function TemperatureChart() {
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
               <XAxis
                 dataKey="date"
-                tickFormatter={formatMonth}
-                tick={{ fontSize: 11 }}
+                tickFormatter={formatDate}
+                tick={{ fontSize: 10 }}
                 stroke="#9ca3af"
+                interval="preserveStartEnd"
               />
               <YAxis
                 tick={{ fontSize: 11 }}
@@ -74,14 +115,18 @@ export function TemperatureChart() {
                 }}
                 formatter={(value, name) => [
                   `${Number(value).toFixed(1)}°${temperatureUnit}`,
-                  name === 'urban' ? 'Urban' : name === 'rural' ? 'Rural' : 'Difference',
+                  name === 'urban' ? 'Urban Center' : 'Rural Reference',
                 ]}
-                labelFormatter={(label) => formatMonth(label as string)}
+                labelFormatter={(label) => `Date: ${formatDate(label as string)}`}
               />
               <Legend
                 verticalAlign="top"
                 height={36}
-                formatter={(value) => <span className="text-xs capitalize">{value}</span>}
+                formatter={(value) => (
+                  <span className="text-xs capitalize">
+                    {value === 'urban' ? 'Urban Center' : 'Rural Reference'}
+                  </span>
+                )}
               />
               <Area
                 type="monotone"
