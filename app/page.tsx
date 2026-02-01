@@ -1,226 +1,286 @@
-import {
-  ArrowRight,
-  BarChart3,
-  Leaf,
-  Map,
-  Thermometer,
-  TreeDeciduous,
-  TrendingDown,
-  Users,
-} from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-gray-200/50 bg-white/80 backdrop-blur-md dark:border-gray-800/50 dark:bg-gray-950/80">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600">
-              <Thermometer className="h-5 w-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-gray-900 dark:text-white">Verdant</span>
-          </div>
-          <Link
-            href="/dashboard"
-            className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition-all hover:bg-emerald-700 hover:shadow-emerald-500/40"
-          >
-            Try Now
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-32">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 h-[600px] w-[600px] rounded-full bg-emerald-500/10 blur-3xl" />
-          <div className="absolute top-40 left-1/4 h-[400px] w-[400px] rounded-full bg-teal-500/10 blur-3xl" />
-        </div>
-
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-white">
-              Fighting Urban Heat Islands with{' '}
-              <span className="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
-                Data-Driven Intelligence
-              </span>
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
-              Verdant empowers urban planners with real NASA satellite data and AI-powered
-              recommendations to build cooler, greener, more livable cities.
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-4">
-              <Link
-                href="/dashboard"
-                className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-emerald-500/25 transition-all hover:bg-emerald-700 hover:shadow-emerald-500/40"
-              >
-                Explore Dashboard
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-              <a
-                href="#features"
-                className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-8 py-4 text-base font-semibold text-gray-700 transition-all hover:border-gray-400 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
-              >
-                Learn More
-              </a>
-            </div>
-          </div>
-
-          {/* Dashboard Preview */}
-          <div className="mt-16 sm:mt-24">
-            <div className="relative mx-auto max-w-5xl">
-              <div className="absolute -inset-4 rounded-2xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 blur-2xl" />
-              <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl dark:border-gray-800 dark:bg-gray-900">
-                <div className="flex h-8 items-center gap-2 border-b border-gray-200 bg-gray-50 px-4 dark:border-gray-800 dark:bg-gray-900">
-                  <div className="h-3 w-3 rounded-full bg-red-400" />
-                  <div className="h-3 w-3 rounded-full bg-yellow-400" />
-                  <div className="h-3 w-3 rounded-full bg-green-400" />
-                </div>
-                <div className="aspect-[16/9] bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-900">
-                  <div className="flex h-full items-center justify-center">
-                    <div className="text-center">
-                      <Map className="mx-auto h-16 w-16 text-emerald-500/50" />
-                      <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-                        Interactive Heat Map Dashboard
-                      </p>
-                    </div>
-                  </div>
-                </div>
+    <div className="relative min-h-screen bg-[#ecefe8] overflow-x-clip">
+      {/* Background Map Layer */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute left-[-666px] right-[-664px] top-[54px] flex items-center justify-center h-[3089px]">
+          <div className="flex-none w-[3079px] h-[1993px] -rotate-90">
+            <div className="relative w-full h-full bg-[#f5f5f5] overflow-clip">
+              <div className="absolute top-[120px] left-0 w-full h-[1854px] relative">
+                <Image
+                  src="/images/landing/parks.png"
+                  alt=""
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+              </div>
+              <div className="absolute top-0 left-0 w-full h-full relative">
+                <Image
+                  src="/images/landing/water.png"
+                  alt=""
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+              </div>
+              <div className="absolute top-0 left-0 w-full h-full relative">
+                <Image
+                  src="/images/landing/secondary-roads.png"
+                  alt=""
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+              </div>
+              <div className="absolute top-0 left-0 w-full h-full relative">
+                <Image
+                  src="/images/landing/main-roads.png"
+                  alt=""
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Stats Section */}
-      <section className="border-y border-gray-200 bg-white py-16 dark:border-gray-800 dark:bg-gray-950">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-            <div className="text-center">
-              <p className="text-4xl font-bold text-emerald-600">10+</p>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Canadian Cities</p>
-            </div>
-            <div className="text-center">
-              <p className="text-4xl font-bold text-emerald-600">NASA</p>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Satellite Data</p>
-            </div>
-            <div className="text-center">
-              <p className="text-4xl font-bold text-emerald-600">5-10°C</p>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Heat Reduction</p>
-            </div>
-            <div className="text-center">
-              <p className="text-4xl font-bold text-emerald-600">Real-time</p>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Climate Analysis</p>
-            </div>
+      {/* Header */}
+      <header className="absolute top-0 left-0 right-0 h-[54px] bg-[#1f2b26] z-10">
+        <div className="relative h-full flex items-center justify-between px-5">
+          <p className="font-alliance text-[24px] text-[#ecefe8] tracking-[-0.96px]">
+            verdant
+          </p>
+          <p className="font-alliance text-[24px] text-white tracking-[-3.6px]">
+            © 2026
+          </p>
+        </div>
+      </header>
+
+      {/* Logo */}
+      <div className="absolute left-[34px] top-[90px] w-[153px] h-[153px] z-20">
+        <img
+          src="/images/landing/logo-vector.svg"
+          alt="Verdant Logo"
+          className="w-full h-full object-contain"
+        />
+      </div>
+
+      {/* Hero Section */}
+      <section className="relative pt-[295px] pb-[300px]">
+        {/* Decorative Green Blobs */}
+        <div className="absolute right-[-13px] top-[167px] w-[603px] h-[603px] z-0">
+          <img
+            src="/images/landing/dark-green-1.svg"
+            alt=""
+            className="w-full h-full object-contain"
+          />
+        </div>
+        <div className="absolute right-[54px] top-[245px] w-[469px] h-[471px] z-0">
+          <img
+            src="/images/landing/dark-green-5.svg"
+            alt=""
+            className="w-full h-full object-contain"
+          />
+        </div>
+        <div className="absolute right-[65.71px] top-[262.46px] w-[432.829px] h-[432.829px] flex items-center justify-center z-0">
+          <div className="rotate-[-15.69deg]">
+            <img
+              src="/images/landing/dark-green-6.svg"
+              alt=""
+              className="w-[351px] h-[351px] object-contain"
+            />
+          </div>
+        </div>
+        <div className="absolute right-[121.95px] top-[315px] w-[320.053px] h-[325.011px] flex items-center justify-center z-0">
+          <div className="rotate-[24.77deg]">
+            <img
+              src="/images/landing/dark-green-7.svg"
+              alt=""
+              className="w-[237.989px] h-[248.127px] object-contain"
+            />
+          </div>
+        </div>
+        <div className="absolute right-[164.75px] top-[360.83px] w-[229.754px] h-[230.42px] flex items-center justify-center z-0">
+          <div className="rotate-[-138.97deg]">
+            <img
+              src="/images/landing/dark-green-9.svg"
+              alt=""
+              className="w-[159.687px] h-[166.489px] object-contain"
+            />
+          </div>
+        </div>
+
+        {/* Hero Text */}
+        <div className="relative z-10 px-[57px]">
+          <h1 className="font-alliance text-[128px] leading-[1.2] text-[#1f2b26] tracking-[-5.12px] w-[1136px]">
+            <p className="mb-0">the new</p>
+            <p className="mb-0 text-[#010103]">blueprint</p>
+            <p className="mb-0">for a climate</p>
+            <p>resilient city.</p>
+          </h1>
+
+          {/* Get Started CTA */}
+          <div className="mt-[86px] relative">
+            <div className="absolute left-[16px] w-[489px] h-[86px] bg-[#c0ffbd]" />
+            <Link
+              href="/dashboard"
+              className="relative z-10 font-alliance text-[128px] leading-[1.2] text-[#1f2b26] tracking-[-5.12px] inline-block hover:opacity-80 transition-opacity"
+            >
+              get started. →
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-white">
-              Everything you need to combat urban heat
-            </h2>
-            <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
-              Powered by real satellite data and designed for actionable insights
+      {/* Definition Section */}
+      <section className="relative pb-[200px]">
+        {/* Decorative Blob */}
+        <div className="absolute left-[64px] top-[1280px] w-[437px] h-[437px] z-0">
+          <img
+            src="/images/landing/dark-green-10.svg"
+            alt=""
+            className="w-full h-full object-contain"
+          />
+        </div>
+        <div className="absolute left-[113.67px] top-[1335.88px] w-[338.987px] h-[324.087px] z-0">
+          <img
+            src="/images/landing/dark-green-11.svg"
+            alt=""
+            className="w-full h-full object-contain"
+          />
+        </div>
+        <div className="absolute left-[145.95px] top-[1365.68px] w-[264.632px] h-[264.632px] flex items-center justify-center z-0">
+          <div className="rotate-[4.31deg]">
+            <img
+              src="/images/landing/dark-green-12.svg"
+              alt=""
+              className="w-[246.795px] h-[246.795px] object-contain"
+            />
+          </div>
+        </div>
+
+        {/* Definition Content */}
+        <div className="relative z-10 px-[57px]">
+          <div className="flex items-start gap-4 mb-4">
+            <p className="font-alliance text-[128px] leading-[1.2] text-[#1f2b26] tracking-[-5.12px]">
+              verdant
+            </p>
+            <span className="font-helvetica text-[24px] text-[#1f2b26] tracking-[-0.96px] mt-[85px]">
+              (1)
+            </span>
+          </div>
+          <p className="font-alliance text-[36px] leading-[0] text-[#1f2b26] tracking-[-1.44px] mb-8">
+            <span className="leading-normal">/ˈvərd</span>
+            <span className="font-helvetica leading-normal">(ə)</span>
+            <span className="leading-normal">{`nt/ `}</span>
+            <span className="leading-normal">{`   · `}</span>
+            <span className="leading-normal">{`  `}</span>
+            <span className="leading-normal">{` `}</span>
+            <span className="leading-normal">adjective</span>
+          </p>
+          <div className="max-w-[606px] ml-auto text-right">
+            <p className="font-alliance text-[24px] leading-[1.755] text-black tracking-[-0.96px]">
+              The strategic integration of lush, living vegetation into urban landscapes to create
+              biological cooling systems. In climate resilience, being &quot;verdant&quot; is the
+              measurable transition from heat-absorbing grey infrastructure (asphalt and concrete)
+              to heat-mitigating green infrastructure (canopy cover and carbon-sequestering
+              parklands).
             </p>
           </div>
+        </div>
+      </section>
 
-          <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <FeatureCard
-              icon={<Map className="h-6 w-6" />}
-              title="Interactive Heat Maps"
-              description="Visualize urban heat patterns with real NASA POWER satellite temperature data overlaid on city maps."
-            />
-            <FeatureCard
-              icon={<BarChart3 className="h-6 w-6" />}
-              title="Climate Analytics"
-              description="Track temperature trends, compare urban vs rural temperatures, and measure heat island intensity."
-            />
-            <FeatureCard
-              icon={<TreeDeciduous className="h-6 w-6" />}
-              title="Green Infrastructure"
-              description="Get AI-powered recommendations for parks, green roofs, tree planting, and cool pavements."
-            />
-            <FeatureCard
-              icon={<TrendingDown className="h-6 w-6" />}
-              title="Impact Projections"
-              description="Estimate temperature reduction from proposed green infrastructure interventions."
-            />
-            <FeatureCard
-              icon={<Users className="h-6 w-6" />}
-              title="Vulnerability Mapping"
-              description="Identify communities most at risk from extreme heat and prioritize interventions."
-            />
-            <FeatureCard
-              icon={<Leaf className="h-6 w-6" />}
-              title="Green Coverage"
-              description="Monitor vegetation levels and track progress toward urban cooling goals."
-            />
+      {/* Gallery Section */}
+      <section className="relative pb-[200px]">
+        <div className="px-[57px]">
+          <div className="flex items-start gap-4 mb-8">
+            <p className="font-alliance text-[128px] leading-[1.2] text-[#1f2b26] tracking-[-5.12px]">
+              gallery
+            </p>
+            <span className="font-helvetica text-[24px] text-[#1f2b26] tracking-[-0.96px] mt-[85px]">
+              (2)
+            </span>
           </div>
+        </div>
+
+        {/* Dashboard Image */}
+        <div className="relative w-[1141px] h-[412px] rounded-[25px] overflow-hidden mb-4 mx-auto">
+          <Image
+            src="/images/landing/image1.png"
+            alt="Verdant Dashboard - Vancouver"
+            fill
+            className="object-cover"
+            unoptimized
+          />
+        </div>
+
+        {/* Caption */}
+        <div className="px-[57px] max-w-[1101px]">
+          <p className="font-alliance text-[24px] leading-[1.755] text-black tracking-[-0.96px] mb-2">
+            verdant DASHBOARD / VANCOUVER →
+          </p>
+          <p className="font-alliance text-[24px] leading-[1.755] text-black tracking-[-0.96px]">
+            A visual showcase of urban heatmaps in the Greater Vancouver area.
+          </p>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-emerald-600 to-teal-600 py-20">
-        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Ready to build a cooler city?
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-emerald-100">
-            Start exploring urban heat patterns and discover green infrastructure opportunities in
-            your city today.
-          </p>
-          <Link
-            href="/dashboard"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-base font-semibold text-emerald-600 shadow-lg transition-all hover:bg-gray-50"
-          >
-            Launch Dashboard
-            <ArrowRight className="h-5 w-5" />
-          </Link>
+      <section className="relative pb-[200px]">
+        <div className="relative px-[80px]">
+          <div className="absolute right-[0px] w-[708px] h-[52px] bg-[#c0ffbd]" />
+          <div className="flex items-start gap-4 relative z-10">
+            <span className="font-helvetica text-[24px] text-[#1f2b26] tracking-[-0.96px] mt-[85px]">
+              (3)
+            </span>
+            <p className="font-alliance text-[64px] leading-[0.97] text-black text-right tracking-[-2.56px] max-w-[749px] ml-auto">
+              Start your journey toward a more verdant city today. ↗
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200 bg-white py-12 dark:border-gray-800 dark:bg-gray-950">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600">
-                <Thermometer className="h-4 w-4 text-white" />
-              </div>
-              <span className="font-semibold text-gray-900 dark:text-white">Verdant</span>
+      <footer className="relative bg-[#1f2b26] h-[179px] px-[25px] py-[15px]">
+        <div className="relative h-full">
+          {/* Logo and Brand */}
+          <div className="absolute bottom-[37px] left-[25px] flex items-center gap-[11px]">
+            <img
+              src="/images/landing/light-green-logo.svg"
+              alt="Verdant Logo"
+              className="w-[105px] h-[105px] object-contain"
+            />
+            <p className="font-alliance text-[128px] leading-[1.2] text-[#91b1a2] tracking-[-5.12px]">
+              verdant
+            </p>
+            <p className="font-alliance text-[32px] leading-normal text-[#91b1a2] opacity-33 tracking-[-4.8px] ml-4">
+              © 2026
+            </p>
+          </div>
+
+          {/* Right Side Content */}
+          <div className="absolute right-[15px] top-[23px] text-right">
+            <p className="font-alliance text-[15px] leading-normal text-[#cfcfcf] mb-8">
+              Github Repository
+            </p>
+            <div className="font-alliance text-[15px] leading-normal text-[#545454] mb-2">
+              <p className="mb-0">Owen Skippen</p>
+              <p className="mb-0">Martin Cam</p>
+              <p className="mb-0">Krrish Kapoor</p>
+              <p>Johnny Ho</p>
             </div>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Data sourced from NASA POWER and NOAA. Open source climate resilience tools.
+            <p className="font-alliance text-[15px] leading-normal text-[#545454] mt-4">
+              Powered by Google LLC. ©
             </p>
           </div>
         </div>
       </footer>
-    </div>
-  );
-}
-
-function FeatureCard({
-  icon,
-  title,
-  description,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}) {
-  return (
-    <div className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-8 transition-all hover:border-emerald-300 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:border-emerald-800">
-      <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400">
-        {icon}
-      </div>
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h3>
-      <p className="mt-2 text-gray-600 dark:text-gray-400">{description}</p>
     </div>
   );
 }
