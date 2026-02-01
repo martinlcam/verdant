@@ -14,7 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { generateRecommendations } from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
-import { formatArea } from '@/lib/utils';
+import { formatArea, formatTemperature } from '@/lib/utils';
 import type { GreenInfrastructureRecommendation } from '@/types';
 
 const typeIcons: Record<string, React.ReactNode> = {
@@ -37,7 +37,7 @@ const priorityColors: Record<string, string> = {
 };
 
 export function RecommendationsPanel() {
-  const { selectedCity, setSelectedRecommendation, selectedRecommendation } = useDashboardStore();
+  const { selectedCity, setSelectedRecommendation, selectedRecommendation, temperatureUnit } = useDashboardStore();
 
   const recommendations = useMemo(() => {
     return generateRecommendations(selectedCity);
@@ -80,7 +80,7 @@ export function RecommendationsPanel() {
               <span className="text-[10px] font-medium">Avg Cooling</span>
             </div>
             <p className="mt-0.5 text-base font-bold text-blue-700 dark:text-blue-300">
-              -{totalCooling.toFixed(1)}°C
+              -{formatTemperature(totalCooling, temperatureUnit)}
             </p>
           </div>
           <div className="rounded-lg bg-emerald-50 p-2.5 dark:bg-emerald-950">
@@ -126,6 +126,7 @@ interface RecommendationCardProps {
 }
 
 function RecommendationCard({ recommendation, isSelected, onSelect }: RecommendationCardProps) {
+  const { temperatureUnit } = useDashboardStore();
   return (
     <button
       type="button"
@@ -151,8 +152,7 @@ function RecommendationCard({ recommendation, isSelected, onSelect }: Recommenda
           </p>
           <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
             <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-              <Thermometer className="h-3 w-3" />-{recommendation.estimatedCoolingEffect.toFixed(1)}
-              °C
+              <Thermometer className="h-3 w-3" />-{formatTemperature(recommendation.estimatedCoolingEffect, temperatureUnit)}
             </span>
             <span className="text-gray-400">•</span>
             <span className="text-gray-600 dark:text-gray-400">
