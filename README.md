@@ -1,8 +1,4 @@
-# Verdant
-
-[**Website:**](verdant-delta-ashen.vercel.app) 
-
-# Description 
+# [Verdant](verdant-delta-ashen.vercel.app) 
 
 **Fighting urban heat islands through data-driven green infrastructure planning.**
 
