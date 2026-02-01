@@ -76,8 +76,8 @@ export function TemperatureChart() {
                   borderRadius: '8px',
                   fontSize: '12px',
                 }}
-                formatter={(value: number, name: string) => [
-                  `${value.toFixed(1)}°${temperatureUnit}`,
+                formatter={(value, name) => [
+                  `${Number(value).toFixed(1)}°${temperatureUnit}`,
                   name === 'urban' ? 'Urban' : name === 'rural' ? 'Rural' : 'Difference',
                 ]}
                 labelFormatter={(label) => formatMonth(label as string)}

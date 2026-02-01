@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useDashboardStore } from '@/lib/store';
 import { generateHeatMapData, generateHeatZones, generateRecommendations } from '@/lib/data';
@@ -32,38 +32,6 @@ const Popup = dynamic(
   () => import('react-leaflet').then((mod) => mod.Popup),
   { ssr: false }
 );
-const useMap = dynamic(
-  () => import('react-leaflet').then((mod) => ({ default: () => mod.useMap() })),
-  { ssr: false }
-);
-
-// Component to handle map center updates
-function MapController({ center, zoom }: { center: [number, number]; zoom: number }) {
-  const MapUpdater = () => {
-    const [mapModule, setMapModule] = useState<{ useMap: () => L.Map } | null>(null);
-    
-    useEffect(() => {
-      import('react-leaflet').then((mod) => {
-        setMapModule({ useMap: mod.useMap });
-      });
-    }, []);
-
-    useEffect(() => {
-      if (mapModule) {
-        try {
-          const map = mapModule.useMap();
-          map.setView(center, zoom);
-        } catch {
-          // Map not ready yet
-        }
-      }
-    }, [center, zoom, mapModule]);
-
-    return null;
-  };
-
-  return null;
-}
 
 export function HeatMap() {
   const { selectedCity, activeLayers, setSelectedHeatZone, setSelectedRecommendation, mapZoom } = useDashboardStore();

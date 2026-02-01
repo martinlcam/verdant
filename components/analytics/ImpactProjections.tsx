@@ -80,7 +80,7 @@ export function ImpactProjections() {
                   borderRadius: '8px',
                   fontSize: '12px',
                 }}
-                formatter={(value: number) => [`-${value}°C`, 'Cooling Effect']}
+                formatter={(value) => [`-${value}°C`, 'Cooling Effect']}
               />
               <Bar dataKey="cooling" radius={[0, 4, 4, 0]}>
                 {data.map((_, index) => (
