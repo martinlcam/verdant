@@ -9,8 +9,9 @@ import {
   generateSensorLocations,
   generateVegetationAreas,
 } from '@/lib/data';
+import { useNASAHeatGrid } from '@/hooks/useClimateData';
 import { useDashboardStore } from '@/lib/store';
-import { getInfrastructureIcon, getPriorityColor } from '@/lib/utils';
+import { getHeatSeverityColor, getInfrastructureIcon, getPriorityColor } from '@/lib/utils';
 
 // Dynamic import for Leaflet components (client-side only)
 const MapContainer = dynamic(() => import('react-leaflet').then((mod) => mod.MapContainer), {
@@ -32,13 +33,24 @@ const CircleMarker = dynamic(() => import('react-leaflet').then((mod) => mod.Cir
 });
 const Polygon = dynamic(() => import('react-leaflet').then((mod) => mod.Polygon), { ssr: false });
 const Popup = dynamic(() => import('react-leaflet').then((mod) => mod.Popup), { ssr: false });
-const Marker = dynamic(() => import('react-leaflet').then((mod) => mod.Marker), { ssr: false });
 
 export function HeatMap() {
-  const { selectedCity, activeLayers, setSelectedHeatZone, setSelectedRecommendation, mapZoom } =
-    useDashboardStore();
+  const {
+    selectedCity,
+    selectedDate,
+    activeLayers,
+    setSelectedHeatZone,
+    setSelectedRecommendation,
+    mapZoom,
+  } = useDashboardStore();
   const [isMounted, setIsMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const { data: nasaHeatGridData } = useNASAHeatGrid(
+    selectedCity,
+    selectedDate,
+    5,
+  );
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -92,8 +104,30 @@ export function HeatMap() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/* Heat Zones Polygons */}
+        {/* Heat layer: NASA POWER grid (real data) when available, else simulated zones */}
         {activeLayers.includes('heat') &&
+          nasaHeatGridData?.map((point) => (
+            <CircleMarker
+              key={`nasa-${point.lat}-${point.lng}`}
+              center={[point.lat, point.lng]}
+              radius={12}
+              pathOptions={{
+                fillColor: getHeatSeverityColor(point.temperature),
+                fillOpacity: 0.7,
+                color: getHeatSeverityColor(point.temperature),
+                weight: 2,
+              }}
+            >
+              <Popup>
+                <div className="text-sm">
+                  <p className="font-semibold text-base mb-1">NASA POWER</p>
+                  <p>Temp: {point.temperature.toFixed(1)}°C</p>
+                  <p className="text-xs text-gray-500">{selectedDate.toLocaleDateString()}</p>
+                </div>
+              </Popup>
+            </CircleMarker>
+          ))}
+        {activeLayers.includes('heat') && !nasaHeatGridData &&
           heatZones.map((zone) => (
             <Polygon
               key={zone.id}

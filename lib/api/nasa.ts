@@ -138,3 +138,60 @@ export function formatNASADate(date: Date): string {
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}${month}${day}`;
 }
+
+/**
+ * Point in a heat grid with temperature from NASA POWER
+ */
+export interface NASAHeatGridPoint {
+  lat: number;
+  lng: number;
+  temperature: number;
+  maxTemperature: number;
+  minTemperature: number;
+}
+
+/**
+ * Fetch temperature for a grid of points around a center (for heatmap).
+ * Uses NASA POWER daily API; one request per point. Grid size 3x3 = 9 requests, 5x5 = 25.
+ */
+export async function fetchNASAHeatGrid(
+  centerLat: number,
+  centerLng: number,
+  dateStr: string,
+  gridSize: number = 5,
+): Promise<NASAHeatGridPoint[]> {
+  const spread = 0.04; // ~4km per degree at mid-latitudes; grid spans ~spread * (gridSize-1) degrees
+  const half = (gridSize - 1) / 2;
+  const points: { lat: number; lng: number }[] = [];
+
+  for (let i = 0; i < gridSize; i++) {
+    for (let j = 0; j < gridSize; j++) {
+      const lat = centerLat + (i - half) * (spread / half);
+      const lng = centerLng + (j - half) * (spread / half) * 1.2;
+      points.push({ lat, lng });
+    }
+  }
+
+  const results = await Promise.all(
+    points.map(async (p) => {
+      try {
+        const data = await fetchNASATemperatureData(p.lat, p.lng, dateStr, dateStr);
+        const day = data[0];
+        const temp = day?.temperature ?? 20;
+        const maxT = day?.maxTemperature ?? day?.temperature ?? temp;
+        const minT = day?.minTemperature ?? day?.temperature ?? temp;
+        return {
+          lat: p.lat,
+          lng: p.lng,
+          temperature: temp !== -999 ? temp : 20,
+          maxTemperature: maxT !== -999 ? maxT : temp,
+          minTemperature: minT !== -999 ? minT : temp,
+        };
+      } catch {
+        return { lat: p.lat, lng: p.lng, temperature: 20, maxTemperature: 22, minTemperature: 18 };
+      }
+    }),
+  );
+
+  return results;
+}

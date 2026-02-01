@@ -1,8 +1,14 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { fetchNASAMonthlyData, fetchNASATemperatureData, formatNASADate } from '@/lib/api/nasa';
+import {
+  fetchNASAHeatGrid,
+  fetchNASAMonthlyData,
+  fetchNASATemperatureData,
+  formatNASADate,
+} from '@/lib/api/nasa';
 import type { City } from '@/types';
+import type { HeatDataPoint } from '@/types';
 
 /**
  * Hook to fetch daily temperature data from NASA POWER API
@@ -98,6 +104,39 @@ export function useHeatIslandComparison(city: City) {
         heatIslandIntensity: Math.round(heatIslandIntensity * 10) / 10,
         comparison,
       };
+    },
+    staleTime: 1000 * 60 * 60, // 1 hour
+    retry: 2,
+  });
+}
+
+/**
+ * Hook to fetch NASA POWER temperature grid for the heatmap (grid of points around city center).
+ * Returns HeatDataPoint[] for use with the map heat layer.
+ */
+export function useNASAHeatGrid(city: City, date: Date, gridSize: number = 5) {
+  const dateStr = formatNASADate(date);
+
+  return useQuery({
+    queryKey: ['nasa-heat-grid', city.id, dateStr, gridSize],
+    queryFn: async () => {
+      const grid = await fetchNASAHeatGrid(
+        city.coordinates[0],
+        city.coordinates[1],
+        dateStr,
+        gridSize,
+      );
+      return grid.map(
+        (p): HeatDataPoint => ({
+          lat: p.lat,
+          lng: p.lng,
+          temperature: Math.round(p.temperature * 10) / 10,
+          surfaceTemperature: Math.round((p.temperature + 2) * 10) / 10,
+          ndvi: 0.3,
+          albedo: 0.2,
+          landUse: 'residential',
+        }),
+      );
     },
     staleTime: 1000 * 60 * 60, // 1 hour
     retry: 2,
