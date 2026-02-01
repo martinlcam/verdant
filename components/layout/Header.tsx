@@ -14,15 +14,15 @@ import { CANADIAN_CITIES } from '@/lib/data';
 import { useState } from 'react';
 
 export function Header() {
-  const { 
-    selectedCity, 
-    setSelectedCity, 
-    sidebarOpen, 
+  const {
+    selectedCity,
+    setSelectedCity,
+    sidebarOpen,
     setSidebarOpen,
     temperatureUnit,
-    setTemperatureUnit
+    setTemperatureUnit,
   } = useDashboardStore();
-  
+
   const [isDark, setIsDark] = useState(false);
 
   const handleCityChange = (cityId: string) => {
@@ -48,7 +48,7 @@ export function Header() {
         >
           <Menu className="h-5 w-5" />
         </Button>
-        
+
         <div className="flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600">
             <Thermometer className="h-5 w-5 text-white" />

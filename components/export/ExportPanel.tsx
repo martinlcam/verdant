@@ -16,10 +16,10 @@ export function ExportPanel() {
 
   const handleExport = async (format: ExportFormat) => {
     setExporting(format);
-    
+
     // Simulate export delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     const stats = generateCityStats(selectedCity);
     const zones = generateHeatZones(selectedCity);
     const recommendations = generateRecommendations(selectedCity);
@@ -29,15 +29,24 @@ export function ExportPanel() {
       const csvContent = [
         ['Heat Zone Report for', selectedCity.name, selectedCity.province].join(','),
         '',
-        ['Zone Name', 'Severity', 'Avg Temperature', 'Max Temperature', 'Area (km²)', 'Vulnerability Score'].join(','),
-        ...zones.map(z => [
-          z.name,
-          z.severity,
-          z.avgTemperature.toFixed(1),
-          z.maxTemperature.toFixed(1),
-          z.area.toFixed(2),
-          z.vulnerabilityScore.toFixed(0)
-        ].join(','))
+        [
+          'Zone Name',
+          'Severity',
+          'Avg Temperature',
+          'Max Temperature',
+          'Area (km²)',
+          'Vulnerability Score',
+        ].join(','),
+        ...zones.map((z) =>
+          [
+            z.name,
+            z.severity,
+            z.avgTemperature.toFixed(1),
+            z.maxTemperature.toFixed(1),
+            z.area.toFixed(2),
+            z.vulnerabilityScore.toFixed(0),
+          ].join(',')
+        ),
       ].join('\n');
 
       const blob = new Blob([csvContent], { type: 'text/csv' });
@@ -48,14 +57,16 @@ export function ExportPanel() {
         stats,
         heatZones: zones,
         recommendations,
-        generatedAt: new Date().toISOString()
+        generatedAt: new Date().toISOString(),
       };
-      
+
       const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
       downloadBlob(blob, `verdant-${selectedCity.id}-data.json`);
     } else if (format === 'png') {
       // For PNG, we'd capture the map - simplified here
-      alert('Map screenshot feature would capture the current view. This requires additional setup with html2canvas.');
+      alert(
+        'Map screenshot feature would capture the current view. This requires additional setup with html2canvas.'
+      );
     }
 
     setExporting(null);

@@ -24,9 +24,7 @@ export function TemperatureChart() {
       ...record,
       urban: temperatureUnit === 'F' ? (record.urban * 9) / 5 + 32 : record.urban,
       rural: temperatureUnit === 'F' ? (record.rural * 9) / 5 + 32 : record.rural,
-      differential: temperatureUnit === 'F' 
-        ? (record.differential * 9) / 5 
-        : record.differential,
+      differential: temperatureUnit === 'F' ? (record.differential * 9) / 5 : record.differential,
     }));
   }, [selectedCity, temperatureUnit]);
 
@@ -39,9 +37,7 @@ export function TemperatureChart() {
   return (
     <Card className="h-full">
       <CardHeader className="pb-2">
-        <CardTitle className="text-base font-semibold">
-          Temperature Trends (12 Months)
-        </CardTitle>
+        <CardTitle className="text-base font-semibold">Temperature Trends (12 Months)</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="h-[240px]">
@@ -58,13 +54,13 @@ export function TemperatureChart() {
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis 
-                dataKey="date" 
+              <XAxis
+                dataKey="date"
                 tickFormatter={formatMonth}
                 tick={{ fontSize: 11 }}
                 stroke="#9ca3af"
               />
-              <YAxis 
+              <YAxis
                 tick={{ fontSize: 11 }}
                 stroke="#9ca3af"
                 tickFormatter={(value) => `${value}°`}
@@ -82,12 +78,10 @@ export function TemperatureChart() {
                 ]}
                 labelFormatter={(label) => formatMonth(label as string)}
               />
-              <Legend 
+              <Legend
                 verticalAlign="top"
                 height={36}
-                formatter={(value) => (
-                  <span className="text-xs capitalize">{value}</span>
-                )}
+                formatter={(value) => <span className="text-xs capitalize">{value}</span>}
               />
               <Area
                 type="monotone"

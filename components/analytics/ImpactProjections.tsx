@@ -21,17 +21,20 @@ export function ImpactProjections() {
 
   const data = useMemo(() => {
     const recommendations = generateRecommendations(selectedCity);
-    
+
     // Aggregate by type
-    const byType = recommendations.reduce((acc, rec) => {
-      const type = rec.type.replace('_', ' ');
-      if (!acc[type]) {
-        acc[type] = { cooling: 0, count: 0 };
-      }
-      acc[type].cooling += rec.estimatedCoolingEffect;
-      acc[type].count += 1;
-      return acc;
-    }, {} as Record<string, { cooling: number; count: number }>);
+    const byType = recommendations.reduce(
+      (acc, rec) => {
+        const type = rec.type.replace('_', ' ');
+        if (!acc[type]) {
+          acc[type] = { cooling: 0, count: 0 };
+        }
+        acc[type].cooling += rec.estimatedCoolingEffect;
+        acc[type].count += 1;
+        return acc;
+      },
+      {} as Record<string, { cooling: number; count: number }>
+    );
 
     return Object.entries(byType)
       .map(([name, data]) => ({
@@ -67,12 +70,7 @@ export function ImpactProjections() {
                 tick={{ fontSize: 11 }}
                 tickFormatter={(value) => `-${value}°C`}
               />
-              <YAxis
-                type="category"
-                dataKey="name"
-                tick={{ fontSize: 10 }}
-                width={100}
-              />
+              <YAxis type="category" dataKey="name" tick={{ fontSize: 10 }} width={100} />
               <Tooltip
                 contentStyle={{
                   backgroundColor: 'white',

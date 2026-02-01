@@ -1,5 +1,5 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -53,23 +53,35 @@ export function getHeatSeverityLabel(temperature: number): string {
 
 export function getPriorityColor(priority: 'low' | 'medium' | 'high' | 'critical'): string {
   switch (priority) {
-    case 'critical': return '#dc2626';
-    case 'high': return '#f97316';
-    case 'medium': return '#facc15';
-    case 'low': return '#22c55e';
+    case 'critical':
+      return '#dc2626';
+    case 'high':
+      return '#f97316';
+    case 'medium':
+      return '#facc15';
+    case 'low':
+      return '#22c55e';
   }
 }
 
 export function getInfrastructureIcon(type: string): string {
   switch (type) {
-    case 'urban_park': return '🌳';
-    case 'green_roof': return '🏢';
-    case 'tree_planting': return '🌲';
-    case 'cool_pavement': return '🛤️';
-    case 'bioswale': return '💧';
-    case 'permeable_surface': return '⬛';
-    case 'water_feature': return '⛲';
-    default: return '📍';
+    case 'urban_park':
+      return '🌳';
+    case 'green_roof':
+      return '🏢';
+    case 'tree_planting':
+      return '🌲';
+    case 'cool_pavement':
+      return '🛤️';
+    case 'bioswale':
+      return '💧';
+    case 'permeable_surface':
+      return '⬛';
+    case 'water_feature':
+      return '⛲';
+    default:
+      return '📍';
   }
 }
 
@@ -80,18 +92,18 @@ export function calculateHeatIslandIntensity(urban: number, rural: number): numb
 export function generateDateRange(start: Date, end: Date): Date[] {
   const dates: Date[] = [];
   const current = new Date(start);
-  
+
   while (current <= end) {
     dates.push(new Date(current));
     current.setDate(current.getDate() + 1);
   }
-  
+
   return dates;
 }
 
 export function interpolateColor(value: number, min: number, max: number): string {
   const normalized = (value - min) / (max - min);
-  
+
   // Color gradient from green (cool) to yellow to red (hot)
   if (normalized < 0.5) {
     const ratio = normalized * 2;

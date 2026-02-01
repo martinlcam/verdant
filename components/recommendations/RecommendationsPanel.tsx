@@ -1,22 +1,20 @@
 'use client';
 
 import { useMemo } from 'react';
-import { 
-  TreeDeciduous, 
-  DollarSign, 
-  Thermometer, 
-  ArrowRight,
+import {
+  TreeDeciduous,
+  DollarSign,
+  Thermometer,
   Building2,
   TreePine,
   Droplets,
-  Square
+  Square,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { useDashboardStore } from '@/lib/store';
 import { generateRecommendations } from '@/lib/data';
-import { formatCurrency, formatArea, getInfrastructureIcon } from '@/lib/utils';
+import { formatCurrency, formatArea } from '@/lib/utils';
 import type { GreenInfrastructureRecommendation } from '@/types';
 
 const typeIcons: Record<string, React.ReactNode> = {
@@ -30,9 +28,11 @@ const typeIcons: Record<string, React.ReactNode> = {
 };
 
 const priorityColors: Record<string, string> = {
-  critical: 'bg-red-100 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-300 dark:border-red-800',
+  critical:
+    'bg-red-100 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-300 dark:border-red-800',
   high: 'bg-orange-100 text-orange-700 border-orange-200 dark:bg-orange-950 dark:text-orange-300 dark:border-orange-800',
-  medium: 'bg-yellow-100 text-yellow-700 border-yellow-200 dark:bg-yellow-950 dark:text-yellow-300 dark:border-yellow-800',
+  medium:
+    'bg-yellow-100 text-yellow-700 border-yellow-200 dark:bg-yellow-950 dark:text-yellow-300 dark:border-yellow-800',
   low: 'bg-green-100 text-green-700 border-green-200 dark:bg-green-950 dark:text-green-300 dark:border-green-800',
 };
 
@@ -48,7 +48,10 @@ export function RecommendationsPanel() {
   }, [recommendations]);
 
   const totalCooling = useMemo(() => {
-    return recommendations.reduce((sum, rec) => sum + rec.estimatedCoolingEffect, 0) / recommendations.length;
+    return (
+      recommendations.reduce((sum, rec) => sum + rec.estimatedCoolingEffect, 0) /
+      recommendations.length
+    );
   }, [recommendations]);
 
   return (
@@ -134,8 +137,8 @@ function RecommendationCard({ recommendation, isSelected, onSelect }: Recommenda
           </p>
           <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
             <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-              <Thermometer className="h-3 w-3" />
-              -{recommendation.estimatedCoolingEffect.toFixed(1)}°C
+              <Thermometer className="h-3 w-3" />-{recommendation.estimatedCoolingEffect.toFixed(1)}
+              °C
             </span>
             <span className="text-gray-400">•</span>
             <span className="text-gray-600 dark:text-gray-400">
@@ -148,8 +151,13 @@ function RecommendationCard({ recommendation, isSelected, onSelect }: Recommenda
           </div>
         </div>
         <Badge
-          variant={recommendation.priority === 'critical' ? 'destructive' : 
-                   recommendation.priority === 'high' ? 'warning' : 'secondary'}
+          variant={
+            recommendation.priority === 'critical'
+              ? 'destructive'
+              : recommendation.priority === 'high'
+                ? 'warning'
+                : 'secondary'
+          }
           className="shrink-0 text-xs capitalize"
         >
           {recommendation.priority}

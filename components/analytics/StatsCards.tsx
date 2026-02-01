@@ -1,14 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { 
-  ThermometerSun, 
-  TrendingUp, 
-  Flame, 
-  Leaf, 
-  Users, 
-  AlertTriangle 
-} from 'lucide-react';
+import { ThermometerSun, TrendingUp, Flame, Leaf, Users } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useDashboardStore } from '@/lib/store';
 import { generateCityStats } from '@/lib/data';
@@ -79,15 +72,11 @@ export function StatsCards() {
           <CardContent className="p-4">
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <p className="text-xs font-medium text-gray-500 dark:text-gray-400">
-                  {card.title}
-                </p>
+                <p className="text-xs font-medium text-gray-500 dark:text-gray-400">{card.title}</p>
                 <p className="mt-1 text-2xl font-bold text-gray-900 dark:text-white">
                   {card.value}
                 </p>
-                <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
-                  {card.description}
-                </p>
+                <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">{card.description}</p>
               </div>
               <div className={`rounded-lg p-2 ${card.bgColor}`}>
                 <span className={card.color}>{card.icon}</span>

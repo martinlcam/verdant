@@ -19,7 +19,7 @@ export interface HeatDataPoint {
   landUse: LandUseType;
 }
 
-export type LandUseType = 
+export type LandUseType =
   | 'residential'
   | 'commercial'
   | 'industrial'
@@ -60,7 +60,7 @@ export interface GreenInfrastructureRecommendation {
   description: string;
 }
 
-export type GreenInfrastructureType = 
+export type GreenInfrastructureType =
   | 'urban_park'
   | 'green_roof'
   | 'tree_planting'
@@ -98,12 +98,7 @@ export interface DashboardState {
   showRecommendations: boolean;
 }
 
-export type LayerType = 
-  | 'heat'
-  | 'vegetation'
-  | 'infrastructure'
-  | 'recommendations'
-  | 'sensors';
+export type LayerType = 'heat' | 'vegetation' | 'infrastructure' | 'recommendations' | 'sensors';
 
 export interface ExportOptions {
   format: 'png' | 'csv' | 'pdf';

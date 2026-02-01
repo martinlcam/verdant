@@ -3,17 +3,14 @@
 import { useMemo } from 'react';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
-import { Play, Pause, SkipBack, SkipForward, Calendar } from 'lucide-react';
+import { Play, SkipBack, SkipForward, Calendar } from 'lucide-react';
 import { useDashboardStore } from '@/lib/store';
 import { format, subMonths, addMonths } from 'date-fns';
 
-const months = [
-  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-];
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export function TimeSlider() {
-  const { timeSliderValue, setTimeSliderValue, selectedDate, setSelectedDate } = useDashboardStore();
+  const { timeSliderValue, setTimeSliderValue, setSelectedDate } = useDashboardStore();
 
   const dateRange = useMemo(() => {
     const end = new Date();
@@ -35,13 +32,13 @@ export function TimeSlider() {
   };
 
   const skipBack = () => {
-    const newValue = Math.max(0, timeSliderValue - (100 / 11));
+    const newValue = Math.max(0, timeSliderValue - 100 / 11);
     setTimeSliderValue(newValue);
     handleSliderChange([newValue]);
   };
 
   const skipForward = () => {
-    const newValue = Math.min(100, timeSliderValue + (100 / 11));
+    const newValue = Math.min(100, timeSliderValue + 100 / 11);
     setTimeSliderValue(newValue);
     handleSliderChange([newValue]);
   };
@@ -51,13 +48,9 @@ export function TimeSlider() {
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Calendar className="h-4 w-4 text-emerald-600" />
-          <span className="text-sm font-medium text-gray-900 dark:text-white">
-            Time Period
-          </span>
+          <span className="text-sm font-medium text-gray-900 dark:text-white">Time Period</span>
         </div>
-        <span className="text-sm font-semibold text-emerald-600">
-          {currentMonth}
-        </span>
+        <span className="text-sm font-semibold text-emerald-600">{currentMonth}</span>
       </div>
 
       <div className="mb-3">

@@ -35,9 +35,7 @@ export function HeatZoneList() {
                 {index + 1}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="truncate font-medium text-gray-900 dark:text-white">
-                  {zone.name}
-                </p>
+                <p className="truncate font-medium text-gray-900 dark:text-white">{zone.name}</p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   {zone.area.toFixed(2)} km² · Vulnerability: {zone.vulnerabilityScore.toFixed(0)}
                 </p>

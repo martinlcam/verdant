@@ -1,15 +1,15 @@
 'use client';
 
-import { 
-  Map, 
-  ThermometerSun, 
-  Leaf, 
-  BarChart3, 
+import {
+  Map,
+  ThermometerSun,
+  Leaf,
+  BarChart3,
   Settings,
   Layers,
   TreeDeciduous,
   Radio,
-  X
+  X,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -17,10 +17,30 @@ import { useDashboardStore } from '@/lib/store';
 import type { LayerType } from '@/types';
 
 const layers: { id: LayerType; name: string; icon: React.ReactNode; color: string }[] = [
-  { id: 'heat', name: 'Heat Map', icon: <ThermometerSun className="h-4 w-4" />, color: 'text-red-500' },
-  { id: 'vegetation', name: 'Vegetation', icon: <Leaf className="h-4 w-4" />, color: 'text-green-500' },
-  { id: 'infrastructure', name: 'Infrastructure', icon: <Layers className="h-4 w-4" />, color: 'text-blue-500' },
-  { id: 'recommendations', name: 'Recommendations', icon: <TreeDeciduous className="h-4 w-4" />, color: 'text-emerald-500' },
+  {
+    id: 'heat',
+    name: 'Heat Map',
+    icon: <ThermometerSun className="h-4 w-4" />,
+    color: 'text-red-500',
+  },
+  {
+    id: 'vegetation',
+    name: 'Vegetation',
+    icon: <Leaf className="h-4 w-4" />,
+    color: 'text-green-500',
+  },
+  {
+    id: 'infrastructure',
+    name: 'Infrastructure',
+    icon: <Layers className="h-4 w-4" />,
+    color: 'text-blue-500',
+  },
+  {
+    id: 'recommendations',
+    name: 'Recommendations',
+    icon: <TreeDeciduous className="h-4 w-4" />,
+    color: 'text-emerald-500',
+  },
   { id: 'sensors', name: 'Sensors', icon: <Radio className="h-4 w-4" />, color: 'text-purple-500' },
 ];
 
@@ -31,12 +51,12 @@ export function Sidebar() {
     <>
       {/* Mobile overlay */}
       {sidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black/50 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
-      
+
       <aside
         className={cn(
           'fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-gray-200 bg-white transition-transform duration-300 dark:border-gray-800 dark:bg-gray-950 lg:static lg:translate-x-0',
@@ -74,7 +94,9 @@ export function Sidebar() {
                   <div
                     className={cn(
                       'ml-auto h-2 w-2 rounded-full',
-                      activeLayers.includes(layer.id) ? 'bg-emerald-500' : 'bg-gray-300 dark:bg-gray-600'
+                      activeLayers.includes(layer.id)
+                        ? 'bg-emerald-500'
+                        : 'bg-gray-300 dark:bg-gray-600'
                     )}
                   />
                 </button>

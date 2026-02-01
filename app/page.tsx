@@ -13,20 +13,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Map, BarChart3, TreeDeciduous } from 'lucide-react';
 
 // Dynamic import for HeatMap (uses Leaflet which requires client-side rendering)
-const HeatMap = dynamic(
-  () => import('@/components/map/HeatMap').then((mod) => mod.HeatMap),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="flex h-full w-full items-center justify-center bg-gray-100 dark:bg-gray-800">
-        <div className="text-center">
-          <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent mx-auto" />
-          <p className="text-gray-600 dark:text-gray-400">Loading map...</p>
-        </div>
+const HeatMap = dynamic(() => import('@/components/map/HeatMap').then((mod) => mod.HeatMap), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-full w-full items-center justify-center bg-gray-100 dark:bg-gray-800">
+      <div className="text-center">
+        <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent mx-auto" />
+        <p className="text-gray-600 dark:text-gray-400">Loading map...</p>
       </div>
-    ),
-  }
-);
+    </div>
+  ),
+});
 
 export default function Dashboard() {
   return (
@@ -52,7 +49,10 @@ export default function Dashboard() {
               </TabsList>
             </div>
 
-            <TabsContent value="map" className="flex-1 m-0 data-[state=active]:flex data-[state=active]:flex-col">
+            <TabsContent
+              value="map"
+              className="flex-1 m-0 data-[state=active]:flex data-[state=active]:flex-col"
+            >
               <div className="flex-1">
                 <HeatMap />
               </div>
