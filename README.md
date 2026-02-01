@@ -1,4 +1,4 @@
-## [Verdant](https://verdant-delta-ashen.vercel.app/) 
+## [verdant](https://verdant-delta-ashen.vercel.app/) 
 
 **Fighting urban heat islands through data-driven green infrastructure planning.**
 
@@ -12,7 +12,7 @@ We believe every city deserves the tools to build a cooler, greener future. Verd
 
 **The goal is simple:** reduce urban temperatures, protect vulnerable populations, and make cities livable for generations to come.
 
-## What Verdant Does
+## What verdant Does
 
 - **Visualizes heat patterns** across Canadian cities using satellite thermal data
 - **Identifies hotspots** where residents face the greatest heat exposure
@@ -21,7 +21,7 @@ We believe every city deserves the tools to build a cooler, greener future. Verd
 
 ## Data & Methodology
 
-Verdant is a climate resilience dashboard that visualizes urban heat using real NASA POWER temperature data and NOAA / Environment Canada weather sources. To estimate heat-island intensity, Verdant compares temperatures at a city’s center coordinates (“urban”) to a nearby “rural reference” point located ~50 km north of the city center. This offset acts as a simple baseline outside the dense core; the temperature difference (urban − rural) is shown as the heat-island signal, alongside trends and infrastructure recommendations.
+Verdant is a climate resilience dashboard that visualizes urban heat using real NASA POWER temperature data and NOAA / Environment Canada weather sources. To estimate heat-island intensity, verdant compares temperatures at a city’s center coordinates (“urban”) to a nearby “rural reference” point located ~50 km north of the city center. This offset acts as a simple baseline outside the dense core; the temperature difference (urban − rural) is shown as the heat-island signal, alongside trends and infrastructure recommendations.
 
 ## Quick Start
 
