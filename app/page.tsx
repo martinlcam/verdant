@@ -154,8 +154,8 @@ export default function LandingPage() {
           verdant
         </p>
 
-        {/* Number "(1)" - positioned to the left of "verdant" */}
-        <p className="absolute left-[713px] top-[509px] font-helvetica text-[24px] text-[#1f2b26] tracking-[-0.96px] w-[32px] z-10">
+        {/* Number "(1)" - positioned closer to "verdant" */}
+        <p className="absolute right-[750px] top-[464px] font-helvetica text-[24px] text-[#1f2b26] tracking-[-0.96px] w-[32px] z-10">
           (1)
         </p>
 
