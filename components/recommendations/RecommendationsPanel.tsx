@@ -14,6 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { generateRecommendations } from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
+import { formatArea, formatTemperatureDifference } from '@/lib/utils';
 import type { GreenInfrastructureRecommendation } from '@/types';
 
 const typeIcons: Record<string, React.ReactNode> = {
