@@ -37,7 +37,7 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ## Tech Stack
 
-Next.js 16 · React 19 · TailwindCSS · Leaflet · Recharts · Zustand
+Next.js 16 · React 19 · TailwindCSS · Leaflet · Mapbox GL · Recharts · Zustand · React Query
 
 
 
