@@ -203,10 +203,22 @@ export function Sidebar() {
 
         {/* Footer */}
         <div className="border-t border-gray-200 p-4 dark:border-gray-800">
-          <Button variant="outline" className="w-full justify-start gap-2">
-            <Settings className="h-4 w-4" />
-            Settings
-          </Button>
+          <TooltipProvider delayDuration={200}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" className="w-full justify-start gap-2">
+                  <Settings className="h-4 w-4" />
+                  Settings
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent
+                side="right"
+                className="max-w-xs p-3 text-sm !bg-gray-900 !border-gray-800 !text-gray-100 shadow-xl backdrop-blur-sm font-alliance"
+              >
+                <p className="text-xs text-gray-300">Coming soon with light mode and dev log</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </aside>
     </>
