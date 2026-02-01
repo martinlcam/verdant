@@ -4,7 +4,7 @@
 
 Cities are heating up. Urban areas experience temperatures 5-10°C higher than surrounding rural regions, creating dangerous conditions for millions of residents. Vulnerable communities suffer most—facing higher energy costs, increased health risks, and degraded quality of life.
 
-Verdant empowers cities to fight back with actionable climate intelligence.
+**Verdant empowers cities to fight back with actionable climate intelligence.**
 
 ## Our Mission
 
@@ -32,14 +32,3 @@ Open [http://localhost:3000](http://localhost:3000)
 
 Next.js 16 · React 19 · TailwindCSS · Leaflet · Recharts · Zustand
 
-## Future Vision
-
-- Real-time satellite data integration (NASA Landsat, NOAA)
-- Municipal sensor network connections
-- ML-powered heat prediction models
-- Multi-city collaboration tools
-- Grant application report generation
-
-## License
-
-MIT
