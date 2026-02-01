@@ -1,53 +1,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import Footer from '@/components/layout/Footer';
 
 export default function LandingPage() {
   return (
-    <div className="relative min-h-screen bg-[#ecefe8] overflow-x-clip">
-      {/* Background Map Layer */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute left-[-666px] right-[-664px] top-[54px] flex items-center justify-center h-[3089px]">
-          <div className="flex-none w-[3079px] h-[1993px] -rotate-90">
-            <div className="relative w-full h-full bg-[#f5f5f5] overflow-clip">
-              <div className="absolute top-[120px] left-0 w-full h-[1854px] relative">
-                <Image
-                  src="/images/landing/parks.png"
-                  alt=""
-                  fill
-                  className="object-cover"
-                  unoptimized
-                />
-              </div>
-              <div className="absolute top-0 left-0 w-full h-full relative">
-                <Image
-                  src="/images/landing/water.png"
-                  alt=""
-                  fill
-                  className="object-cover"
-                  unoptimized
-                />
-              </div>
-              <div className="absolute top-0 left-0 w-full h-full relative">
-                <Image
-                  src="/images/landing/secondary-roads.png"
-                  alt=""
-                  fill
-                  className="object-cover"
-                  unoptimized
-                />
-              </div>
-              <div className="absolute top-0 left-0 w-full h-full relative">
-                <Image
-                  src="/images/landing/main-roads.png"
-                  alt=""
-                  fill
-                  className="object-cover"
-                  unoptimized
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+    <div className="relative min-h-screen overflow-x-clip flex flex-col mb-0">
+      {/* Background Map */}
+      <div className="fixed inset-0 -z-10">
+        <img
+          src="/MAP BG.svg"
+          alt=""
+          className="h-full w-full object-cover"
+        />
       </div>
 
       {/* Header */}
@@ -68,7 +32,7 @@ export default function LandingPage() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative pt-[295px] pb-[300px]">
+      <section className="relative pt-[295px] pb-0">
         {/* Decorative Green Blobs */}
         <div className="absolute right-[-13px] top-[167px] w-[603px] h-[603px] z-0">
           <img
@@ -135,23 +99,23 @@ export default function LandingPage() {
       </section>
 
       {/* Definition Section */}
-      <section className="relative pb-[200px]">
-        {/* Decorative Blob */}
-        <div className="absolute left-[64px] top-[1280px] w-[437px] h-[437px] z-0">
+      <section className="relative min-h-[1400px]">
+        {/* Decorative Blobs - Left Side */}
+        <div className="absolute left-[64px] top-[480px] w-[437.082px] h-[437.082px] z-0">
           <img
             src="/images/landing/dark-green-10.svg"
             alt=""
             className="w-full h-full object-contain"
           />
         </div>
-        <div className="absolute left-[113.67px] top-[1335.88px] w-[338.987px] h-[324.087px] z-0">
+        <div className="absolute left-[113.67px] top-[535.88px] w-[338.987px] h-[324.087px] z-0">
           <img
             src="/images/landing/dark-green-11.svg"
             alt=""
             className="w-full h-full object-contain"
           />
         </div>
-        <div className="absolute left-[145.95px] top-[1365.68px] w-[264.632px] h-[264.632px] flex items-center justify-center z-0">
+        <div className="absolute left-[145.95px] top-[565.68px] w-[264.632px] h-[264.632px] flex items-center justify-center z-0">
           <div className="rotate-[4.31deg]">
             <img
               src="/images/landing/dark-green-12.svg"
@@ -160,28 +124,60 @@ export default function LandingPage() {
             />
           </div>
         </div>
-
-        {/* Definition Content */}
-        <div className="relative z-10 px-[57px]">
-          <div className="flex items-start gap-4 mb-4">
-            <p className="font-alliance text-[128px] leading-[1.2] text-[#1f2b26] tracking-[-5.12px]">
-              verdant
-            </p>
-            <span className="font-helvetica text-[24px] text-[#1f2b26] tracking-[-0.96px] mt-[85px]">
-              (1)
-            </span>
+        {/* Additional nested decorative element */}
+        <div className="absolute left-[157.13px] top-[591.75px] w-[238.409px] h-[213.062px] flex items-center justify-center z-0">
+          <div className="rotate-[24.77deg]">
+            <div className="relative w-[196.029px] h-[144.196px] overflow-clip">
+              <div className="absolute inset-[5.77%_11.1%_5.63%_7.11%]">
+                <img
+                  src="/images/landing/vector-1.svg"
+                  alt=""
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="absolute left-[calc(50%+0.42px)] top-[9.53px] bottom-[9.46px] flex items-center justify-center w-[99.605px] -translate-x-1/2">
+                <div className="rotate-[-101.5deg] scale-y-[0.99] skew-x-[7.15deg] w-[100.359px] h-[84.014px]">
+                  <div className="relative w-full h-full overflow-clip">
+                    <div className="absolute inset-[5.77%_11.1%_5.63%_7.11%]">
+                      <img
+                        src="/images/landing/vector-2.svg"
+                        alt=""
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <p className="font-alliance text-[36px] leading-[0] text-[#1f2b26] tracking-[-1.44px] mb-8">
-            <span className="leading-normal">/ˈvərd</span>
-            <span className="font-helvetica leading-normal">(ə)</span>
-            <span className="leading-normal">{`nt/ `}</span>
-            <span className="leading-normal">{`   · `}</span>
-            <span className="leading-normal">{`  `}</span>
-            <span className="leading-normal">{` `}</span>
-            <span className="leading-normal">adjective</span>
-          </p>
-          <div className="max-w-[606px] ml-auto text-right">
-            <p className="font-alliance text-[24px] leading-[1.755] text-black tracking-[-0.96px]">
+        </div>
+
+        {/* Definition Content - Right Side */}
+        {/* Title "verdant" - positioned from right edge of page */}
+        <p className="absolute right-[106px] top-[464px] font-alliance text-[128px] leading-[1.2] text-[#1f2b26] text-right tracking-[-5.12px] w-[637px] z-10">
+          verdant
+        </p>
+        
+        {/* Number "(1)" - positioned to the left of "verdant" */}
+        <p className="absolute left-[713px] top-[509px] font-helvetica text-[24px] text-[#1f2b26] tracking-[-0.96px] w-[32px] z-10">
+          (1)
+        </p>
+        
+        {/* Pronunciation - positioned from right edge */}
+        <p className="absolute right-[106px] top-[622px] font-alliance text-[36px] leading-[0] text-[#1f2b26] text-right tracking-[-1.44px] w-[611px] z-10">
+          <span className="leading-normal">/ˈvərd</span>
+          <span className="font-helvetica leading-normal">(ə)</span>
+          <span className="leading-normal">{`nt/ `}</span>
+          <span className="leading-normal">{`   · `}</span>
+          <span className="leading-normal">{`  `}</span>
+          <span className="leading-normal">{` `}</span>
+          <span className="leading-normal">adjective</span>
+        </p>
+        
+        {/* Definition text - positioned from right edge, below pronunciation */}
+        <div className="absolute right-[105px] top-[759px] flex items-center justify-center w-[608.874px] z-10">
+          <div className="rotate-[0.19deg]">
+            <p className="font-alliance text-[24px] leading-[1.755] text-black text-right tracking-[-0.96px] w-[606.854px]">
               The strategic integration of lush, living vegetation into urban landscapes to create
               biological cooling systems. In climate resilience, being &quot;verdant&quot; is the
               measurable transition from heat-absorbing grey infrastructure (asphalt and concrete)
@@ -195,6 +191,7 @@ export default function LandingPage() {
       {/* Gallery Section */}
       <section className="relative pb-[200px]">
         <div className="px-[57px]">
+          {/* Title and number */}
           <div className="flex items-start gap-4 mb-8">
             <p className="font-alliance text-[128px] leading-[1.2] text-[#1f2b26] tracking-[-5.12px]">
               gallery
@@ -207,76 +204,42 @@ export default function LandingPage() {
 
         {/* Dashboard Image */}
         <div className="relative w-[1141px] h-[412px] rounded-[25px] overflow-hidden mb-4 mx-auto">
-          <Image
+          <img
             src="/images/landing/image1.png"
             alt="Verdant Dashboard - Vancouver"
-            fill
-            className="object-cover"
-            unoptimized
+            className="w-full h-full object-cover"
           />
         </div>
 
         {/* Caption */}
-        <div className="px-[57px] max-w-[1101px]">
-          <p className="font-alliance text-[24px] leading-[1.755] text-black tracking-[-0.96px] mb-2">
-            verdant DASHBOARD / VANCOUVER →
-          </p>
-          <p className="font-alliance text-[24px] leading-[1.755] text-black tracking-[-0.96px]">
-            A visual showcase of urban heatmaps in the Greater Vancouver area.
-          </p>
+        <div className="px-[57px] max-w-[1101px] mx-auto">
+          <div className="rotate-[0.19deg]">
+            <div className="font-alliance text-[24px] leading-[1.755] text-black tracking-[-0.96px]">
+              <p className="mb-0">verdant DASHBOARD / VANCOUVER →</p>
+              <p>A visual showcase of urban heatmaps in the Greater Vancouver area.</p>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="relative pb-[200px]">
+      <section className="relative pb-[250px]">
         <div className="relative px-[80px]">
-          <div className="absolute right-[0px] w-[708px] h-[52px] bg-[#c0ffbd]" />
-          <div className="flex items-start gap-4 relative z-10">
-            <span className="font-helvetica text-[24px] text-[#1f2b26] tracking-[-0.96px] mt-[85px]">
-              (3)
-            </span>
-            <p className="font-alliance text-[64px] leading-[0.97] text-black text-right tracking-[-2.56px] max-w-[749px] ml-auto">
-              Start your journey toward a more verdant city today. ↗
-            </p>
+          {/* Content - (3) to the left of "Start", block stays on the right */}
+          <div className="flex items-start gap-4 relative z-10 justify-end">
+            <div className="flex items-baseline gap-3 flex-wrap max-w-[749px]">
+              <span className="font-helvetica text-[24px] text-[#1f2b26] tracking-[-0.96px] shrink-0 mt-[85px]">
+                (3)
+              </span>
+              <p className="font-alliance text-[64px] leading-[0.97] text-black text-right tracking-[-2.56px]">
+                Start your journey toward a more verdant city today. ↗
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="relative bg-[#1f2b26] h-[179px] px-[25px] py-[15px]">
-        <div className="relative h-full">
-          {/* Logo and Brand */}
-          <div className="absolute bottom-[37px] left-[25px] flex items-center gap-[11px]">
-            <img
-              src="/images/landing/light-green-logo.svg"
-              alt="Verdant Logo"
-              className="w-[105px] h-[105px] object-contain"
-            />
-            <p className="font-alliance text-[128px] leading-[1.2] text-[#91b1a2] tracking-[-5.12px]">
-              verdant
-            </p>
-            <p className="font-alliance text-[32px] leading-normal text-[#91b1a2] opacity-33 tracking-[-4.8px] ml-4">
-              © 2026
-            </p>
-          </div>
-
-          {/* Right Side Content */}
-          <div className="absolute right-[15px] top-[23px] text-right">
-            <p className="font-alliance text-[15px] leading-normal text-[#cfcfcf] mb-8">
-              Github Repository
-            </p>
-            <div className="font-alliance text-[15px] leading-normal text-[#545454] mb-2">
-              <p className="mb-0">Owen Skippen</p>
-              <p className="mb-0">Martin Cam</p>
-              <p className="mb-0">Krrish Kapoor</p>
-              <p>Johnny Ho</p>
-            </div>
-            <p className="font-alliance text-[15px] leading-normal text-[#545454] mt-4">
-              Powered by Google LLC. ©
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
