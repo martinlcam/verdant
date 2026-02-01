@@ -9,11 +9,32 @@ import { useDashboardStore } from '@/lib/store';
 import { formatTemperature } from '@/lib/utils';
 
 export function HeatZoneList() {
-  const { selectedCity, setSelectedHeatZone } = useDashboardStore();
+  const { selectedCity, setSelectedHeatZone, setMapView } = useDashboardStore();
 
   const zones = useMemo(() => {
     return generateHeatZones(selectedCity).slice(0, 5);
   }, [selectedCity]);
+
+  // Calculate the center of a polygon from its coordinates
+  const calculatePolygonCenter = (coordinates: [number, number][]): [number, number] => {
+    if (coordinates.length === 0) return selectedCity.coordinates;
+    
+    let sumLat = 0;
+    let sumLng = 0;
+    for (const [lat, lng] of coordinates) {
+      sumLat += lat;
+      sumLng += lng;
+    }
+    return [sumLat / coordinates.length, sumLng / coordinates.length];
+  };
+
+  const handleZoneClick = (zone: typeof zones[0]) => {
+    setSelectedHeatZone(zone);
+    // Calculate center of the heat zone polygon
+    const center = calculatePolygonCenter(zone.coordinates);
+    // Zoom in to focus on the zone (zoom level 14-15 for a good close-up view)
+    setMapView(center, 15);
+  };
 
   return (
     <Card className="h-full">
@@ -29,7 +50,7 @@ export function HeatZoneList() {
             <button
               type="button"
               key={zone.id}
-              onClick={() => setSelectedHeatZone(zone)}
+              onClick={() => handleZoneClick(zone)}
               className="flex w-full items-center gap-3 rounded-lg border border-gray-100 bg-gray-50/50 p-3 text-left transition-colors hover:border-emerald-200 hover:bg-emerald-50/50 dark:border-gray-800 dark:bg-gray-900/50 dark:hover:border-emerald-800 dark:hover:bg-emerald-950/30"
             >
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-red-100 text-sm font-bold text-red-600 dark:bg-red-900 dark:text-red-400">

@@ -24,6 +24,7 @@ export function MapboxMap() {
     activeLayers,
     setSelectedHeatZone,
     setSelectedRecommendation,
+    mapCenter,
     mapZoom,
   } = useDashboardStore();
   const [isMounted, setIsMounted] = useState(false);
@@ -57,8 +58,8 @@ export function MapboxMap() {
       const map = new mapboxgl.default.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/dark-v11', // Dark/dusk style with vector tiles and 3D building support
-        center: [selectedCity.coordinates[1], selectedCity.coordinates[0]],
-        zoom: 16, // Higher zoom to see buildings in detail
+        center: [mapCenter[1], mapCenter[0]], // [lng, lat] for Mapbox
+        zoom: mapZoom, // Use zoom from store
         pitch: 60, // Steeper angle for better 3D building view
         bearing: 0,
         antialias: true,
@@ -226,17 +227,17 @@ export function MapboxMap() {
     };
   }, []);
 
-  // Update map center when city changes
+  // Update map center and zoom when mapCenter or mapZoom changes
   useEffect(() => {
-    if (mapRef.current && selectedCity) {
+    if (mapRef.current && mapCenter) {
       const currentBearing = mapRef.current.getBearing();
       const normalized = normalizeBearing(currentBearing);
       mapRef.current.flyTo({
-        center: [selectedCity.coordinates[1], selectedCity.coordinates[0]],
-        zoom: 16, // Higher zoom for 3D building view
-        pitch: 60, // Steeper angle for better 3D view
+        center: [mapCenter[1], mapCenter[0]], // [lng, lat] for Mapbox
+        zoom: mapZoom,
+        pitch: mapRef.current.getPitch(), // Maintain current pitch
         bearing: normalized, // Maintain current rotation (normalized)
-        duration: 1500,
+        duration: 1000,
       });
       // Update bearing state after flyTo completes
       setTimeout(() => {
@@ -244,9 +245,9 @@ export function MapboxMap() {
           const newBearing = normalizeBearing(mapRef.current.getBearing());
           setBearing(newBearing);
         }
-      }, 1600);
+      }, 1100);
     }
-  }, [selectedCity]);
+  }, [mapCenter, mapZoom]);
 
   // Listen for pitch changes from map
   useEffect(() => {

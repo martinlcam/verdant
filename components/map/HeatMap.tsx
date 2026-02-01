@@ -40,6 +40,7 @@ export function HeatMap() {
     activeLayers,
     setSelectedHeatZone,
     setSelectedRecommendation,
+    mapCenter,
     mapZoom,
   } = useDashboardStore();
   const [isMounted, setIsMounted] = useState(false);
@@ -86,11 +87,11 @@ export function HeatMap() {
   return (
     <div ref={containerRef} className="relative h-full w-full">
       <MapContainer
-        center={selectedCity.coordinates}
+        center={mapCenter}
         zoom={mapZoom}
         className="h-full w-full"
         zoomControl={true}
-        key={`map-${selectedCity.id}-${mapZoom}`}
+        key={`map-${selectedCity.id}-${mapZoom}-${mapCenter[0]}-${mapCenter[1]}`}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
