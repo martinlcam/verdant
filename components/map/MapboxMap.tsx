@@ -56,7 +56,7 @@ export function MapboxMap() {
 
       const map = new mapboxgl.default.Map({
         container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/streets-v12', // Streets style with vector tiles and 3D building support
+        style: 'mapbox://styles/mapbox/dark-v11', // Dark/dusk style with vector tiles and 3D building support
         center: [selectedCity.coordinates[1], selectedCity.coordinates[0]],
         zoom: 16, // Higher zoom to see buildings in detail
         pitch: 60, // Steeper angle for better 3D building view
