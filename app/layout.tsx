@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     'heat mapping',
   ],
   authors: [{ name: 'Verdant Team' }],
+  icons: {
+    icon: '/favicons/LIGHT-GREEN-LOGO.svg',
+  },
   openGraph: {
     title: 'Verdant | Urban Heat Intelligence',
     description: 'Fighting urban heat islands through data-driven green infrastructure planning',
@@ -40,9 +43,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-      </head>
+      <head />
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <QueryProvider>{children}</QueryProvider>
       </body>
