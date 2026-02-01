@@ -10,6 +10,7 @@ import { TimeSlider } from '@/components/controls/TimeSlider';
 import { ExportPanel } from '@/components/export/ExportPanel';
 import { DashboardShell } from '@/components/layout/DashboardShell';
 import { RecommendationsPanel } from '@/components/recommendations/RecommendationsPanel';
+import { useDashboardStore } from '@/lib/store';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 // Dynamic import for HeatMap (uses Leaflet which requires client-side rendering)
@@ -25,7 +26,22 @@ const HeatMap = dynamic(() => import('@/components/map/HeatMap').then((mod) => m
   ),
 });
 
+// Dynamic import for MapboxMap (3D visualization)
+const MapboxMap = dynamic(() => import('@/components/map/MapboxMap').then((mod) => mod.MapboxMap), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-full w-full items-center justify-center bg-gray-100 dark:bg-gray-800">
+      <div className="text-center">
+        <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent mx-auto" />
+        <p className="text-gray-600 dark:text-gray-400">Loading 3D map...</p>
+      </div>
+    </div>
+  ),
+});
+
 export default function DashboardPage() {
+  const { enable3D } = useDashboardStore();
+
   return (
     <DashboardShell>
       <div className="flex h-full flex-col overflow-hidden">
@@ -54,7 +70,7 @@ export default function DashboardPage() {
               className="flex-1 m-0 data-[state=active]:flex data-[state=active]:flex-col"
             >
               <div className="flex-1">
-                <HeatMap />
+                {enable3D ? <MapboxMap /> : <HeatMap />}
               </div>
               <div className="p-4 bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800">
                 <TimeSlider />
@@ -89,7 +105,7 @@ export default function DashboardPage() {
               {/* Map Section */}
               <div className="flex flex-1 flex-col overflow-hidden">
                 <div className="flex-1">
-                  <HeatMap />
+                  {enable3D ? <MapboxMap /> : <HeatMap />}
                 </div>
                 <div className="shrink-0 border-t border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-950">
                   <TimeSlider />

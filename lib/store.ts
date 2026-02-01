@@ -44,6 +44,10 @@ interface DashboardStore {
   // Temperature unit
   temperatureUnit: 'C' | 'F';
   setTemperatureUnit: (unit: 'C' | 'F') => void;
+
+  // 3D Visualization
+  enable3D: boolean;
+  setEnable3D: (enable: boolean) => void;
 }
 
 export const useDashboardStore = create<DashboardStore>((set) => {
@@ -108,5 +112,9 @@ export const useDashboardStore = create<DashboardStore>((set) => {
     // Temperature unit
     temperatureUnit: 'C',
     setTemperatureUnit: (unit) => set({ temperatureUnit: unit }),
+
+    // 3D Visualization
+    enable3D: false,
+    setEnable3D: (enable) => set({ enable3D: enable }),
   };
 });

@@ -2,6 +2,7 @@
 
 import {
   BarChart3,
+  Box,
   Layers,
   Leaf,
   Map,
@@ -67,7 +68,8 @@ const layers: {
 ];
 
 export function Sidebar() {
-  const { sidebarOpen, setSidebarOpen, activeLayers, toggleLayer } = useDashboardStore();
+  const { sidebarOpen, setSidebarOpen, activeLayers, toggleLayer, enable3D, setEnable3D } =
+    useDashboardStore();
 
   return (
     <>
@@ -140,6 +142,52 @@ export function Sidebar() {
                   </Tooltip>
                 ))}
               </div>
+            </TooltipProvider>
+          </div>
+
+          {/* 3D Visualization Section */}
+          <div className="mb-6 border-t border-gray-200 pt-6 dark:border-gray-800">
+            <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white">
+              <Box className="h-4 w-4" />
+              3D Visualization
+            </h3>
+            <TooltipProvider delayDuration={200}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    type="button"
+                    onClick={() => setEnable3D(!enable3D)}
+                    className={cn(
+                      'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors font-alliance',
+                      enable3D
+                        ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'
+                        : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800',
+                    )}
+                  >
+                    <span className="text-purple-500">
+                      <Box className="h-4 w-4" />
+                    </span>
+                    <span>3D Map View</span>
+                    <div
+                      className={cn(
+                        'ml-auto h-2 w-2 rounded-full',
+                        enable3D ? 'bg-emerald-500' : 'bg-gray-300 dark:bg-gray-600',
+                      )}
+                    />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent
+                  side="right"
+                  className="max-w-xs p-4 text-sm !bg-gray-900 !border-gray-800 !text-gray-100 shadow-xl backdrop-blur-sm font-alliance"
+                >
+                  <div className="space-y-2">
+                    <h4 className="font-semibold mb-1.5 text-gray-50">3D Visualization</h4>
+                    <p className="text-xs text-gray-300 leading-relaxed">
+                      Toggle 3D map view powered by Mapbox. Provides enhanced terrain visualization and building heights for better spatial understanding.
+                    </p>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
             </TooltipProvider>
           </div>
 
