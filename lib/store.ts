@@ -44,9 +44,13 @@ interface DashboardStore {
   setTemperatureUnit: (unit: 'C' | 'F') => void;
 }
 
-export const useDashboardStore = create<DashboardStore>((set) => ({
-  // City selection - default to Toronto
-  selectedCity: CANADIAN_CITIES[0],
+export const useDashboardStore = create<DashboardStore>((set) => {
+  // Find Vancouver as default city
+  const vancouver = CANADIAN_CITIES.find((city) => city.id === 'vancouver') || CANADIAN_CITIES[0];
+  
+  return {
+  // City selection - default to Vancouver
+  selectedCity: vancouver,
   setSelectedCity: (city) =>
     set({
       selectedCity: city,
@@ -59,7 +63,7 @@ export const useDashboardStore = create<DashboardStore>((set) => ({
   setSelectedDate: (date) => set({ selectedDate: date }),
 
   // Map view
-  mapCenter: CANADIAN_CITIES[0].coordinates,
+  mapCenter: vancouver.coordinates,
   mapZoom: 12,
   setMapView: (center, zoom) => set({ mapCenter: center, mapZoom: zoom }),
 
@@ -94,4 +98,5 @@ export const useDashboardStore = create<DashboardStore>((set) => ({
   // Temperature unit
   temperatureUnit: 'C',
   setTemperatureUnit: (unit) => set({ temperatureUnit: unit }),
-}));
+  };
+});

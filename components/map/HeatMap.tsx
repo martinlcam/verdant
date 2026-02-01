@@ -2,9 +2,9 @@
 
 import dynamic from 'next/dynamic';
 import { useEffect, useMemo, useState } from 'react';
-import { generateHeatMapData, generateHeatZones, generateRecommendations } from '@/lib/data';
+import { generateHeatZones, generateRecommendations } from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
-import { getInfrastructureIcon, getPriorityColor, interpolateColor } from '@/lib/utils';
+import { getInfrastructureIcon, getPriorityColor } from '@/lib/utils';
 
 // Dynamic import for Leaflet components (client-side only)
 const MapContainer = dynamic(() => import('react-leaflet').then((mod) => mod.MapContainer), {
@@ -32,11 +32,6 @@ export function HeatMap() {
     });
   }, []);
 
-  // Generate data based on selected city
-  const heatData = useMemo(() => {
-    return generateHeatMapData(selectedCity, 15);
-  }, [selectedCity]);
-
   const heatZones = useMemo(() => {
     return generateHeatZones(selectedCity);
   }, [selectedCity]);
@@ -44,9 +39,6 @@ export function HeatMap() {
   const recommendations = useMemo(() => {
     return generateRecommendations(selectedCity);
   }, [selectedCity]);
-
-  const minTemp = useMemo(() => Math.min(...heatData.map((d) => d.temperature)), [heatData]);
-  const maxTemp = useMemo(() => Math.max(...heatData.map((d) => d.temperature)), [heatData]);
 
   if (!isClient || !L) {
     return (
@@ -71,31 +63,6 @@ export function HeatMap() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-
-        {/* Heat Data Points Layer */}
-        {activeLayers.includes('heat') &&
-          heatData.map((point, index) => (
-            <CircleMarker
-              key={`heat-${index}`}
-              center={[point.lat, point.lng]}
-              radius={12}
-              pathOptions={{
-                fillColor: interpolateColor(point.temperature, minTemp, maxTemp),
-                fillOpacity: 0.6,
-                color: 'transparent',
-                weight: 0,
-              }}
-            >
-              <Popup>
-                <div className="text-sm">
-                  <p className="font-semibold">Temperature: {point.temperature}°C</p>
-                  <p>Surface: {point.surfaceTemperature}°C</p>
-                  <p>NDVI: {point.ndvi.toFixed(2)}</p>
-                  <p>Land Use: {point.landUse}</p>
-                </div>
-              </Popup>
-            </CircleMarker>
-          ))}
 
         {/* Heat Zones Polygons */}
         {activeLayers.includes('heat') &&

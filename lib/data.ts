@@ -267,7 +267,7 @@ export function generateHeatMapData(city: City, resolution: number = 20): HeatDa
   const points: HeatDataPoint[] = [];
   const centerLat = city.coordinates[0];
   const centerLng = city.coordinates[1];
-  const spread = 0.05;
+  const spread = 0.08; // Increased spread for better coverage
 
   const landUses: HeatDataPoint['landUse'][] = [
     'residential',
@@ -280,30 +280,47 @@ export function generateHeatMapData(city: City, resolution: number = 20): HeatDa
     'bare',
   ];
 
+  // Create a smooth gradient with higher density in center
   for (let i = 0; i < resolution; i++) {
     for (let j = 0; j < resolution; j++) {
-      const lat = centerLat + (i / resolution - 0.5) * spread * 2;
-      const lng = centerLng + (j / resolution - 0.5) * spread * 3;
+      // Normalized position (-1 to 1)
+      const normalizedI = (i / resolution - 0.5) * 2;
+      const normalizedJ = (j / resolution - 0.5) * 2;
+      
+      // Small jitter to break up perfect grid (much smaller)
+      const jitterLat = (Math.random() - 0.5) * (spread / resolution) * 0.3;
+      const jitterLng = (Math.random() - 0.5) * (spread / resolution) * 0.3;
+      
+      const lat = centerLat + normalizedI * spread + jitterLat;
+      const lng = centerLng + normalizedJ * spread * 1.2 + jitterLng;
 
-      // Distance from center affects temperature
-      const distFromCenter = Math.sqrt(
-        ((i / resolution - 0.5) * 2) ** 2 + ((j / resolution - 0.5) * 2) ** 2,
-      );
-
-      // Base temperature with urban heat island effect
-      const baseTemp = 32 - distFromCenter * 8 + Math.random() * 6;
-      const surfaceTemp = baseTemp + 5 + Math.random() * 10;
+      // Distance from center (0 to ~1.4 for corners)
+      const distFromCenter = Math.sqrt(normalizedI ** 2 + normalizedJ ** 2);
+      
+      // Create smooth gradient: hot in center, cooler at edges
+      // Use exponential decay for more realistic heat island effect
+      const gradientFactor = Math.exp(-distFromCenter * 1.2);
+      
+      // Base temperature: 35°C in center, ~22°C at edges
+      const baseTemp = 22 + gradientFactor * 13;
+      
+      // Add natural variation (smaller range to maintain gradient)
+      const variation = (Math.random() - 0.5) * 3;
+      const finalTemp = Math.max(18, Math.min(38, baseTemp + variation));
+      
+      // Surface temp is typically higher
+      const surfaceTemp = finalTemp + 3 + Math.random() * 4;
 
       // Vegetation index inversely related to temperature
-      const ndvi = Math.max(-0.2, Math.min(0.8, 0.4 - (baseTemp - 28) * 0.1 + Math.random() * 0.3));
+      const ndvi = Math.max(-0.2, Math.min(0.8, 0.5 - (finalTemp - 25) * 0.05 + (Math.random() - 0.5) * 0.2));
 
       points.push({
         lat,
         lng,
-        temperature: Math.round(baseTemp * 10) / 10,
+        temperature: Math.round(finalTemp * 10) / 10,
         surfaceTemperature: Math.round(surfaceTemp * 10) / 10,
         ndvi: Math.round(ndvi * 100) / 100,
-        albedo: 0.1 + Math.random() * 0.4,
+        albedo: 0.15 + Math.random() * 0.3,
         landUse: landUses[Math.floor(Math.random() * landUses.length)],
       });
     }
