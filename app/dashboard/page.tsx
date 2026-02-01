@@ -92,9 +92,9 @@ export default function DashboardPage() {
         </div>
 
         {/* Desktop Layout */}
-        <div className="hidden lg:flex lg:flex-1 lg:overflow-hidden">
+        <div className="hidden lg:flex lg:flex-1 lg:overflow-hidden w-full">
           {/* Main Content Area */}
-          <div className="flex flex-1 flex-col overflow-hidden">
+          <div className="flex flex-1 flex-col overflow-hidden w-full">
             {/* Stats Row */}
             <div className="shrink-0 border-b border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-950">
               <StatsCards />
@@ -125,7 +125,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Recommendations Panel */}
-          <div className="w-[350px] shrink-0 overflow-y-auto border-l border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-950">
+          <div className="w-[350px] shrink-0 overflow-y-auto border-l border-gray-200 bg-white pl-4 pr-0 pt-4 pb-4 dark:border-gray-800 dark:bg-gray-950">
             <RecommendationsPanel />
           </div>
         </div>

@@ -42,6 +42,8 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 /* Ensure footer extends to bottom with no gap (sticky footer layout) */

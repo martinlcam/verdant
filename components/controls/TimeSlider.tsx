@@ -24,7 +24,13 @@ export function TimeSlider() {
     return { start, end };
   }, []);
 
-  // Calculate slider value from selectedDate on mount and when selectedDate changes externally
+  // Initialize slider to rightmost position (100) on mount
+  useEffect(() => {
+    // Set to maximum on initial mount
+    setTimeSliderValue(100);
+  }, []); // Only run once on mount
+
+  // Sync slider value when selectedDate changes externally (but not on initial mount)
   useEffect(() => {
     if (!dateRange.start || isNaN(dateRange.start.getTime()) || !selectedDate || isNaN(selectedDate.getTime())) {
       return;

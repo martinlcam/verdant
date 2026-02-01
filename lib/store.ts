@@ -101,7 +101,7 @@ export const useDashboardStore = create<DashboardStore>((set) => {
     selectedHeatZone: null,
     setSelectedHeatZone: (zone) => set({ selectedHeatZone: zone }),
 
-    // Time slider
+    // Time slider - start at maximum (right side)
     timeSliderValue: 100,
     setTimeSliderValue: (value) => set({ timeSliderValue: value }),
 

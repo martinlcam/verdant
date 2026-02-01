@@ -120,7 +120,7 @@ export function ExportPanel() {
             <Button
               key={option.format}
               variant="outline"
-              className="h-auto flex-col gap-1 p-3"
+              className="h-auto flex-col gap-1 p-3 min-w-0"
               onClick={() => handleExport(option.format)}
               disabled={exporting !== null}
             >
@@ -129,10 +129,10 @@ export function ExportPanel() {
               ) : exported === option.format ? (
                 <Check className="h-5 w-5 text-emerald-500" />
               ) : (
-                <span className="text-gray-600 dark:text-gray-400">{option.icon}</span>
+                <span className="text-gray-600 dark:text-gray-400 shrink-0">{option.icon}</span>
               )}
-              <span className="text-xs font-medium">{option.title}</span>
-              <span className="text-[10px] text-gray-400">{option.description}</span>
+              <span className="text-xs font-medium text-center break-words">{option.title}</span>
+              <span className="text-[10px] text-gray-400 text-center break-words line-clamp-2 max-w-full">{option.description}</span>
             </Button>
           ))}
         </div>

@@ -67,7 +67,7 @@ export function RecommendationsPanel() {
   }, [recommendations]);
 
   return (
-    <Card className="h-full flex flex-col font-alliance">
+    <Card className="h-full flex flex-col font-alliance mr-0 border-r-0 rounded-r-none">
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center justify-between text-base font-semibold font-alliance">
           <span className="flex items-center gap-2">

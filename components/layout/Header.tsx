@@ -2,6 +2,7 @@
 
 import { Download, FileImage, FileSpreadsheet, FileText, Info, Menu } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -98,7 +99,7 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-gray-200 bg-white/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-gray-800 dark:bg-gray-950/95 dark:supports-[backdrop-filter]:bg-gray-950/60">
+    <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-gray-200 bg-white/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-gray-800 dark:bg-gray-950/95 dark:supports-[backdrop-filter]:bg-gray-950/60 w-full">
       <div className="flex items-center gap-4">
         <Button
           variant="ghost"
@@ -109,21 +110,21 @@ export function Header() {
           <Menu className="h-5 w-5" />
         </Button>
 
-        <div className="flex items-center gap-2">
-          <div className="relative h-9 w-9">
+        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer flex-shrink-0">
+          <div className="relative h-10 w-10 flex-shrink-0">
             <Image
               src="/favicons/LIGHT-GREEN-LOGO.svg"
               alt="Verdant Logo"
               fill
-              className="object-contain"
+              className="object-cover"
               unoptimized
             />
           </div>
-          <div className="hidden sm:block">
+          <div className="hidden sm:block flex-shrink-0">
             <h1 className="text-lg font-bold text-gray-900 dark:text-white">Verdant</h1>
             <p className="text-xs text-gray-500 dark:text-gray-400">Urban Heat Intelligence</p>
           </div>
-        </div>
+        </Link>
       </div>
 
       <div className="flex items-center gap-3">
