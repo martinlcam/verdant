@@ -2,9 +2,9 @@
 
 **Fighting urban heat islands through data-driven green infrastructure planning.**
 
-Cities are heating up. Urban areas experience temperatures 5-10°C higher than surrounding rural regions, creating dangerous conditions for millions of residents. Vulnerable communities suffer most—facing higher energy costs, increased health risks, and degraded quality of life.
+Urban areas experience higher temperatures overtime creating dangerous conditions for millions of residents. Vulnerable communities suffer the most by facing higher energy costs, increased health risks, and degraded quality of life.
 
-**Verdant empowers cities to fight back with actionable climate intelligence.**
+**Verdant empowers cities to combat with actionable climate intelligence.**
 
 ## Our Mission
 
