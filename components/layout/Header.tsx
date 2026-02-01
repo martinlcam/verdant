@@ -1,6 +1,7 @@
 'use client';
 
-import { Download, Info, Menu, Moon, Sun, Thermometer } from 'lucide-react';
+import { Download, Info, Menu, Moon, Sun } from 'lucide-react';
+import Image from 'next/image';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -48,8 +49,14 @@ export function Header() {
         </Button>
 
         <div className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600">
-            <Thermometer className="h-5 w-5 text-white" />
+          <div className="relative h-9 w-9">
+            <Image
+              src="/favicons/LIGHT-GREEN-LOGO.svg"
+              alt="Verdant Logo"
+              fill
+              className="object-contain"
+              unoptimized
+            />
           </div>
           <div className="hidden sm:block">
             <h1 className="text-lg font-bold text-gray-900 dark:text-white">Verdant</h1>
