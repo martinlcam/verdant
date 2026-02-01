@@ -21,7 +21,7 @@ We believe every city deserves the tools to build a cooler, greener future. Verd
 
 ## Data & Methodology
 
-Verdant is a climate resilience dashboard that visualizes urban heat using real NASA POWER temperature data and NOAA / Environment Canada weather sources. To estimate heat-island intensity, verdant compares temperatures at a city’s center coordinates (“urban”) to a nearby “rural reference” point located ~50 km north of the city center. This offset acts as a simple baseline outside the dense core; the temperature difference (urban − rural) is shown as the heat-island signal, alongside trends and infrastructure recommendations.
+Verdant is a climate resilience dashboard that visualizes urban heat using real NASA POWER temperature data. To estimate heat-island intensity, verdant compares temperatures at a city’s center coordinates (“urban”) to a nearby “rural reference” point located ~50 km north of the city center. This offset acts as a simple baseline outside the dense core; the temperature difference (urban − rural) is shown as the heat-island signal, alongside trends and infrastructure recommendations.
 
 ## Quick Start
 
