@@ -44,16 +44,28 @@ export function MapboxMap() {
 
       const map = new mapboxgl.default.Map({
         container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/satellite-v9',
+        style: 'mapbox://styles/mapbox/streets-v12', // Streets style with 3D building support
         center: [selectedCity.coordinates[1], selectedCity.coordinates[0]],
-        zoom: mapZoom,
-        pitch: 45, // 3D tilt
+        zoom: 16, // Higher zoom to see buildings in detail
+        pitch: 60, // Steeper angle for better 3D building view
         bearing: 0,
         antialias: true,
+        dragRotate: true, // Enable rotation by dragging (right-click or Ctrl+drag)
+        touchZoomRotate: true, // Enable rotation on touch devices
+        touchPitch: true, // Enable pitch adjustment on touch
       });
 
-      // Add terrain
+      // Add navigation controls (zoom, rotate, pitch)
+      const nav = new mapboxgl.default.NavigationControl({
+        showCompass: true,
+        showZoom: true,
+        visualizePitch: true,
+      });
+      map.addControl(nav, 'top-right');
+
+      // Enable 3D buildings and terrain
       map.on('load', () => {
+        // Add terrain for elevation
         map.addSource('mapbox-dem', {
           type: 'raster-dem',
           url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
@@ -61,29 +73,117 @@ export function MapboxMap() {
           maxzoom: 14,
         });
         map.setTerrain({ source: 'mapbox-dem', exaggeration: 1.5 });
+
+        // Enable 3D building extrusion
+        const layers = map.getStyle().layers;
+        
+        // Find existing building layers and enhance them for 3D
+        for (const layer of layers) {
+          if (layer.type === 'fill-extrusion' && layer.id.includes('building')) {
+            // Enhance existing building layer
+            map.setPaintProperty(layer.id, 'fill-extrusion-height', [
+              'get',
+              'height',
+            ]);
+            map.setPaintProperty(layer.id, 'fill-extrusion-base', [
+              'get',
+              'min_height',
+            ]);
+            map.setPaintProperty(layer.id, 'fill-extrusion-color', [
+              'interpolate',
+              ['linear'],
+              ['get', 'height'],
+              0,
+              '#aaa',
+              50,
+              '#888',
+              100,
+              '#666',
+            ]);
+            map.setPaintProperty(layer.id, 'fill-extrusion-opacity', 0.7);
+          }
+        }
+
+        // Add 3D buildings layer if it doesn't exist
+        const hasBuildingLayer = layers.some(
+          (layer) => layer.type === 'fill-extrusion' && layer.id.includes('building'),
+        );
+        
+        if (!hasBuildingLayer) {
+          // Insert 3D buildings layer before labels
+          const labelLayer = layers.find(
+            (layer) => layer.type === 'symbol' && layer.layout && layer.layout['text-field'],
+          );
+          
+          map.addLayer(
+            {
+              id: '3d-buildings',
+              source: 'composite',
+              'source-layer': 'building',
+              type: 'fill-extrusion',
+              minzoom: 14,
+              paint: {
+                'fill-extrusion-color': [
+                  'interpolate',
+                  ['linear'],
+                  ['get', 'height'],
+                  0,
+                  '#aaa',
+                  50,
+                  '#888',
+                  100,
+                  '#666',
+                ],
+                'fill-extrusion-height': [
+                  'interpolate',
+                  ['linear'],
+                  ['zoom'],
+                  14,
+                  0,
+                  15,
+                  ['get', 'height'],
+                ],
+                'fill-extrusion-base': [
+                  'interpolate',
+                  ['linear'],
+                  ['zoom'],
+                  14,
+                  0,
+                  15,
+                  ['get', 'min_height'],
+                ],
+                'fill-extrusion-opacity': 0.7,
+              },
+            },
+            labelLayer?.id,
+          );
+        }
       });
 
       mapRef.current = map;
-
-      return () => {
-        if (mapRef.current) {
-          mapRef.current.remove();
-          mapRef.current = null;
-        }
-      };
     });
-  }, [isMounted, selectedCity, mapZoom]);
+
+    // Cleanup function
+    return () => {
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
+    };
+  }, [isMounted]);
 
   // Update map center when city changes
   useEffect(() => {
     if (mapRef.current && selectedCity) {
       mapRef.current.flyTo({
         center: [selectedCity.coordinates[1], selectedCity.coordinates[0]],
-        zoom: mapZoom,
-        duration: 1000,
+        zoom: 16, // Higher zoom for 3D building view
+        pitch: 60, // Steeper angle for better 3D view
+        bearing: mapRef.current.getBearing(), // Maintain current rotation
+        duration: 1500,
       });
     }
-  }, [selectedCity, mapZoom]);
+  }, [selectedCity]);
 
   if (!isMounted) {
     return (
