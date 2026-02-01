@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { generateHeatZones, generateRecommendations } from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
 import { getInfrastructureIcon, getPriorityColor } from '@/lib/utils';
@@ -9,6 +9,14 @@ import { getInfrastructureIcon, getPriorityColor } from '@/lib/utils';
 // Dynamic import for Leaflet components (client-side only)
 const MapContainer = dynamic(() => import('react-leaflet').then((mod) => mod.MapContainer), {
   ssr: false,
+  loading: () => (
+    <div className="flex h-full w-full items-center justify-center bg-gray-100 dark:bg-gray-800">
+      <div className="text-center">
+        <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent mx-auto" />
+        <p className="text-gray-600 dark:text-gray-400">Loading map...</p>
+      </div>
+    </div>
+  ),
 });
 const TileLayer = dynamic(() => import('react-leaflet').then((mod) => mod.TileLayer), {
   ssr: false,
@@ -22,14 +30,14 @@ const Popup = dynamic(() => import('react-leaflet').then((mod) => mod.Popup), { 
 export function HeatMap() {
   const { selectedCity, activeLayers, setSelectedHeatZone, setSelectedRecommendation, mapZoom } =
     useDashboardStore();
-  const [isClient, setIsClient] = useState(false);
-  const [L, setL] = useState<typeof import('leaflet') | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setIsClient(true);
-    import('leaflet').then((leaflet) => {
-      setL(leaflet.default);
-    });
+    if (typeof window === 'undefined') return;
+    
+    // Wait for DOM to be ready
+    setIsMounted(true);
   }, []);
 
   const heatZones = useMemo(() => {
@@ -40,7 +48,18 @@ export function HeatMap() {
     return generateRecommendations(selectedCity);
   }, [selectedCity]);
 
-  if (!isClient || !L) {
+  if (!isMounted) {
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-gray-100 dark:bg-gray-800">
+        <div className="text-center">
+          <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent mx-auto" />
+          <p className="text-gray-600 dark:text-gray-400">Loading map...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isMounted) {
     return (
       <div className="flex h-full w-full items-center justify-center bg-gray-100 dark:bg-gray-800">
         <div className="text-center">
@@ -52,12 +71,13 @@ export function HeatMap() {
   }
 
   return (
-    <div className="relative h-full w-full">
+    <div ref={containerRef} className="relative h-full w-full">
       <MapContainer
         center={selectedCity.coordinates}
         zoom={mapZoom}
         className="h-full w-full"
         zoomControl={true}
+        key={`map-${selectedCity.id}-${mapZoom}`}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

@@ -26,6 +26,8 @@ interface DashboardStore {
   setShowRecommendations: (show: boolean) => void;
   selectedRecommendation: GreenInfrastructureRecommendation | null;
   setSelectedRecommendation: (rec: GreenInfrastructureRecommendation | null) => void;
+  implementedRecommendations: string[]; // IDs of implemented recommendations
+  toggleImplementedRecommendation: (recId: string) => void;
 
   // Heat zones
   selectedHeatZone: HeatZone | null;
@@ -56,6 +58,7 @@ export const useDashboardStore = create<DashboardStore>((set) => {
         selectedCity: city,
         mapCenter: city.coordinates,
         mapZoom: 12,
+        implementedRecommendations: [], // Clear implemented recommendations when city changes
       }),
 
     // Date selection
@@ -82,6 +85,13 @@ export const useDashboardStore = create<DashboardStore>((set) => {
     setShowRecommendations: (show) => set({ showRecommendations: show }),
     selectedRecommendation: null,
     setSelectedRecommendation: (rec) => set({ selectedRecommendation: rec }),
+    implementedRecommendations: [],
+    toggleImplementedRecommendation: (recId) =>
+      set((state) => ({
+        implementedRecommendations: state.implementedRecommendations.includes(recId)
+          ? state.implementedRecommendations.filter((id) => id !== recId)
+          : [...state.implementedRecommendations, recId],
+      })),
 
     // Heat zones
     selectedHeatZone: null,

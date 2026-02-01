@@ -12,36 +12,63 @@ import {
   X,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { useDashboardStore } from '@/lib/store';
 import { cn } from '@/lib/utils';
 import type { LayerType } from '@/types';
 
-const layers: { id: LayerType; name: string; icon: React.ReactNode; color: string }[] = [
+const layers: {
+  id: LayerType;
+  name: string;
+  icon: React.ReactNode;
+  color: string;
+  description: string;
+}[] = [
   {
     id: 'heat',
     name: 'Heat Map',
     icon: <ThermometerSun className="h-4 w-4" />,
     color: 'text-red-500',
+    description:
+      'Toggles the display of temperature zones on the map. Shows heat hotspots with color-coded polygons (red for extreme, orange for high, yellow for moderate).',
   },
   {
     id: 'vegetation',
     name: 'Vegetation',
     icon: <Leaf className="h-4 w-4" />,
     color: 'text-green-500',
+    description:
+      'Toggles the display of green spaces, parks, and vegetation areas on the map. This layer helps visualize where natural cooling occurs.',
   },
   {
     id: 'infrastructure',
     name: 'Infrastructure',
     icon: <Layers className="h-4 w-4" />,
     color: 'text-blue-500',
+    description:
+      'Toggles the display of buildings, roads, and urban infrastructure on the map. This layer helps identify areas with dense development that may contribute to heat islands.',
   },
   {
     id: 'recommendations',
     name: 'Recommendations',
     icon: <TreeDeciduous className="h-4 w-4" />,
     color: 'text-emerald-500',
+    description:
+      'Toggles the display of suggested green infrastructure project locations on the map. Click markers to see project details.',
   },
-  { id: 'sensors', name: 'Sensors', icon: <Radio className="h-4 w-4" />, color: 'text-purple-500' },
+  {
+    id: 'sensors',
+    name: 'Sensors',
+    icon: <Radio className="h-4 w-4" />,
+    color: 'text-purple-500',
+    description:
+      'Toggles the display of temperature and environmental monitoring sensor locations on the map.',
+  },
 ];
 
 export function Sidebar() {
@@ -79,32 +106,46 @@ export function Sidebar() {
               <Map className="h-4 w-4" />
               Map Layers
             </h3>
-            <div className="space-y-2">
-              {layers.map((layer) => (
-                <button
-                  type="button"
-                  key={layer.id}
-                  onClick={() => toggleLayer(layer.id)}
-                  className={cn(
-                    'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
-                    activeLayers.includes(layer.id)
-                      ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'
-                      : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800',
-                  )}
-                >
-                  <span className={cn(layer.color)}>{layer.icon}</span>
-                  <span>{layer.name}</span>
-                  <div
-                    className={cn(
-                      'ml-auto h-2 w-2 rounded-full',
-                      activeLayers.includes(layer.id)
-                        ? 'bg-emerald-500'
-                        : 'bg-gray-300 dark:bg-gray-600',
-                    )}
-                  />
-                </button>
-              ))}
-            </div>
+            <TooltipProvider delayDuration={200}>
+              <div className="space-y-2">
+                {layers.map((layer) => (
+                  <Tooltip key={layer.id}>
+                    <TooltipTrigger asChild>
+                      <button
+                        type="button"
+                        onClick={() => toggleLayer(layer.id)}
+                        className={cn(
+                          'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors font-alliance',
+                          activeLayers.includes(layer.id)
+                            ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'
+                            : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800',
+                        )}
+                      >
+                        <span className={cn(layer.color)}>{layer.icon}</span>
+                        <span>{layer.name}</span>
+                        <div
+                          className={cn(
+                            'ml-auto h-2 w-2 rounded-full',
+                            activeLayers.includes(layer.id)
+                              ? 'bg-emerald-500'
+                              : 'bg-gray-300 dark:bg-gray-600',
+                          )}
+                        />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent
+                      side="right"
+                      className="max-w-xs p-4 text-sm !bg-gray-900 !border-gray-800 !text-gray-100 shadow-xl backdrop-blur-sm font-alliance"
+                    >
+                      <div className="space-y-2">
+                        <h4 className="font-semibold mb-1.5 text-gray-50">{layer.name}</h4>
+                        <p className="text-xs text-gray-300 leading-relaxed">{layer.description}</p>
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
+                ))}
+              </div>
+            </TooltipProvider>
           </div>
 
           {/* Heat Legend */}

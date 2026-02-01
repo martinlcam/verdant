@@ -7,6 +7,21 @@ import type {
   TemperatureRecord,
 } from '@/types';
 
+// Seeded random number generator for deterministic values
+function seededRandom(seed: string): () => number {
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    const char = seed.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  let value = Math.abs(hash) / 2147483647;
+  return () => {
+    value = (value * 9301 + 49297) % 233280;
+    return value / 233280;
+  };
+}
+
 // Canadian cities with their coordinates
 export const CANADIAN_CITIES: City[] = [
   {
@@ -93,8 +108,9 @@ export const CANADIAN_CITIES: City[] = [
 
 // Generate mock heat zones for a city
 export function generateHeatZones(city: City): HeatZone[] {
+  const random = seededRandom(city.id);
   const zones: HeatZone[] = [];
-  const baseTemp = 28 + Math.random() * 8;
+  const baseTemp = 28 + random() * 8;
 
   const zoneNames = [
     'Downtown Core',
@@ -115,33 +131,38 @@ export function generateHeatZones(city: City): HeatZone[] {
   ];
 
   for (let i = 0; i < 6; i++) {
-    const offset = 0.02 + Math.random() * 0.03;
-    const lat = city.coordinates[0] + (Math.random() - 0.5) * offset * 2;
-    const lng = city.coordinates[1] + (Math.random() - 0.5) * offset * 2;
-    const temp = baseTemp + Math.random() * 10 - 2;
+    const offset = 0.02 + random() * 0.03;
+    const lat = city.coordinates[0] + (random() - 0.5) * offset * 2;
+    const lng = city.coordinates[1] + (random() - 0.5) * offset * 2;
+    const temp = baseTemp + random() * 10 - 2;
 
     zones.push({
       id: `zone-${city.id}-${i}`,
       name: zoneNames[i % zoneNames.length],
       severity: severities[Math.min(3, Math.floor((temp - 28) / 4))],
       avgTemperature: temp,
-      maxTemperature: temp + 2 + Math.random() * 3,
-      area: 0.5 + Math.random() * 2,
-      coordinates: generatePolygon(lat, lng, 0.01 + Math.random() * 0.01),
-      vulnerabilityScore: 30 + Math.random() * 60,
+      maxTemperature: temp + 2 + random() * 3,
+      area: 0.5 + random() * 2,
+      coordinates: generatePolygon(lat, lng, 0.01 + random() * 0.01, random),
+      vulnerabilityScore: 30 + random() * 60,
     });
   }
 
   return zones.sort((a, b) => b.avgTemperature - a.avgTemperature);
 }
 
-function generatePolygon(centerLat: number, centerLng: number, radius: number): [number, number][] {
+function generatePolygon(
+  centerLat: number,
+  centerLng: number,
+  radius: number,
+  random: () => number,
+): [number, number][] {
   const points: [number, number][] = [];
   const numPoints = 6;
 
   for (let i = 0; i < numPoints; i++) {
     const angle = (i / numPoints) * Math.PI * 2;
-    const r = radius * (0.8 + Math.random() * 0.4);
+    const r = radius * (0.8 + random() * 0.4);
     points.push([centerLat + Math.cos(angle) * r, centerLng + Math.sin(angle) * r * 1.5]);
   }
 
@@ -177,6 +198,7 @@ export function generateTemperatureHistory(_city: City, months: number = 12): Te
 
 // Generate green infrastructure recommendations
 export function generateRecommendations(city: City): GreenInfrastructureRecommendation[] {
+  const random = seededRandom(city.id);
   const types: GreenInfrastructureRecommendation['type'][] = [
     'urban_park',
     'green_roof',
@@ -220,23 +242,23 @@ export function generateRecommendations(city: City): GreenInfrastructureRecommen
   ];
 
   for (let i = 0; i < 8; i++) {
-    const type = types[Math.floor(Math.random() * types.length)];
-    const priority = priorities[Math.floor(Math.random() * priorities.length)];
+    const type = types[Math.floor(random() * types.length)];
+    const priority = priorities[Math.floor(random() * priorities.length)];
 
     recommendations.push({
       id: `rec-${city.id}-${i}`,
       type,
       location: [
-        city.coordinates[0] + (Math.random() - 0.5) * 0.06,
-        city.coordinates[1] + (Math.random() - 0.5) * 0.08,
+        city.coordinates[0] + (random() - 0.5) * 0.06,
+        city.coordinates[1] + (random() - 0.5) * 0.08,
       ],
       name: names[i % names.length],
       priority,
-      estimatedCost: Math.round((500000 + Math.random() * 4500000) / 10000) * 10000,
-      estimatedCoolingEffect: 0.5 + Math.random() * 2.5,
-      area: Math.round(1000 + Math.random() * 49000),
-      benefitScore: Math.round(40 + Math.random() * 55),
-      description: descriptions[Math.floor(Math.random() * descriptions.length)],
+      estimatedCost: Math.round((500000 + random() * 4500000) / 10000) * 10000,
+      estimatedCoolingEffect: 0.5 + random() * 2.5,
+      area: Math.round(1000 + random() * 49000),
+      benefitScore: Math.round(40 + random() * 55),
+      description: descriptions[Math.floor(random() * descriptions.length)],
     });
   }
 
@@ -247,18 +269,74 @@ export function generateRecommendations(city: City): GreenInfrastructureRecommen
 }
 
 // Generate city statistics
-export function generateCityStats(city: City): CityStats {
-  const baseTemp = 20 + Math.random() * 10;
-  const ruralTemp = baseTemp - 4 - Math.random() * 3;
+export function generateCityStats(
+  city: City,
+  implementedRecommendations: GreenInfrastructureRecommendation[] = [],
+): CityStats {
+  const random = seededRandom(city.id);
+  const baseTemp = 20 + random() * 10;
+  const ruralTemp = baseTemp - 4 - random() * 3;
+
+  // Base stats
+  const baseHotspotCount = Math.floor(5 + random() * 15);
+  const baseGreenCoverage = Math.round((15 + random() * 25) * 10) / 10;
+  const baseVulnerablePopulation = Math.round(city.population * (0.08 + random() * 0.12));
+
+  // Calculate impact from implemented recommendations
+  // Different types contribute differently to green coverage:
+  // - High vegetation types (parks, trees) = 100% contribution
+  // - Medium vegetation types (green roofs, bioswales) = 60% contribution
+  // - Low vegetation types (cool pavement, permeable) = 20% contribution (infrastructure, not green)
+  // - Water features = 40% contribution (water, not vegetation)
+  const greenCoverageMultipliers: Record<string, number> = {
+    urban_park: 1.0, // 100% - full green coverage
+    tree_planting: 1.0, // 100% - full green coverage
+    green_roof: 0.6, // 60% - vegetation but on buildings
+    bioswale: 0.6, // 60% - vegetation with water management
+    water_feature: 0.4, // 40% - water, not vegetation
+    cool_pavement: 0.2, // 20% - infrastructure, minimal green
+    permeable_surface: 0.2, // 20% - infrastructure, minimal green
+  };
+
+  const effectiveGreenArea = implementedRecommendations.reduce((sum, rec) => {
+    const multiplier = greenCoverageMultipliers[rec.type] || 0.5; // Default 50% if unknown type
+    return sum + (rec.area || 0) * multiplier;
+  }, 0);
+
+  const cityAreaKm2 = city?.area || 1; // city.area is in km², default to 1 to avoid division by zero
+  const cityAreaM2 = cityAreaKm2 * 1000000; // Convert to m²
+  // Calculate additional green coverage percentage
+  // Multiply by 10 to make the impact more visible (each recommendation adds ~0.1-0.5% instead of ~0.01-0.05%)
+  const additionalGreenCoveragePercent =
+    cityAreaM2 > 0 && !isNaN(effectiveGreenArea) ? (effectiveGreenArea / cityAreaM2) * 100 * 10 : 0;
+
+  // Each recommendation reduces hotspots (more green = fewer hotspots)
+  // Assume each recommendation can reduce 1-3 hotspots depending on area and type
+  // Increased from 0.5-1.5 to make the impact more visible
+  const hotspotReduction = implementedRecommendations.reduce((sum, rec) => {
+    const reductionFactor = rec.area > 20000 ? 3.0 : rec.area > 10000 ? 2.0 : 1.0;
+    return sum + reductionFactor;
+  }, 0);
+
+  // Each recommendation reduces vulnerable population by providing cooling and better access
+  // Larger projects and higher priority ones have more impact
+  // Assume each recommendation can reduce 2-5% of base vulnerable population
+  // Increased from 1-3% to make the impact more visible
+  const vulnerablePopulationReduction = implementedRecommendations.reduce((sum, rec) => {
+    let reductionPercent = 0.02; // Base 2% reduction (increased from 1%)
+    if (rec.area > 20000) reductionPercent += 0.02; // Large projects reduce more
+    if (rec.priority === 'critical' || rec.priority === 'high') reductionPercent += 0.01; // High priority reduces more
+    return sum + reductionPercent;
+  }, 0);
 
   return {
     avgUrbanTemp: Math.round(baseTemp * 10) / 10,
     avgRuralTemp: Math.round(ruralTemp * 10) / 10,
     heatIslandIntensity: Math.round((baseTemp - ruralTemp) * 10) / 10,
-    hotspotCount: Math.floor(5 + Math.random() * 15),
-    greenCoverage: Math.round((15 + Math.random() * 25) * 10) / 10,
-    vulnerablePopulation: Math.round(city.population * (0.08 + Math.random() * 0.12)),
-    projectedTempIncrease: Math.round((1.5 + Math.random() * 2) * 10) / 10,
+    hotspotCount: Math.max(0, Math.floor(baseHotspotCount - hotspotReduction)),
+    greenCoverage: Math.min(100, Math.round((baseGreenCoverage + additionalGreenCoveragePercent) * 10) / 10),
+    vulnerablePopulation: Math.max(0, Math.round(baseVulnerablePopulation * (1 - vulnerablePopulationReduction))),
+    projectedTempIncrease: Math.round((1.5 + random() * 2) * 10) / 10,
   };
 }
 

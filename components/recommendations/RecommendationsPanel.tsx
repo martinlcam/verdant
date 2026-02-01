@@ -12,6 +12,12 @@ import {
 import { useMemo } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { generateRecommendations } from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
 import { formatArea, formatTemperatureDifference } from '@/lib/utils';
@@ -37,7 +43,13 @@ const priorityColors: Record<string, string> = {
 };
 
 export function RecommendationsPanel() {
-  const { selectedCity, setSelectedRecommendation, selectedRecommendation } = useDashboardStore();
+  const {
+    selectedCity,
+    setSelectedRecommendation,
+    selectedRecommendation,
+    implementedRecommendations,
+    toggleImplementedRecommendation,
+  } = useDashboardStore();
 
   const recommendations = useMemo(() => {
     return generateRecommendations(selectedCity);
@@ -59,19 +71,19 @@ export function RecommendationsPanel() {
   }, [recommendations]);
 
   return (
-    <Card className="h-full flex flex-col">
+    <Card className="h-full flex flex-col font-alliance">
       <CardHeader className="pb-2">
-        <CardTitle className="flex items-center justify-between text-base font-semibold">
+        <CardTitle className="flex items-center justify-between text-base font-semibold font-alliance">
           <span className="flex items-center gap-2">
             <TreeDeciduous className="h-4 w-4 text-emerald-500" />
             Green Infrastructure
           </span>
-          <Badge variant="default" className="text-xs">
+          <Badge variant="default" className="text-xs font-alliance">
             {recommendations.length} sites
           </Badge>
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col overflow-hidden min-h-0">
+      <CardContent className="flex-1 flex flex-col overflow-hidden min-h-0 font-alliance">
         {/* Summary Stats */}
         <div className="mb-4 grid grid-cols-3 gap-2 shrink-0">
           <div className="rounded-lg bg-blue-50 p-2.5 dark:bg-blue-950">
@@ -110,7 +122,14 @@ export function RecommendationsPanel() {
               key={rec.id}
               recommendation={rec}
               isSelected={selectedRecommendation?.id === rec.id}
-              onSelect={() => setSelectedRecommendation(rec)}
+              onSelect={() => {
+                // Toggle selection: if already selected, deselect; otherwise select
+                if (selectedRecommendation?.id === rec.id) {
+                  setSelectedRecommendation(null);
+                } else {
+                  setSelectedRecommendation(rec);
+                }
+              }}
             />
           ))}
         </div>
@@ -126,57 +145,115 @@ interface RecommendationCardProps {
 }
 
 function RecommendationCard({ recommendation, isSelected, onSelect }: RecommendationCardProps) {
+  const { implementedRecommendations, toggleImplementedRecommendation } = useDashboardStore();
+  const isImplemented = implementedRecommendations.includes(recommendation.id);
+
+  const handleClick = (e: React.MouseEvent) => {
+    // Click the entire card to toggle implementation
+    e.preventDefault();
+    e.stopPropagation();
+    toggleImplementedRecommendation(recommendation.id);
+  };
+
   return (
-    <button
-      type="button"
-      onClick={onSelect}
-      className={`w-full rounded-lg border p-3 text-left transition-all ${
-        isSelected
-          ? 'border-emerald-500 bg-emerald-50 ring-1 ring-emerald-500 dark:bg-emerald-950'
-          : 'border-gray-200 bg-white hover:border-emerald-300 hover:bg-emerald-50/50 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-emerald-800'
-      }`}
-    >
-      <div className="flex items-start gap-3">
-        <div className={`rounded-lg p-2 ${priorityColors[recommendation.priority]}`}>
-          {typeIcons[recommendation.type] || <TreeDeciduous className="h-4 w-4" />}
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2">
-            <p className="truncate font-medium text-gray-900 dark:text-white">
-              {recommendation.name}
-            </p>
-          </div>
-          <p className="mt-1 text-xs text-gray-500 line-clamp-2 dark:text-gray-400">
-            {recommendation.description}
-          </p>
-          <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
-            <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-              <Thermometer className="h-3 w-3" />
-              {formatTemperatureDifference(-recommendation.estimatedCoolingEffect)}
-            </span>
-            <span className="text-gray-400">•</span>
-            <span className="text-gray-600 dark:text-gray-400">
-              {formatArea(recommendation.area)}
-            </span>
-            <span className="text-gray-400">•</span>
-            <span className="text-gray-600 dark:text-gray-400 capitalize">
-              {recommendation.type.replace('_', ' ')}
-            </span>
-          </div>
-        </div>
-        <Badge
-          variant={
-            recommendation.priority === 'critical'
-              ? 'destructive'
-              : recommendation.priority === 'high'
-                ? 'warning'
-                : 'secondary'
-          }
-          className="shrink-0 text-xs capitalize"
+    <TooltipProvider delayDuration={200}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            onClick={handleClick}
+            className={`w-full rounded-lg border p-3 text-left transition-all font-alliance cursor-pointer ${
+              isImplemented
+                ? 'border-emerald-600 bg-emerald-100 ring-2 ring-emerald-500 dark:bg-emerald-900 dark:border-emerald-500'
+                : isSelected
+                  ? 'border-emerald-500 bg-emerald-50 ring-1 ring-emerald-500 dark:bg-emerald-950'
+                  : 'border-gray-200 bg-white hover:border-emerald-300 hover:bg-emerald-50/50 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-emerald-800'
+            }`}
+          >
+            <div className="flex items-start gap-3">
+              <div className={`rounded-lg p-2 ${priorityColors[recommendation.priority]}`}>
+                <span className="text-current">
+                  {typeIcons[recommendation.type] || <TreeDeciduous className="h-4 w-4" />}
+                </span>
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <p className="truncate font-medium text-gray-900 dark:text-white">
+                    {recommendation.name}
+                  </p>
+                </div>
+                <p className="mt-1 text-xs text-gray-500 line-clamp-2 dark:text-gray-400">
+                  {recommendation.description}
+                </p>
+                <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
+                  <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
+                    <Thermometer className="h-3 w-3" />
+                    {formatTemperatureDifference(-recommendation.estimatedCoolingEffect)}
+                  </span>
+                  <span className="text-gray-400">•</span>
+                  <span className="text-gray-600 dark:text-gray-400">
+                    {formatArea(recommendation.area)}
+                  </span>
+                  <span className="text-gray-400">•</span>
+                  <span className="text-gray-600 dark:text-gray-400 capitalize">
+                    {recommendation.type.replace('_', ' ')}
+                  </span>
+                </div>
+              </div>
+              <Badge
+                variant={
+                  recommendation.priority === 'critical'
+                    ? 'destructive'
+                    : recommendation.priority === 'high'
+                      ? 'warning'
+                      : 'secondary'
+                }
+                className="shrink-0 text-xs capitalize"
+              >
+                {recommendation.priority}
+              </Badge>
+            </div>
+          </button>
+        </TooltipTrigger>
+        <TooltipContent
+          side="left"
+          className="max-w-sm p-4 text-sm !bg-gray-900 !border-gray-800 !text-gray-100 shadow-xl backdrop-blur-sm font-alliance"
         >
-          {recommendation.priority}
-        </Badge>
-      </div>
-    </button>
+          <div className="space-y-3">
+            <div>
+              <h4 className="font-semibold mb-2 text-gray-50 text-base">{recommendation.name}</h4>
+              <p className="text-xs text-gray-300 leading-relaxed">{recommendation.description}</p>
+            </div>
+            <div className="border-t border-gray-700 pt-2 space-y-1.5">
+              <div className="flex items-center gap-2 text-xs">
+                <Thermometer className="h-3.5 w-3.5 text-emerald-400" />
+                <span className="text-gray-300">
+                  <strong className="text-gray-200">Cooling Effect:</strong>{' '}
+                  {formatTemperatureDifference(-recommendation.estimatedCoolingEffect)}
+                </span>
+              </div>
+              <div className="flex items-center gap-2 text-xs">
+                <Ruler className="h-3.5 w-3.5 text-gray-400" />
+                <span className="text-gray-300">
+                  <strong className="text-gray-200">Area:</strong> {formatArea(recommendation.area)}
+                </span>
+              </div>
+              <div className="text-xs">
+                <span className="text-gray-300">
+                  <strong className="text-gray-200">Type:</strong>{' '}
+                  <span className="capitalize">{recommendation.type.replace('_', ' ')}</span>
+                </span>
+              </div>
+              <div className="text-xs">
+                <span className="text-gray-300">
+                  <strong className="text-gray-200">Priority:</strong>{' '}
+                  <span className="capitalize">{recommendation.priority}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
