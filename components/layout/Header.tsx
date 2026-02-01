@@ -1,9 +1,15 @@
 'use client';
 
-import { Download, Info, Menu, Moon, Sun } from 'lucide-react';
+import { Download, FileImage, FileSpreadsheet, FileText, Info, Menu, Moon, Sun } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import {
   Select,
   SelectContent,
@@ -11,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { CANADIAN_CITIES } from '@/lib/data';
+import { CANADIAN_CITIES, generateCityStats, generateHeatZones, generateRecommendations } from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
 
 export function Header() {
@@ -29,6 +35,68 @@ export function Header() {
   const toggleTheme = () => {
     setIsDark(!isDark);
     document.documentElement.classList.toggle('dark');
+  };
+
+  const handleExport = async (format: 'csv' | 'json' | 'png') => {
+    const stats = generateCityStats(selectedCity);
+    const zones = generateHeatZones(selectedCity);
+    const recommendations = generateRecommendations(selectedCity);
+
+    if (format === 'csv') {
+      // Generate CSV content
+      const csvContent = [
+        ['Heat Zone Report for', selectedCity.name, selectedCity.province].join(','),
+        '',
+        [
+          'Zone Name',
+          'Severity',
+          'Avg Temperature',
+          'Max Temperature',
+          'Area (km²)',
+          'Vulnerability Score',
+        ].join(','),
+        ...zones.map((z) =>
+          [
+            z.name,
+            z.severity,
+            z.avgTemperature.toFixed(1),
+            z.maxTemperature.toFixed(1),
+            z.area.toFixed(2),
+            z.vulnerabilityScore.toFixed(0),
+          ].join(','),
+        ),
+      ].join('\n');
+
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      downloadBlob(blob, `verdant-${selectedCity.id}-report.csv`);
+    } else if (format === 'json') {
+      const report = {
+        city: selectedCity,
+        stats,
+        heatZones: zones,
+        recommendations,
+        generatedAt: new Date().toISOString(),
+      };
+
+      const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+      downloadBlob(blob, `verdant-${selectedCity.id}-data.json`);
+    } else if (format === 'png') {
+      // For PNG, we'd capture the map - simplified here
+      alert(
+        'Map screenshot feature would capture the current view. This requires additional setup with html2canvas.',
+      );
+    }
+  };
+
+  const downloadBlob = (blob: Blob, filename: string) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -74,9 +142,27 @@ export function Header() {
           </SelectContent>
         </Select>
 
-        <Button variant="outline" size="icon" className="hidden sm:flex">
-          <Download className="h-4 w-4" />
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon" className="hidden sm:flex">
+              <Download className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48">
+            <DropdownMenuItem onClick={() => handleExport('csv')} className="cursor-pointer">
+              <FileSpreadsheet className="mr-2 h-4 w-4" />
+              <span>CSV Report</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleExport('json')} className="cursor-pointer">
+              <FileText className="mr-2 h-4 w-4" />
+              <span>JSON Data</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleExport('png')} className="cursor-pointer">
+              <FileImage className="mr-2 h-4 w-4" />
+              <span>Map Image</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         <Button variant="ghost" size="icon" onClick={toggleTheme}>
           {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
