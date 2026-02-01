@@ -16,7 +16,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { CANADIAN_CITIES, generateCityStats, generateHeatZones, generateRecommendations } from '@/lib/data';
+import {
+  CANADIAN_CITIES,
+  generateCityStats,
+  generateHeatZones,
+  generateRecommendations,
+} from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
 
 export function Header() {
