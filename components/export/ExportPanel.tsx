@@ -41,7 +41,7 @@ export function ExportPanel() {
       ].join('\n');
 
       const blob = new Blob([csvContent], { type: 'text/csv' });
-      downloadBlob(blob, `urbanheat-${selectedCity.id}-report.csv`);
+      downloadBlob(blob, `verdant-${selectedCity.id}-report.csv`);
     } else if (format === 'json') {
       const report = {
         city: selectedCity,
@@ -52,7 +52,7 @@ export function ExportPanel() {
       };
       
       const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
-      downloadBlob(blob, `urbanheat-${selectedCity.id}-data.json`);
+      downloadBlob(blob, `verdant-${selectedCity.id}-data.json`);
     } else if (format === 'png') {
       // For PNG, we'd capture the map - simplified here
       alert('Map screenshot feature would capture the current view. This requires additional setup with html2canvas.');

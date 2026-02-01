@@ -54,8 +54,8 @@ export function Header() {
             <Thermometer className="h-5 w-5 text-white" />
           </div>
           <div className="hidden sm:block">
-            <h1 className="text-lg font-bold text-gray-900 dark:text-white">UrbanHeat</h1>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Climate Resilience Dashboard</p>
+            <h1 className="text-lg font-bold text-gray-900 dark:text-white">Verdant</h1>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Urban Heat Intelligence</p>
           </div>
         </div>
       </div>

@@ -14,13 +14,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "UrbanHeat | Climate Resilience Dashboard",
-  description: "AI-powered urban heat island analysis and green infrastructure planning for Canadian cities",
+  title: "Verdant | Urban Heat Intelligence",
+  description: "Fighting urban heat islands through data-driven green infrastructure planning for Canadian cities",
   keywords: ["urban heat island", "climate resilience", "green infrastructure", "city planning", "heat mapping"],
-  authors: [{ name: "UrbanHeat Team" }],
+  authors: [{ name: "Verdant Team" }],
   openGraph: {
-    title: "UrbanHeat | Climate Resilience Dashboard",
-    description: "AI-powered urban heat island analysis and green infrastructure planning",
+    title: "Verdant | Urban Heat Intelligence",
+    description: "Fighting urban heat islands through data-driven green infrastructure planning",
     type: "website",
   },
 };
