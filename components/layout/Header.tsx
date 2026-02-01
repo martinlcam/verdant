@@ -1,8 +1,7 @@
 'use client';
 
-import { Download, FileImage, FileSpreadsheet, FileText, Info, Menu, Moon, Sun } from 'lucide-react';
+import { Download, FileImage, FileSpreadsheet, FileText, Info, Menu } from 'lucide-react';
 import Image from 'next/image';
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -23,18 +22,11 @@ import { useDashboardStore } from '@/lib/store';
 export function Header() {
   const { selectedCity, setSelectedCity, sidebarOpen, setSidebarOpen } = useDashboardStore();
 
-  const [isDark, setIsDark] = useState(false);
-
   const handleCityChange = (cityId: string) => {
     const city = CANADIAN_CITIES.find((c) => c.id === cityId);
     if (city) {
       setSelectedCity(city);
     }
-  };
-
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-    document.documentElement.classList.toggle('dark');
   };
 
   const handleExport = async (format: 'csv' | 'json' | 'png') => {
@@ -163,10 +155,6 @@ export function Header() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-
-        <Button variant="ghost" size="icon" onClick={toggleTheme}>
-          {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-        </Button>
 
         <Button variant="ghost" size="icon">
           <Info className="h-4 w-4" />
