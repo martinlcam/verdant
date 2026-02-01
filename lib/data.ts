@@ -4,7 +4,10 @@ import type {
   GreenInfrastructureRecommendation,
   HeatDataPoint,
   HeatZone,
+  InfrastructurePoint,
+  SensorLocation,
   TemperatureRecord,
+  VegetationArea,
 } from '@/types';
 
 // Seeded random number generator for deterministic values
@@ -408,6 +411,114 @@ export function generateHeatMapData(city: City, resolution: number = 20): HeatDa
   }
 
   return points;
+}
+
+// Generate vegetation areas for the map
+export function generateVegetationAreas(city: City): VegetationArea[] {
+  const random = seededRandom(`${city.id}-vegetation`);
+  const areas: VegetationArea[] = [];
+  const baseLat = city.coordinates[0];
+  const baseLng = city.coordinates[1];
+
+  const types: VegetationArea['type'][] = ['park', 'forest', 'garden', 'greenway'];
+  const names = [
+    'Central Park',
+    'Riverside Greenway',
+    'Community Garden',
+    'Urban Forest',
+    'Memorial Park',
+    'Botanical Gardens',
+    'Nature Reserve',
+    'Green Corridor',
+  ];
+
+  for (let i = 0; i < 5; i++) {
+    const lat = baseLat + (random() - 0.5) * 0.08;
+    const lng = baseLng + (random() - 0.5) * 0.08;
+    const radius = 0.005 + random() * 0.01;
+
+    areas.push({
+      id: `veg-${city.id}-${i}`,
+      name: names[i % names.length],
+      type: types[Math.floor(random() * types.length)],
+      coordinates: generatePolygon(lat, lng, radius, random),
+      area: 0.2 + random() * 1.5,
+      ndvi: 0.4 + random() * 0.4,
+    });
+  }
+
+  return areas;
+}
+
+// Generate infrastructure points for the map
+export function generateInfrastructurePoints(city: City): InfrastructurePoint[] {
+  const random = seededRandom(`${city.id}-infrastructure`);
+  const points: InfrastructurePoint[] = [];
+  const baseLat = city.coordinates[0];
+  const baseLng = city.coordinates[1];
+
+  const types: InfrastructurePoint['type'][] = ['building', 'road', 'bridge', 'parking'];
+  const names = [
+    'City Hall',
+    'Main Street',
+    'Highway Bridge',
+    'Shopping Center',
+    'Office Complex',
+    'Transit Station',
+    'Parking Garage',
+    'Industrial Zone',
+  ];
+
+  for (let i = 0; i < 8; i++) {
+    const lat = baseLat + (random() - 0.5) * 0.1;
+    const lng = baseLng + (random() - 0.5) * 0.1;
+
+    points.push({
+      id: `infra-${city.id}-${i}`,
+      name: names[i % names.length],
+      type: types[Math.floor(random() * types.length)],
+      location: [lat, lng],
+      size: 0.5 + random() * 1.5,
+    });
+  }
+
+  return points;
+}
+
+// Generate sensor locations for the map
+export function generateSensorLocations(city: City): SensorLocation[] {
+  const random = seededRandom(`${city.id}-sensors`);
+  const sensors: SensorLocation[] = [];
+  const baseLat = city.coordinates[0];
+  const baseLng = city.coordinates[1];
+
+  const names = [
+    'Downtown Sensor',
+    'Park Monitoring Station',
+    'Residential Area Sensor',
+    'Industrial Zone Monitor',
+    'Waterfront Station',
+    'Transit Hub Sensor',
+    'University Campus Monitor',
+    'Suburban Station',
+  ];
+
+  for (let i = 0; i < 6; i++) {
+    const lat = baseLat + (random() - 0.5) * 0.1;
+    const lng = baseLng + (random() - 0.5) * 0.1;
+    const temp = 20 + random() * 12;
+    const lastReading = new Date(Date.now() - random() * 3600000).toISOString();
+
+    sensors.push({
+      id: `sensor-${city.id}-${i}`,
+      name: names[i % names.length],
+      location: [lat, lng],
+      temperature: Math.round(temp * 10) / 10,
+      lastReading,
+    });
+  }
+
+  return sensors;
 }
 
 // Time series data for charts

@@ -100,6 +100,31 @@ export interface DashboardState {
 
 export type LayerType = 'heat' | 'vegetation' | 'infrastructure' | 'recommendations' | 'sensors';
 
+export interface VegetationArea {
+  id: string;
+  name: string;
+  type: 'park' | 'forest' | 'garden' | 'greenway';
+  coordinates: [number, number][];
+  area: number; // km²
+  ndvi: number; // 0-1
+}
+
+export interface InfrastructurePoint {
+  id: string;
+  name: string;
+  type: 'building' | 'road' | 'bridge' | 'parking';
+  location: [number, number];
+  size: number; // relative size indicator
+}
+
+export interface SensorLocation {
+  id: string;
+  name: string;
+  location: [number, number];
+  temperature: number; // °C
+  lastReading: string; // ISO date string
+}
+
 export interface ExportOptions {
   format: 'png' | 'csv' | 'pdf';
   includeRecommendations: boolean;

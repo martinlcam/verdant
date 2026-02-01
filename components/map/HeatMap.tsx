@@ -2,7 +2,13 @@
 
 import dynamic from 'next/dynamic';
 import { useEffect, useMemo, useState, useRef } from 'react';
-import { generateHeatZones, generateRecommendations } from '@/lib/data';
+import {
+  generateHeatZones,
+  generateInfrastructurePoints,
+  generateRecommendations,
+  generateSensorLocations,
+  generateVegetationAreas,
+} from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
 import { getInfrastructureIcon, getPriorityColor } from '@/lib/utils';
 
@@ -26,6 +32,7 @@ const CircleMarker = dynamic(() => import('react-leaflet').then((mod) => mod.Cir
 });
 const Polygon = dynamic(() => import('react-leaflet').then((mod) => mod.Polygon), { ssr: false });
 const Popup = dynamic(() => import('react-leaflet').then((mod) => mod.Popup), { ssr: false });
+const Marker = dynamic(() => import('react-leaflet').then((mod) => mod.Marker), { ssr: false });
 
 export function HeatMap() {
   const { selectedCity, activeLayers, setSelectedHeatZone, setSelectedRecommendation, mapZoom } =
@@ -48,16 +55,17 @@ export function HeatMap() {
     return generateRecommendations(selectedCity);
   }, [selectedCity]);
 
-  if (!isMounted) {
-    return (
-      <div className="flex h-full w-full items-center justify-center bg-gray-100 dark:bg-gray-800">
-        <div className="text-center">
-          <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent mx-auto" />
-          <p className="text-gray-600 dark:text-gray-400">Loading map...</p>
-        </div>
-      </div>
-    );
-  }
+  const vegetationAreas = useMemo(() => {
+    return generateVegetationAreas(selectedCity);
+  }, [selectedCity]);
+
+  const infrastructurePoints = useMemo(() => {
+    return generateInfrastructurePoints(selectedCity);
+  }, [selectedCity]);
+
+  const sensorLocations = useMemo(() => {
+    return generateSensorLocations(selectedCity);
+  }, [selectedCity]);
 
   if (!isMounted) {
     return (
@@ -173,6 +181,83 @@ export function HeatMap() {
                       </span>
                     </p>
                   </div>
+                </div>
+              </Popup>
+            </CircleMarker>
+          ))}
+
+        {/* Vegetation Layer */}
+        {activeLayers.includes('vegetation') &&
+          vegetationAreas.map((area) => (
+            <Polygon
+              key={area.id}
+              positions={area.coordinates}
+              pathOptions={{
+                fillColor: '#22c55e',
+                fillOpacity: 0.4,
+                color: '#16a34a',
+                weight: 2,
+              }}
+            >
+              <Popup>
+                <div className="text-sm">
+                  <p className="font-semibold text-base mb-1">{area.name}</p>
+                  <p>
+                    Type: <span className="font-medium capitalize">{area.type}</span>
+                  </p>
+                  <p>Area: {area.area.toFixed(2)} km²</p>
+                  <p>NDVI: {area.ndvi.toFixed(2)}</p>
+                </div>
+              </Popup>
+            </Polygon>
+          ))}
+
+        {/* Infrastructure Layer */}
+        {activeLayers.includes('infrastructure') &&
+          infrastructurePoints.map((point) => (
+            <CircleMarker
+              key={point.id}
+              center={point.location}
+              radius={point.size * 3}
+              pathOptions={{
+                fillColor: '#3b82f6',
+                fillOpacity: 0.7,
+                color: '#1e40af',
+                weight: 2,
+              }}
+            >
+              <Popup>
+                <div className="text-sm">
+                  <p className="font-semibold text-base mb-1">{point.name}</p>
+                  <p>
+                    Type: <span className="font-medium capitalize">{point.type}</span>
+                  </p>
+                </div>
+              </Popup>
+            </CircleMarker>
+          ))}
+
+        {/* Sensors Layer */}
+        {activeLayers.includes('sensors') &&
+          sensorLocations.map((sensor) => (
+            <CircleMarker
+              key={sensor.id}
+              center={sensor.location}
+              radius={6}
+              pathOptions={{
+                fillColor: '#a855f7',
+                fillOpacity: 0.9,
+                color: '#ffffff',
+                weight: 2,
+              }}
+            >
+              <Popup>
+                <div className="text-sm">
+                  <p className="font-semibold text-base mb-1">{sensor.name}</p>
+                  <p>Temperature: {sensor.temperature.toFixed(1)}°C</p>
+                  <p className="text-xs text-gray-500">
+                    Last reading: {new Date(sensor.lastReading).toLocaleString()}
+                  </p>
                 </div>
               </Popup>
             </CircleMarker>
