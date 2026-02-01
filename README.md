@@ -1,4 +1,4 @@
-# [Verdant](verdant-delta-ashen.vercel.app) 
+## [Verdant](verdant-delta-ashen.vercel.app) 
 
 **Fighting urban heat islands through data-driven green infrastructure planning.**
 
@@ -28,9 +28,14 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000)
 
+## Data & Methodology
+
+Verdant is a climate resilience dashboard that visualizes urban heat using real NASA POWER temperature data and NOAA / Environment Canada weather sources. To estimate heat-island intensity, Verdant compares temperatures at a city’s center coordinates (“urban”) to a nearby “rural reference” point located ~50 km north of the city center. This offset acts as a simple baseline outside the dense core; the temperature difference (urban − rural) is shown as the heat-island signal, alongside trends and infrastructure recommendations.
+
 ## Tech Stack
 
 Next.js 16 · React 19 · TailwindCSS · Leaflet · Recharts · Zustand
+
 
 
 
