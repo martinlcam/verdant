@@ -113,7 +113,7 @@ export const CANADIAN_CITIES: City[] = [
 export function generateHeatZones(city: City, date: Date = new Date()): HeatZone[] {
   const random = seededRandom(city.id);
   const zones: HeatZone[] = [];
-  
+
   // Vary base temperature based on month (summer months are hotter)
   const month = date.getMonth(); // 0-11 (Jan-Dec)
   const seasonalVariation = month >= 5 && month <= 8 ? 5 : month >= 3 && month <= 9 ? 2 : -2; // Summer: +5°C, Spring/Fall: +2°C, Winter: -2°C
@@ -205,7 +205,10 @@ export function generateTemperatureHistory(_city: City, months: number = 12): Te
 }
 
 // Generate green infrastructure recommendations
-export function generateRecommendations(city: City, date: Date = new Date()): GreenInfrastructureRecommendation[] {
+export function generateRecommendations(
+  city: City,
+  _date: Date = new Date(),
+): GreenInfrastructureRecommendation[] {
   const random = seededRandom(city.id);
   const types: GreenInfrastructureRecommendation['type'][] = [
     'urban_park',
@@ -316,7 +319,9 @@ export function generateCityStats(
   // Calculate additional green coverage percentage
   // Multiply by 10 to make the impact more visible (each recommendation adds ~0.1-0.5% instead of ~0.01-0.05%)
   const additionalGreenCoveragePercent =
-    cityAreaM2 > 0 && !isNaN(effectiveGreenArea) ? (effectiveGreenArea / cityAreaM2) * 100 * 10 : 0;
+    cityAreaM2 > 0 && !Number.isNaN(effectiveGreenArea)
+      ? (effectiveGreenArea / cityAreaM2) * 100 * 10
+      : 0;
 
   // Each recommendation reduces hotspots (more green = fewer hotspots)
   // Assume each recommendation can reduce 1-3 hotspots depending on area and type

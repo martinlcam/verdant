@@ -183,7 +183,8 @@ export function Sidebar() {
                   <div className="space-y-2">
                     <h4 className="font-semibold mb-1.5 text-gray-50">3D Visualization</h4>
                     <p className="text-xs text-gray-300 leading-relaxed">
-                      Toggle 3D map view powered by Mapbox. Provides enhanced terrain visualization and building heights for better spatial understanding.
+                      Toggle 3D map view powered by Mapbox. Provides enhanced terrain visualization
+                      and building heights for better spatial understanding.
                     </p>
                   </div>
                 </TooltipContent>

@@ -44,7 +44,7 @@ export function ImpactProjections() {
       }))
       .sort((a, b) => b.cooling - a.cooling)
       .slice(0, 6);
-  }, [selectedCity]);
+  }, [selectedCity, selectedDate]);
 
   const colors = ['#10b981', '#14b8a6', '#06b6d4', '#3b82f6', '#8b5cf6', '#ec4899'];
 

@@ -27,7 +27,8 @@ import {
 import { useDashboardStore } from '@/lib/store';
 
 export function Header() {
-  const { selectedCity, selectedDate, setSelectedCity, sidebarOpen, setSidebarOpen } = useDashboardStore();
+  const { selectedCity, selectedDate, setSelectedCity, sidebarOpen, setSidebarOpen } =
+    useDashboardStore();
 
   const handleCityChange = (cityId: string) => {
     const city = CANADIAN_CITIES.find((c) => c.id === cityId);
@@ -110,7 +111,10 @@ export function Header() {
           <Menu className="h-5 w-5" />
         </Button>
 
-        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer flex-shrink-0">
+        <Link
+          href="/"
+          className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer flex-shrink-0"
+        >
           <div className="relative h-10 w-10 flex-shrink-0">
             <Image
               src="/favicons/LIGHT-GREEN-LOGO.svg"

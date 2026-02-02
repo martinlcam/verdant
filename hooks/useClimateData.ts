@@ -7,8 +7,7 @@ import {
   fetchNASATemperatureData,
   formatNASADate,
 } from '@/lib/api/nasa';
-import type { City } from '@/types';
-import type { HeatDataPoint } from '@/types';
+import type { City, HeatDataPoint } from '@/types';
 
 /**
  * Hook to fetch daily temperature data from NASA POWER API

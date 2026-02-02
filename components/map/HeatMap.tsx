@@ -10,7 +10,7 @@ import {
   generateVegetationAreas,
 } from '@/lib/data';
 import { useDashboardStore } from '@/lib/store';
-import { getHeatSeverityColor, getInfrastructureIcon, getPriorityColor } from '@/lib/utils';
+import { getInfrastructureIcon, getPriorityColor } from '@/lib/utils';
 
 // Dynamic import for Leaflet components (client-side only)
 const MapContainer = dynamic(() => import('react-leaflet').then((mod) => mod.MapContainer), {

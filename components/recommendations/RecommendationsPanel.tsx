@@ -38,14 +38,8 @@ const priorityColors: Record<string, string> = {
 };
 
 export function RecommendationsPanel() {
-  const {
-    selectedCity,
-    selectedDate,
-    setSelectedRecommendation,
-    selectedRecommendation,
-    implementedRecommendations,
-    toggleImplementedRecommendation,
-  } = useDashboardStore();
+  const { selectedCity, selectedDate, setSelectedRecommendation, selectedRecommendation } =
+    useDashboardStore();
 
   const recommendations = useMemo(() => {
     return generateRecommendations(selectedCity, selectedDate);
@@ -140,7 +134,7 @@ interface RecommendationCardProps {
   onSelect: () => void;
 }
 
-function RecommendationCard({ recommendation, isSelected, onSelect }: RecommendationCardProps) {
+function RecommendationCard({ recommendation, isSelected }: RecommendationCardProps) {
   const { implementedRecommendations, toggleImplementedRecommendation } = useDashboardStore();
   const isImplemented = implementedRecommendations.includes(recommendation.id);
 

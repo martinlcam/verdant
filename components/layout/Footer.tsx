@@ -1,12 +1,16 @@
+import Image from 'next/image';
+
 export default function Footer() {
   return (
     <footer className="relative mt-auto mb-0 bg-[#1f2b26] h-[179px] px-[25px] py-[15px]">
       <div className="relative h-full">
         {/* Logo and Brand - aligned to bottom left of footer */}
         <div className="absolute bottom-0 left-[25px] flex items-center gap-[11px]">
-          <img
+          <Image
             src="/images/landing/light-green-logo.svg"
             alt="Verdant Logo"
+            width={105}
+            height={105}
             className="w-[105px] h-[105px] object-contain"
           />
           <p className="font-alliance text-[128px] leading-[1.2] text-[#91b1a2] tracking-[-5.12px]">

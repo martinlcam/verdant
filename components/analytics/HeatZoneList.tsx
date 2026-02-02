@@ -18,7 +18,7 @@ export function HeatZoneList() {
   // Calculate the center of a polygon from its coordinates
   const calculatePolygonCenter = (coordinates: [number, number][]): [number, number] => {
     if (coordinates.length === 0) return selectedCity.coordinates;
-    
+
     let sumLat = 0;
     let sumLng = 0;
     for (const [lat, lng] of coordinates) {
@@ -28,7 +28,7 @@ export function HeatZoneList() {
     return [sumLat / coordinates.length, sumLng / coordinates.length];
   };
 
-  const handleZoneClick = (zone: typeof zones[0]) => {
+  const handleZoneClick = (zone: (typeof zones)[0]) => {
     setSelectedHeatZone(zone);
     // Calculate center of the heat zone polygon
     const center = calculatePolygonCenter(zone.coordinates);

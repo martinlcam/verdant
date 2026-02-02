@@ -7,7 +7,7 @@ export default function LandingPage() {
     <div className="relative min-h-screen overflow-x-clip flex flex-col mb-0">
       {/* Background Map */}
       <div className="fixed inset-0 -z-10">
-        <img src="/MAP BG.svg" alt="" className="h-full w-full object-cover" />
+        <Image src="/MAP BG.svg" alt="" fill className="object-cover" />
       </div>
 
       {/* Header */}
@@ -19,10 +19,15 @@ export default function LandingPage() {
       </header>
 
       {/* Logo */}
-      <Link href="/dashboard" className="absolute left-[34px] top-[90px] w-[153px] h-[153px] z-20 hover:opacity-80 transition-opacity">
-        <img
+      <Link
+        href="/dashboard"
+        className="absolute left-[34px] top-[90px] w-[153px] h-[153px] z-20 hover:opacity-80 transition-opacity"
+      >
+        <Image
           src="/images/landing/logo-vector.svg"
           alt="Verdant Logo"
+          width={153}
+          height={153}
           className="w-full h-full object-contain"
         />
       </Link>
@@ -31,42 +36,52 @@ export default function LandingPage() {
       <section className="relative pt-[280px] pb-0">
         {/* Decorative Green Blobs */}
         <div className="absolute right-[-13px] top-[167px] w-[603px] h-[603px] z-0">
-          <img
+          <Image
             src="/images/landing/dark-green-1.svg"
             alt=""
+            width={603}
+            height={603}
             className="w-full h-full object-contain"
           />
         </div>
         <div className="absolute right-[54px] top-[245px] w-[469px] h-[471px] z-0">
-          <img
+          <Image
             src="/images/landing/dark-green-5.svg"
             alt=""
+            width={469}
+            height={471}
             className="w-full h-full object-contain"
           />
         </div>
         <div className="absolute right-[65.71px] top-[262.46px] w-[432.829px] h-[432.829px] flex items-center justify-center z-0">
           <div className="rotate-[-15.69deg]">
-            <img
+            <Image
               src="/images/landing/dark-green-6.svg"
               alt=""
+              width={351}
+              height={351}
               className="w-[351px] h-[351px] object-contain"
             />
           </div>
         </div>
         <div className="absolute right-[121.95px] top-[315px] w-[320.053px] h-[325.011px] flex items-center justify-center z-0">
           <div className="rotate-[24.77deg]">
-            <img
+            <Image
               src="/images/landing/dark-green-7.svg"
               alt=""
+              width={238}
+              height={248}
               className="w-[237.989px] h-[248.127px] object-contain"
             />
           </div>
         </div>
         <div className="absolute right-[164.75px] top-[360.83px] w-[229.754px] h-[230.42px] flex items-center justify-center z-0">
           <div className="rotate-[-138.97deg]">
-            <img
+            <Image
               src="/images/landing/dark-green-9.svg"
               alt=""
+              width={160}
+              height={166}
               className="w-[159.687px] h-[166.489px] object-contain"
             />
           </div>
@@ -98,24 +113,30 @@ export default function LandingPage() {
       <section className="relative min-h-[1100px]">
         {/* Decorative Blobs - Left Side */}
         <div className="absolute left-[64px] top-[280px] w-[437.082px] h-[437.082px] z-0">
-          <img
+          <Image
             src="/images/landing/dark-green-10.svg"
             alt=""
+            width={437}
+            height={437}
             className="w-full h-full object-contain"
           />
         </div>
         <div className="absolute left-[113.67px] top-[335.88px] w-[338.987px] h-[324.087px] z-0">
-          <img
+          <Image
             src="/images/landing/dark-green-11.svg"
             alt=""
+            width={339}
+            height={324}
             className="w-full h-full object-contain"
           />
         </div>
         <div className="absolute left-[145.95px] top-[365.68px] w-[264.632px] h-[264.632px] flex items-center justify-center z-0">
           <div className="rotate-[4.31deg]">
-            <img
+            <Image
               src="/images/landing/dark-green-12.svg"
               alt=""
+              width={247}
+              height={247}
               className="w-[246.795px] h-[246.795px] object-contain"
             />
           </div>
@@ -125,9 +146,11 @@ export default function LandingPage() {
           <div className="rotate-[24.77deg]">
             <div className="relative w-[196.029px] h-[144.196px] overflow-clip">
               <div className="absolute inset-[5.77%_11.1%_5.63%_7.11%]">
-                <img
+                <Image
                   src="/images/landing/vector-1.svg"
                   alt=""
+                  width={196}
+                  height={144}
                   className="w-full h-full object-contain"
                 />
               </div>
@@ -135,9 +158,11 @@ export default function LandingPage() {
                 <div className="rotate-[-101.5deg] scale-y-[0.99] skew-x-[7.15deg] w-[100.359px] h-[84.014px]">
                   <div className="relative w-full h-full overflow-clip">
                     <div className="absolute inset-[5.77%_11.1%_5.63%_7.11%]">
-                      <img
+                      <Image
                         src="/images/landing/vector-2.svg"
                         alt=""
+                        width={100}
+                        height={84}
                         className="w-full h-full object-contain"
                       />
                     </div>
@@ -200,10 +225,11 @@ export default function LandingPage() {
 
         {/* Dashboard Image */}
         <div className="relative w-[1141px] h-[412px] rounded-[25px] overflow-hidden mb-4 mx-auto">
-          <img
+          <Image
             src="/images/landing/image1.png"
             alt="Verdant Dashboard - Vancouver"
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
           />
         </div>
 

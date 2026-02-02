@@ -132,7 +132,9 @@ export function ExportPanel() {
                 <span className="text-gray-600 dark:text-gray-400 shrink-0">{option.icon}</span>
               )}
               <span className="text-xs font-medium text-center break-words">{option.title}</span>
-              <span className="text-[10px] text-gray-400 text-center break-words line-clamp-2 max-w-full">{option.description}</span>
+              <span className="text-[10px] text-gray-400 text-center break-words line-clamp-2 max-w-full">
+                {option.description}
+              </span>
             </Button>
           ))}
         </div>
