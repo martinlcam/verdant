@@ -12,6 +12,19 @@ import {
 import { useDashboardStore } from '@/lib/store';
 import { getInfrastructureIcon, getPriorityColor } from '@/lib/utils';
 
+// Dynamic import for MapboxMap (client-side only)
+const MapboxMap = dynamic(() => import('./MapboxMap').then((mod) => mod.MapboxMap), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-full w-full items-center justify-center bg-gray-100 dark:bg-gray-800">
+      <div className="text-center">
+        <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent mx-auto" />
+        <p className="text-gray-600 dark:text-gray-400">Loading 3D map...</p>
+      </div>
+    </div>
+  ),
+});
+
 // Dynamic import for Leaflet components (client-side only)
 const MapContainer = dynamic(() => import('react-leaflet').then((mod) => mod.MapContainer), {
   ssr: false,
@@ -42,6 +55,7 @@ export function HeatMap() {
     setSelectedRecommendation,
     mapCenter,
     mapZoom,
+    enable3D,
   } = useDashboardStore();
   const [isMounted, setIsMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -84,6 +98,12 @@ export function HeatMap() {
     );
   }
 
+  // Render 3D Mapbox map if enabled
+  if (enable3D) {
+    return <MapboxMap />;
+  }
+
+  // Render 2D Leaflet map
   return (
     <div ref={containerRef} className="relative h-full w-full">
       <MapContainer
